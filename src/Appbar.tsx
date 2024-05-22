@@ -30,6 +30,19 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import PercentIcon from '@mui/icons-material/Percent';
 import SettingsIcon from '@mui/icons-material/Settings';
 
+import { useNavigate, useLocation } from 'react-router-dom'; 
+
+import { Routes, Route, Link } from "react-router-dom";
+import HomePage from './Pages/HomePage';
+import AddStock from './Pages/AddStock';
+import CreateBill from './Pages/CreateBill';
+import ViewBills from './Pages/ViewBills';
+import ViewStocks from './Pages/ViewStocks';
+import ViewBalance from './Pages/ViewBalance';
+import ViewSales from './Pages/ViewSales';
+import UserSettings from './Pages/UserSettings';
+import NoPage from './Pages/NoPage';
+
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
@@ -93,6 +106,45 @@ export default function Appbar() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+
+  const navigate = useNavigate();
+
+  const navigateToHome = () => {
+    navigate('/home');  
+  };
+
+  const navigateToCreateBill = () => {
+    navigate('/createBill');  
+  };
+
+  const navigateToAddStock = () => {
+    navigate('/addStock');  
+  };
+
+  const navigateToViewBills = () => {
+    navigate('/viewBills');  
+  };
+
+  const navigateToViewStocks = () => {
+    navigate('/viewStocks');  
+  };
+
+  const navigateToViewBalance = () => {
+    navigate('/viewBalance');  
+  };
+
+  const navigateToViewSales = () => {
+    navigate('/viewSales');  
+  };
+
+  const navigateToUserSettings = () => {
+    navigate('/userSettings');  
+  };
+
+
+  const location = useLocation();
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -133,7 +185,7 @@ export default function Appbar() {
         <Divider />
         <List>
           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => ( */}
-          <ListItemButton>
+          <ListItemButton onClick={navigateToHome} style={{ backgroundColor: location.pathname === '/home' ? 'DodgerBlue' : 'white' }}>
           <ListItemIcon>
                   {/* {index % 2 === 0 ?  */}
                   <HomeIcon /> 
@@ -151,7 +203,7 @@ export default function Appbar() {
         </List>
         <List>
           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => ( */}
-          <ListItemButton>
+          <ListItemButton onClick={navigateToCreateBill} style={{ backgroundColor: location.pathname === '/createBill' ? 'DodgerBlue' : 'white' }}>
           <ListItemIcon>
                   {/* {index % 2 === 0 ?  */}
                   <CreateIcon /> 
@@ -169,7 +221,7 @@ export default function Appbar() {
         </List>
         <List>
           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => ( */}
-          <ListItemButton>
+          <ListItemButton onClick={navigateToAddStock} style={{ backgroundColor: location.pathname === '/addStock' ? 'DodgerBlue' : 'white' }}>
           <ListItemIcon>
                   {/* {index % 2 === 0 ?  */}
                   <AddBoxIcon /> 
@@ -188,7 +240,7 @@ export default function Appbar() {
 
         <List>
           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => ( */}
-          <ListItemButton>
+          <ListItemButton onClick={navigateToViewBills} style={{ backgroundColor: location.pathname === '/viewBills' ? 'DodgerBlue' : 'white' }}>
           <ListItemIcon>
                   {/* {index % 2 === 0 ?  */}
                   <CommentIcon /> 
@@ -207,7 +259,7 @@ export default function Appbar() {
 
         <List>
           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => ( */}
-          <ListItemButton>
+          <ListItemButton onClick={navigateToViewStocks} style={{ backgroundColor: location.pathname === '/viewStocks' ? 'DodgerBlue' : 'white' }}>
           <ListItemIcon>
                   {/* {index % 2 === 0 ?  */}
                   <VisibilityIcon /> 
@@ -226,7 +278,7 @@ export default function Appbar() {
 
         <List>
           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => ( */}
-          <ListItemButton>
+          <ListItemButton onClick={navigateToViewBalance} style={{ backgroundColor: location.pathname === '/viewBalance' ? 'DodgerBlue' : 'white' }}>
           <ListItemIcon>
                   {/* {index % 2 === 0 ?  */}
                   <AccountBalanceIcon /> 
@@ -245,7 +297,7 @@ export default function Appbar() {
 
         <List>
           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => ( */}
-          <ListItemButton>
+          <ListItemButton onClick={navigateToViewSales} style={{ backgroundColor: location.pathname === '/viewSales' ? 'DodgerBlue' : 'white' }}>
           <ListItemIcon>
                   {/* {index % 2 === 0 ?  */}
                   <PercentIcon /> 
@@ -264,7 +316,7 @@ export default function Appbar() {
 
         <List>
           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => ( */}
-          <ListItemButton>
+          <ListItemButton onClick={navigateToUserSettings} style={{ backgroundColor: location.pathname === '/userSettings' ? 'DodgerBlue' : 'white' }}>
           <ListItemIcon>
                   {/* {index % 2 === 0 ?  */}
                   <SettingsIcon /> 
@@ -283,33 +335,24 @@ export default function Appbar() {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <Typography paragraph>
+        {/* <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
           enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-          imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-          Convallis convallis tellus id interdum velit laoreet id donec ultrices.
-          Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
-          nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
-          leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
-          feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-          consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-          sapien faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-          eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
-          neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
-          tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
-          sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
-          tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
-          gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-          et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
-          tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
+          imperdiet.
+        </Typography> */}
+
+        <Routes>
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/createBill" element={<CreateBill />} />
+        <Route path="/addStock" element={<AddStock />} />
+        <Route path="/viewBills" element={<ViewBills />} />
+        <Route path="/viewStocks" element={<ViewStocks />} />
+        <Route path="/viewBalance" element={<ViewBalance />} />
+        <Route path="/viewSales" element={<ViewSales />} />
+        <Route path="/userSettings" element={<UserSettings />} />
+        <Route path="*" element={<NoPage />} />
+      </Routes>
       </Main>
     </Box>
   )

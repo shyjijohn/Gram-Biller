@@ -34,22 +34,22 @@ export default function AddStock() {
           sx={{ border: '2px solid grey' }}
         >
           <Stack>
-            <Stack padding={2} spacing={2} direction="row">
+            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
               <Typography sx={{ alignSelf: "left" }}>
                 Name
               </Typography >
               <TextField id="outlined-basic" variant="outlined" size="small" />
             </Stack>
 
-            <Stack padding={2} spacing={2} direction="row">
+            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
               <Typography sx={{ alignSelf: "left" }}>
                 Stock type
               </Typography >
               <TextField id="outlined-basic" variant="standard" size="small" />
             </Stack>
 
-            <Stack padding={2} spacing={2} direction="row">
-              <Typography sx={{ alignSelf: "left" }}>
+            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
+              <Typography sx={{ alignSelf: "center" }}>
                 Date
               </Typography >
               <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -59,21 +59,21 @@ export default function AddStock() {
               </LocalizationProvider>
             </Stack>
 
-            <Stack padding={2} spacing={2} direction="row">
+            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
               <Typography sx={{ alignSelf: "left" }}>
                 Quantity
               </Typography >
               <TextField id="outlined-basic" variant="outlined" size="small" />
             </Stack>
 
-            <Stack padding={2} spacing={2} direction="row">
+            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
               <Typography sx={{ alignSelf: "left" }}>
                 Weight(gm)
               </Typography >
               <TextField id="outlined-basic" variant="outlined" size="small" />
             </Stack>
 
-            <Stack padding={2} spacing={2} direction="row">
+            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
               <Typography sx={{ alignSelf: "left" }}>
                 Remarks
               </Typography >

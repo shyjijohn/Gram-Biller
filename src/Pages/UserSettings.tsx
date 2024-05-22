@@ -39,35 +39,35 @@ export default function UserSettings() {
             <Button variant="outlined">Log out</Button>
             </Stack>
 
-            <Stack padding={2} spacing={2} direction="row">
+            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
               <Typography sx={{ alignSelf: "center" }}>
                 Line 1
               </Typography >
               <TextField id="outlined-basic" variant="outlined" size="small" />
             </Stack>
 
-            <Stack padding={2} spacing={2} direction="row">
+            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
               <Typography sx={{ alignSelf: "center" }}>
                 Line 2
               </Typography >
               <TextField id="outlined-basic" variant="outlined" size="small" />
             </Stack>
 
-            <Stack padding={2} spacing={2} direction="row">
+            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
               <Typography sx={{ alignSelf: "center" }}>
                 Line 3
               </Typography >
               <TextField id="outlined-basic" variant="outlined" size="small" />
             </Stack>
 
-            <Stack padding={2} spacing={2} direction="row">
+            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
               <Typography sx={{ alignSelf: "center" }}>
                 Title
               </Typography >
               <TextField id="outlined-basic" variant="outlined" size="small" />
             </Stack>
 
-            <Stack padding={2} spacing={2} direction="row">
+            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
               <Typography sx={{ alignSelf: "flex-start" }}>
                 Backup type
               </Typography >

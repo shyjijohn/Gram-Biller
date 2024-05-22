@@ -35,13 +35,13 @@ export default function ViewSales() {
           sx={{ border: '2px solid grey' }}
         >
           <Stack>
-          <Stack padding={2} spacing = {2} direction="row">
+          <Stack padding={2} spacing = {2} direction="row" justifyContent="space-between" >
               <Typography sx={{ alignSelf: "center" }}>
                 Date
               </Typography >
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer components={['DatePicker']}>
-                  <DatePicker label="DD/MM/YYYY" />
+                  <DatePicker label="MM/DD/YYYY" />
                 </DemoContainer>
               </LocalizationProvider>
 
@@ -51,21 +51,21 @@ export default function ViewSales() {
                }}/>
             </Stack>
 
-            <Stack padding={2} spacing = {2} direction="row">
+            <Stack padding={2} spacing = {2} direction="row" justifyContent="space-between">
               <Typography sx={{ alignSelf: "center" }}>
                 Cash Payment
               </Typography >
               <TextField id="outlined-basic" variant="outlined" size="small" />
             </Stack>
 
-            <Stack padding={2} spacing = {2} direction="row">
+            <Stack padding={2} spacing = {2} direction="row" justifyContent="space-between">
               <Typography sx={{ alignSelf: "center" }}>
                 Online Payment
               </Typography >
               <TextField id="outlined-basic" variant="outlined" size="small" />
             </Stack>
 
-            <Stack padding={2} spacing = {2} direction="row">
+            <Stack padding={2} spacing = {2} direction="row" justifyContent="space-between">
               <Typography sx={{ alignSelf: "center" }}>
                 Total Amount Paid
               </Typography >

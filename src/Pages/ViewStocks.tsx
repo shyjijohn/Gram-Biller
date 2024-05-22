@@ -15,33 +15,38 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 const columns1: GridColDef[] = [
-  { field: 'no', headerName: 'No'},
-  { field: 'date', headerName: 'Date'},
-  { field: 'totalQuantity', headerName: 'Total Quantity'},
+  { field: 'no', headerName: 'No', width: 10 },
+  { field: 'date', headerName: 'Date', width: 10 },
+  { field: 'totalQuantity', headerName: 'Total Quantity', width: 100 },
   {
     field: 'totalWeight',
     headerName: 'Total Weight',
     type: 'number',
+    width: 100
   },
   {
     field: 'salesQuantity',
     headerName: 'Sales Quantity',
     type: 'number',
+    width: 110
   },
   {
     field: 'salesWeight',
     headerName: 'Sales Weight',
     type: 'number',
+    width: 100
   },
   {
     field: 'balanceQuantity',
     headerName: 'Balance Quantity',
     type: 'number',
+    width: 120
   },
   {
     field: 'balanceWeight',
     headerName: 'Balance Weight',
     type: 'number',
+    width: 120
   },
 ];
 
@@ -58,23 +63,26 @@ const rows1 = [
 ];
 
 const columns2: GridColDef[] = [
-  { field: 'no', headerName: 'No'},
-  { field: 'name', headerName: 'Name'},
-  { field: 'date', headerName: 'Date'},
+  { field: 'no', headerName: 'No', width: 20 },
+  { field: 'name', headerName: 'Name', width: 70 },
+  { field: 'date', headerName: 'Date', width: 70 },
   {
     field: 'quantity',
     headerName: 'Quantity',
     type: 'number',
+    width: 70
   },
   {
     field: 'weight',
     headerName: 'Weight',
     type: 'number',
+    width: 80
   },
   {
     field: 'remarks',
     headerName: 'Remarks',
     type: 'number',
+    width: 100
   },
 ];
 
@@ -109,16 +117,16 @@ export default function ViewStocks() {
           sx={{ border: '2px solid grey' }}
         >
           <Stack>
-            <Stack padding={2} spacing={2} direction="row" alignItems={'self-end'}>
+            <Stack spacing={2} direction="row" justifyContent="center">
               <Typography >
                 Stock Name
               </Typography >
               <TextField id="outlined-basic" variant="standard" size="small"/> 
             </Stack>
 
-            <Stack padding={2} spacing={2} direction="row" alignSelf="self-end">
+            <Stack padding={2} spacing={2} direction="row" justifyContent="center">
               <Card sx={{
-                minWidth: '50%',
+                minWidth: '30%',
                 bgcolor: "gray",
                 display: "flex",
                 
@@ -137,13 +145,13 @@ export default function ViewStocks() {
               </Card>
             </Stack>
 
-            <Stack padding={2} spacing={2} direction="row">
+            <Stack paddingTop={2} spacing={2} direction="row">
               <Typography sx={{ alignSelf: "center" }}>
                 Stocks and Sales report:
               </Typography >
             </Stack>
 
-            <Stack padding={2} spacing={2} direction="row">
+            <Stack paddingTop={2} spacing={2} direction="row">
             <div style={{ height: 400, width: '100%' }}>
       <DataGrid
         rows={rows1}
@@ -159,13 +167,13 @@ export default function ViewStocks() {
     </div>
             </Stack>       
 
-            <Stack padding={2} spacing={2} direction="row">
+            <Stack paddingTop={2} spacing={2} direction="row">
               <Typography sx={{ alignSelf: "center" }}>
                 Stock history:
               </Typography >
             </Stack>
 
-            <Stack padding={2} spacing={2} direction="row">
+            <Stack paddingTop={2} spacing={2} direction="row">
             <div style={{ height: 400, width: '100%' }}>
       <DataGrid
         rows={rows2}

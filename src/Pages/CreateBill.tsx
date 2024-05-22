@@ -49,236 +49,236 @@ const rows = [
 
 export default function CreateBill() {
   return (
-    <Stack padding={2} spacing={2} direction="row">
-    <Card sx={{
-      minWidth: '50%',
-      bgcolor: "red",
-      alignSelf: "center",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }}>
-      <CardContent>
-        <Box
-          display="flex"
-          alignItems="center"
-          gap={4}
-          p={2}
-          sx={{ border: '2px solid grey' }}
-        >
-          <Stack>
-            <Stack padding={2} spacing={2} direction="column">
-              <Typography sx={{ alignSelf: "center" }}>
-                Jewellers
-              </Typography >
-              <Typography sx={{ alignSelf: "center" }}>
-                Kulasekharam
-              </Typography >
-              <Typography sx={{ alignSelf: "center" }}>
-                8438607589
-              </Typography >
-            </Stack>
+    <Stack alignSelf="center" justifyContent="center" spacing={2} direction="row">
+      <Card sx={{
+        minWidth: '50%',
+        bgcolor: "red",
+        alignSelf: "center",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      }}>
+        <CardContent>
+          <Box
+            display="flex"
+            alignItems="center"
+            gap={4}
+            p={2}
+            sx={{ border: '2px solid grey' }}
+          >
+            <Stack>
+              <Stack paddingTop={2} spacing={0} direction="column">
+                <Typography sx={{ alignSelf: "center" }}>
+                  Jewellers
+                </Typography >
+                <Typography sx={{ alignSelf: "center" }}>
+                  Kulasekharam
+                </Typography >
+                <Typography sx={{ alignSelf: "center" }}>
+                  8438607589
+                </Typography >
+              </Stack>
 
-            <Stack padding={2} spacing={2} direction="row">
-              <Stack padding={2} spacing={2} direction="column">
-                <Stack padding={2} spacing={2} direction="row">
-                  <Typography sx={{ alignSelf: "center" }}>
-                    Name:
-                  </Typography >
-                  <TextField id="outlined-basic" variant="standard" size="small" />
-                </Stack>
-                <Stack padding={2} spacing={2} direction="row">
-                  <Typography sx={{ alignSelf: "center" }}>
-                    Phone:
-                  </Typography >
-                  <TextField id="outlined-basic" variant="standard" size="small" />
-                </Stack>
-                <Stack padding={2} spacing={2} direction="row">
-                  <Typography sx={{ alignSelf: "center" }}>
-                    Address:
-                  </Typography >
-                  <Stack padding={2} spacing={2} direction="column">
+              <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between">
+                <Stack spacing={2} direction="column">
+                  <Stack spacing={2} direction="row">
+                    <Typography sx={{ alignSelf: "center" }}>
+                      Name:
+                    </Typography >
                     <TextField id="outlined-basic" variant="standard" size="small" />
+                  </Stack>
+                  <Stack spacing={2} direction="row">
+                    <Typography sx={{ alignSelf: "center" }}>
+                      Phone:
+                    </Typography >
+                    <TextField id="outlined-basic" variant="standard" size="small" />
+                  </Stack>
+                  <Stack spacing={2} direction="row">
+                    <Typography sx={{ alignSelf: "center" }}>
+                      Address:
+                    </Typography >
+                    <Stack spacing={2} direction="column">
+                      <TextField id="outlined-basic" variant="standard" size="small" />
+                      <TextField id="outlined-basic" variant="standard" size="small" />
+                    </Stack>
+                  </Stack>
+                </Stack>
+                <Stack spacing={2} direction="column">
+                  <Stack spacing={2} direction="row">
+                    <Typography sx={{ alignSelf: "center" }}>
+                      Invoice No:
+                    </Typography >
+                    <Typography sx={{ alignSelf: "center" }}>
+                      685273
+                    </Typography >
+                  </Stack>
+                  <Stack spacing={2} direction="row">
+                    <Typography sx={{ alignSelf: "center" }}>
+                      Date:
+                    </Typography >
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DemoContainer components={['DatePicker']}>
+                        <DatePicker label="DD/MM/YYYY" />
+                      </DemoContainer>
+                    </LocalizationProvider>
+                  </Stack>
+                  <Stack spacing={2} direction="row">
+                    <Typography sx={{ alignSelf: "center" }}>
+                      Gold Rate:
+                    </Typography >
+                    <TextField id="outlined-basic" variant="standard" size="small" />
+                  </Stack>
+                  <Stack spacing={2} direction="row">
+                    <Typography sx={{ alignSelf: "center" }}>
+                      Silver Rate:
+                    </Typography >
                     <TextField id="outlined-basic" variant="standard" size="small" />
                   </Stack>
                 </Stack>
               </Stack>
-              <Stack padding={2} spacing={2} direction="column">
-                <Stack padding={2} spacing={2} direction="row">
-                  <Typography sx={{ alignSelf: "center" }}>
-                    Invoice No:
-                  </Typography >
-                  <Typography sx={{ alignSelf: "center" }}>
-                    685273
-                  </Typography >
-                </Stack>
-                <Stack padding={2} spacing={2} direction="row">
-                  <Typography sx={{ alignSelf: "center" }}>
-                    Date:
-                  </Typography >
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DatePicker']}>
-                      <DatePicker label="DD/MM/YYYY" />
-                    </DemoContainer>
-                  </LocalizationProvider>
-                </Stack>
-                <Stack padding={2} spacing={2} direction="row">
-                  <Typography sx={{ alignSelf: "center" }}>
-                    Gold Rate:
-                  </Typography >
-                  <TextField id="outlined-basic" variant="standard" size="small" />
-                </Stack>
-                <Stack padding={2} spacing={2} direction="row">
-                  <Typography sx={{ alignSelf: "center" }}>
-                    Silver Rate:
-                  </Typography >
-                  <TextField id="outlined-basic" variant="standard" size="small" />
-                </Stack>
-              </Stack>
-            </Stack>
 
 
-            <Stack padding={2} spacing={2} direction="row">
-              <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>S.No</TableCell>
-                      <TableCell align="right">Product</TableCell>
-                      <TableCell align="right">QTY</TableCell>
-                      <TableCell align="right">Gross Weight</TableCell>
-                      <TableCell align="right">Stone Weight</TableCell>
-                      <TableCell align="right">Stone Rate</TableCell>
-                      <TableCell align="right">N.WT</TableCell>
-                      <TableCell align="right">VA%</TableCell>
-                      <TableCell align="right">MC/HC</TableCell>
-                      <TableCell align="right">Amount</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {rows.map((row) => (
-                      <TableRow
-                        key={row.name}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                      >
-                        <TableCell component="th" scope="row">
-                          {row.name}
-                        </TableCell>
-                        <TableCell align="right">{row.calories}</TableCell>
-                        <TableCell align="right">{row.fat}</TableCell>
-                        <TableCell align="right">{row.carbs}</TableCell>
-                        <TableCell align="right">{row.protein}</TableCell>
+              <Stack paddingTop={2} spacing={2} direction="row">
+                <TableContainer component={Paper}>
+                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>S.No</TableCell>
+                        <TableCell align="right">Product</TableCell>
+                        <TableCell align="right">QTY</TableCell>
+                        <TableCell align="right">Gross Weight</TableCell>
+                        <TableCell align="right">Stone Weight</TableCell>
+                        <TableCell align="right">Stone Rate</TableCell>
+                        <TableCell align="right">N.WT</TableCell>
+                        <TableCell align="right">VA%</TableCell>
+                        <TableCell align="right">MC/HC</TableCell>
+                        <TableCell align="right">Amount</TableCell>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Stack>
+                    </TableHead>
+                    <TableBody>
+                      {rows.map((row) => (
+                        <TableRow
+                          key={row.name}
+                          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                          <TableCell component="th" scope="row">
+                            {row.name}
+                          </TableCell>
+                          <TableCell align="right">{row.calories}</TableCell>
+                          <TableCell align="right">{row.fat}</TableCell>
+                          <TableCell align="right">{row.carbs}</TableCell>
+                          <TableCell align="right">{row.protein}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Stack>
 
-            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
-              <Typography sx={{ alignSelf: "left" }}>
-                In Words:
-              </Typography >
-              <Stack padding={2} spacing={2} direction="column">
-                <Stack padding={2} spacing={2} direction="row">
-                  <Typography sx={{ alignSelf: "right" }}>
-                    Taxable Amount:
-                  </Typography >
-                  <Typography sx={{ alignSelf: "center" }}>
-                    0.00
-                  </Typography >
-                </Stack>
-                <Stack padding={2} spacing={2} direction="row">
-                  <Typography sx={{ alignSelf: "center" }}>
-                    Discount:
-                  </Typography >
-                  <TextField id="outlined-basic" variant="standard" size="small" />
-                </Stack>
-                <Stack padding={2} spacing={2} direction="row">
-                  <Typography sx={{ alignSelf: "center" }}>
-                    NET AMOUNT:
-                  </Typography >
-                  <Typography sx={{ alignSelf: "center" }}>
-                    0.00
-                  </Typography >
+              <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between">
+                <Typography sx={{ alignSelf: "left" }}>
+                  In Words:
+                </Typography >
+                <Stack paddingTop={2} spacing={2} direction="column">
+                  <Stack spacing={2} direction="row">
+                    <Typography sx={{ alignSelf: "right" }}>
+                      Taxable Amount:
+                    </Typography >
+                    <Typography sx={{ alignSelf: "center" }}>
+                      0.00
+                    </Typography >
+                  </Stack>
+                  <Stack spacing={2} direction="row">
+                    <Typography sx={{ alignSelf: "center" }}>
+                      Discount:
+                    </Typography >
+                    <TextField id="outlined-basic" variant="standard" size="small" />
+                  </Stack>
+                  <Stack spacing={2} direction="row">
+                    <Typography sx={{ alignSelf: "center" }}>
+                      NET AMOUNT:
+                    </Typography >
+                    <Typography sx={{ alignSelf: "center" }}>
+                      0.00
+                    </Typography >
+                  </Stack>
                 </Stack>
               </Stack>
-            </Stack>
 
-            <Stack padding={2} spacing={2} direction="row">
-              <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Particulars</TableCell>
-                      <TableCell align="right">WT</TableCell>
-                      <TableCell align="right">Wastage</TableCell>
-                      <TableCell align="right">Total WT</TableCell>
-                      <TableCell align="right">Rate</TableCell>
-                      <TableCell align="right">Amount</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {rows.map((row) => (
-                      <TableRow
-                        key={row.name}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                      >
-                        <TableCell component="th" scope="row">
-                          {row.name}
-                        </TableCell>
-                        <TableCell align="right">{row.calories}</TableCell>
-                        <TableCell align="right">{row.fat}</TableCell>
-                        <TableCell align="right">{row.carbs}</TableCell>
-                        <TableCell align="right">{row.protein}</TableCell>
+              <Stack paddingTop={2} spacing={2} direction="row">
+                <TableContainer component={Paper}>
+                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Particulars</TableCell>
+                        <TableCell align="right">WT</TableCell>
+                        <TableCell align="right">Wastage</TableCell>
+                        <TableCell align="right">Total WT</TableCell>
+                        <TableCell align="right">Rate</TableCell>
+                        <TableCell align="right">Amount</TableCell>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Stack>
-
-
-            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
-              <Stack padding={2} spacing={2} direction="row">
-                <Typography sx={{ alignSelf: "left" }}>
-                  Old Gold Total Weight:
-                </Typography >
-                <Typography sx={{ alignSelf: "left" }}>
-                  0.000
-                </Typography >
+                    </TableHead>
+                    <TableBody>
+                      {rows.map((row) => (
+                        <TableRow
+                          key={row.name}
+                          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                          <TableCell component="th" scope="row">
+                            {row.name}
+                          </TableCell>
+                          <TableCell align="right">{row.calories}</TableCell>
+                          <TableCell align="right">{row.fat}</TableCell>
+                          <TableCell align="right">{row.carbs}</TableCell>
+                          <TableCell align="right">{row.protein}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               </Stack>
-              <Stack padding={2} spacing={2} direction="column">
-                <Stack padding={2} spacing={2} direction="row">
-                  <Typography sx={{ alignSelf: "right" }}>
-                    Old Reduced:
+
+
+              <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between">
+                <Stack spacing={2} direction="row">
+                  <Typography sx={{ alignSelf: "left" }}>
+                    Old Gold Total Weight:
                   </Typography >
-                  <Typography sx={{ alignSelf: "center" }}>
-                    0.00
+                  <Typography sx={{ alignSelf: "left" }}>
+                    0.000
                   </Typography >
                 </Stack>
-                <Stack padding={2} spacing={2} direction="row">
-                  <Typography sx={{ alignSelf: "center" }}>
-                    TOTAL:
-                  </Typography >
-                  <Typography sx={{ alignSelf: "center" }}>
-                    0.00
-                  </Typography >
+                <Stack spacing={2} direction="column">
+                  <Stack spacing={2} direction="row">
+                    <Typography sx={{ alignSelf: "right" }}>
+                      Old Reduced:
+                    </Typography >
+                    <Typography sx={{ alignSelf: "center" }}>
+                      0.00
+                    </Typography >
+                  </Stack>
+                  <Stack spacing={2} direction="row">
+                    <Typography sx={{ alignSelf: "center" }}>
+                      TOTAL:
+                    </Typography >
+                    <Typography sx={{ alignSelf: "center" }}>
+                      0.00
+                    </Typography >
+                  </Stack>
                 </Stack>
               </Stack>
-            </Stack>
 
-          </Stack>
-        </Box>
-      </CardContent>
-    </Card>
-    <Stack padding={2} spacing={2} direction="column">
-    <SaveIcon sx={{ height: 40, width: 40 }}/>
-    <LibraryAddIcon sx={{ height: 40, width: 40 }}/>
-    <DeleteIcon sx={{ height: 40, width: 40 }}/>
-    <LibraryAddIcon sx={{ height: 40, width: 40 }}/>
-    <DeleteIcon sx={{ height: 40, width: 40 }}/>
-    </Stack>
+            </Stack>
+          </Box>
+        </CardContent>
+      </Card>
+      <Stack padding={2} spacing={2} direction="column">
+        <SaveIcon sx={{ height: 40, width: 40 }} />
+        <LibraryAddIcon sx={{ height: 40, width: 40 }} />
+        <DeleteIcon sx={{ height: 40, width: 40 }} />
+        <LibraryAddIcon sx={{ height: 40, width: 40 }} />
+        <DeleteIcon sx={{ height: 40, width: 40 }} />
+      </Stack>
     </Stack>
   )
 }

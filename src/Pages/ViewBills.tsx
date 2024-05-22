@@ -19,43 +19,50 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 
 const columns: GridColDef[] = [
-  { field: 'no', headerName: 'No'},
-  { field: 'name', headerName: 'Name'},
-  { field: 'phoneNo', headerName: 'Phone No'},
+  { field: 'no', headerName: 'No', width: 10 },
+  { field: 'name', headerName: 'Name', width: 70 },
+  { field: 'phoneNo', headerName: 'Phone No', width: 100 },
   {
     field: 'invoiceNo',
     headerName: 'Invoice No',
     type: 'number',
+    width: 80
   },
   {
     field: 'date',
     headerName: 'Date',
     type: 'number',
+    width: 60
   },
   {
     field: 'address',
     headerName: 'Address',
     type: 'number',
+    width: 90
   },
   {
     field: 'goldWeight',
     headerName: 'Gold Weight',
     type: 'number',
+    width: 120
   },
   {
     field: 'silverWeight',
     headerName: 'Silver Weight',
     type: 'number',
+    width: 120
   },
   {
     field: 'oldItemWeight',
     headerName: 'Old Item Weight',
     type: 'number',
+    width: 140
   },
   {
     field: 'discount',
     headerName: 'Discount',
     type: 'number',
+    width: 90
   },
   {
     field: 'billAmount',
@@ -80,107 +87,125 @@ const rows = [
 
 export default function ViewBills() {
   return (
-    <Stack  padding={2} spacing={2} direction="column">
-    <Card sx={{
-      minWidth: '50%',
-      bgcolor: "red",
-      alignSelf: "center",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }}>
-      <CardContent>
-        <Box
-          display="flex"
-          alignItems="center"
-          gap={4}
-          p={2}
-          sx={{ border: '2px solid grey' }}
-        >
-          <Stack>
-            <Stack padding={2} spacing={2} direction="row">
-              <Typography sx={{ alignSelf: "left" }}>
-                Date From:
-              </Typography >
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={['DatePicker']}>
-                  <DatePicker label="DD/MM/YYYY" />
-                </DemoContainer>
-              </LocalizationProvider>
-              <Typography sx={{ alignSelf: "left" }}>
-                Date To:
-              </Typography >
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={['DatePicker']}>
-                  <DatePicker label="DD/MM/YYYY" />
-                </DemoContainer>
-              </LocalizationProvider>
-              <PageviewOutlinedIcon sx={{
-                alignSelf: "center",
-                height: 40,
-                width: 40
-              }} />
-            </Stack>
+    <Stack padding={2} spacing={2} direction="row" >
+      <Card sx={{
+        minWidth: '50%',
+        bgcolor: "red",
+        alignSelf: "center",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      }}>
+        <CardContent>
+          <Box
+            display="flex"
+            alignItems="center"
+            gap={4}
+            p={2}
+            sx={{ border: '2px solid grey' }}
+          >
+            <Stack>
+              <Stack spacing={2} direction="row" justifyContent="space-between">
+                <Stack>
+                  <Typography sx={{ alignSelf: "left" }}>
+                    Date From:
+                  </Typography >
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['DatePicker']}>
+                      <DatePicker label="DD/MM/YYYY" />
+                    </DemoContainer>
+                  </LocalizationProvider>
+                </Stack>
+                <Stack>
+                  <Typography sx={{ alignSelf: "left" }}>
+                    Date To:
+                  </Typography >
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['DatePicker']}>
+                      <DatePicker label="DD/MM/YYYY" />
+                    </DemoContainer>
+                  </LocalizationProvider>
+                </Stack>
+                <Stack>
+                  <PageviewOutlinedIcon sx={{
+                    alignSelf: "center",
+                    height: 40,
+                    width: 40
+                  }} />
+                </Stack>
+              </Stack>
 
-            <Stack padding={2} spacing={2} direction="row">
-              <Typography sx={{ alignSelf: "left" }}>
-                Name:
-              </Typography >
-              <TextField id="outlined-basic" variant="standard" size="small" />
-              <PageviewOutlinedIcon sx={{
-                alignSelf: "center",
-                height: 40,
-                width: 40
-              }} />
-            </Stack>
+              <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between">
+                <Stack direction="row">
+                  <Typography sx={{ alignSelf: "left" }}>
+                    Name:
+                  </Typography >
+                  <TextField id="outlined-basic" variant="standard" size="small" />
+                </Stack>
+                <Stack>
+                  <PageviewOutlinedIcon sx={{
+                    alignSelf: "center",
+                    height: 40,
+                    width: 40
+                  }} />
+                </Stack>
+              </Stack>
 
-            <Stack padding={2} spacing={2} direction="row">
-              <Typography sx={{ alignSelf: "left" }}>
-                Invoice No:
-              </Typography >
-              <TextField id="outlined-basic" variant="standard" size="small" />
-              <PageviewOutlinedIcon sx={{
-                alignSelf: "center",
-                height: 40,
-                width: 40
-              }} />
-            </Stack>
+              <Stack spacing={2} direction="row" justifyContent="space-between">
+                <Stack direction="row">
+                  <Typography sx={{ alignSelf: "left" }}>
+                    Invoice No:
+                  </Typography >
+                  <TextField id="outlined-basic" variant="standard" size="small" />
+                </Stack>
+                <Stack>
+                  <PageviewOutlinedIcon sx={{
+                    alignSelf: "center",
+                    height: 40,
+                    width: 40
+                  }} />
+                </Stack>
+              </Stack>
 
-            <Stack padding={2} spacing={2} direction="row">
-              <Typography sx={{ alignSelf: "left" }}>
-                Phone No:
-              </Typography >
-              <TextField id="outlined-basic" variant="standard" size="small" />
-              <PageviewOutlinedIcon sx={{
-                alignSelf: "center",
-                height: 40,
-                width: 40
-              }} />
-            </Stack>
+              <Stack spacing={2} direction="row" justifyContent="space-between">
+                <Stack direction="row">
+                  <Typography sx={{ alignSelf: "left" }}>
+                    Phone No:
+                  </Typography >
+                  <TextField id="outlined-basic" variant="standard" size="small" />
+                </Stack>
+                <Stack>
+                  <PageviewOutlinedIcon sx={{
+                    alignSelf: "center",
+                    height: 40,
+                    width: 40
+                  }} />
+                </Stack>
+              </Stack>
 
-            <Stack padding={2} spacing={2} direction="row">
-            <div style={{ height: 400, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection
-      />
-    </div>
-    </Stack>
+              <Stack paddingTop={2} spacing={1} direction="row">
+                <div style={{ height: 400, width: '100%' }}>
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    initialState={{
+                      pagination: {
+                        paginationModel: { page: 0, pageSize: 5 },
+                      },
+                    }}
+                    pageSizeOptions={[5, 10]}
+                    checkboxSelection
+                  />
+                </div>
+              </Stack>
             </Stack>
-        </Box>
-      </CardContent>
-    </Card>
-    <Stack padding={2} spacing={2} direction="column">
-    <VisibilityIcon color="disabled" sx={{ height: 40, width: 40 }}/>
-    <DeleteIcon color="disabled" sx={{ height: 40, width: 40 }}/>
-    </Stack>
+          </Box>
+        </CardContent>
+      </Card>
+      <Stack padding={2} spacing={2} direction="column">
+        <VisibilityIcon color="disabled" sx={{ height: 40, width: 40 }} />
+        <DeleteIcon color="disabled" sx={{ height: 40, width: 40 }} />
+      </Stack>
     </Stack>
   )
 }

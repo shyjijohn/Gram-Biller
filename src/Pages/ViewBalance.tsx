@@ -14,23 +14,26 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 const columns: GridColDef[] = [
-  { field: 'no', headerName: 'No'},
-  { field: 'date', headerName: 'Date'},
-  { field: 'billAmount', headerName: 'Bill Amount'},
+  { field: 'no', headerName: 'No', width: 10},
+  { field: 'date', headerName: 'Date', width: 30},
+  { field: 'billAmount', headerName: 'Bill Amount', width: 90},
   {
     field: 'paid',
     headerName: 'Paid',
     type: 'number',
+    width: 60
   },
   {
     field: 'paymentType',
     headerName: 'Payment Type',
     type: 'number',
+    width: 120
   },
   {
     field: 'modeOfPayment',
     headerName: 'Mode Of Payment',
     type: 'number',
+    width: 140
   },
 ];
 
@@ -67,8 +70,8 @@ export default function ViewBalance() {
           sx={{ border: '2px solid grey' }}
         >
           <Stack>
-            <Stack padding={2} spacing={2} direction="row">
-              <Typography sx={{ alignSelf: "left" }}>
+            <Stack padding={2} spacing={2} direction="row" >
+              <Typography sx={{ alignSelf: "center" }}>
                 Phone No
               </Typography >
               <TextField id="outlined-basic" variant="outlined" size="small" />
@@ -80,10 +83,10 @@ export default function ViewBalance() {
             </Stack>
 
             <Stack padding={2} spacing={2} direction="row">
-              <Typography sx={{ alignSelf: "left" }}>
+              <Typography sx={{ alignSelf: "center", paddingRight:4 }}>
                 Name
               </Typography >
-              <TextField id="outlined-basic" variant="standard" size="small" />
+              <TextField id="outlined-basic" variant="outlined" size="small" />
               <PageviewOutlinedIcon sx={{
                 alignSelf: "center",
                 height: 40,
@@ -91,7 +94,7 @@ export default function ViewBalance() {
               }} />
             </Stack>
 
-            <Stack padding={2} spacing={2} direction="row" alignSelf="self-end">
+            <Stack padding={2} spacing={2} direction="row" justifyContent="center">
               <Card sx={{
                 minWidth: '50%',
                 bgcolor: "gray",
