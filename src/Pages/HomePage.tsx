@@ -40,6 +40,10 @@ import PageviewOutlinedIcon from '@mui/icons-material/PageviewOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
+const updatingRateBtn = () => {
+  
+}
+
 
 export default function HomePage() {
 
@@ -76,7 +80,7 @@ export default function HomePage() {
               <TextField id="outlined-basic" variant="outlined" size="small" />
             </Stack>
 
-            <Button variant="outlined">Update</Button>
+            <Button variant="outlined" onClick={updatingRateBtn}>Update</Button>
 
           </Stack>
         </Box>
