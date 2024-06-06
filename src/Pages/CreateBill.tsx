@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
+
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -13,7 +15,6 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -25,34 +26,142 @@ import Paper from '@mui/material/Paper';
 
 import SaveIcon from '@mui/icons-material/Save';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import { DataGrid, GridColDef, GridRowsProp, GridRowId, GridRowParams } from '@mui/x-data-grid';
+import { Container } from '@mui/material';
+import { randomId } from '@mui/x-data-grid-generator';
+import axios from 'axios'
 
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-) {
-  return { name, calories, fat, carbs, protein };
+// function createData(
+//   name: string,
+//   calories: number,
+//   fat: number,
+//   carbs: number,
+//   protein: number,
+// ) {
+//   return { name, calories, fat, carbs, protein };
+// }
+
+// const rows = [
+//   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+//   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+//   createData('Eclair', 262, 16.0, 24, 6.0),
+//   createData('Cupcake', 305, 3.7, 67, 4.3),
+//   createData('Gingerbread', 356, 16.0, 49, 3.9),
+// ];
+
+interface DataRow {
+  id: number;
+  product: string;
+  qty: number;
+  gross_weight: number;
+  stone_weight: number;
+  stone_rate: number;
+  n_wt: number;
+  va_percent: number;
+  mc_hc: number;
+  amount: number;
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
+const initialRows: GridRowsProp = [
+  { id: 1, product: '', qty: 0, gross_weight: 0.000, stone_weight: 0.000, stone_rate: 0.00, n_wt: 0.000, va_percent: 0.00, mc_hc: 0.00, amount: 0.00 },
+  // { s_no: 2, product: 'Jane Smith', age: 25, city: 'San Francisco' },
+  // { s_no: 3, product: 'Michael Johnson', age: 45, city: 'Chicago' },
+  // { s_no: 4, product: 'Mary Brown', age: 35, city: 'Miami' },
 ];
 
 
 
+
 export default function CreateBill() {
+
+  //get only stock names from DB 
+  //assign or store those name in a usestate variable 
+  //create the columns collection after defining usestate in this react component.  
+
+
+  const [rows, setRows] = useState<GridRowsProp>(initialRows);
+  const [clickedRowId, setClickedRowId] = useState();
+  const [stockNames, setStockNames] = useState<string[]>([]);
+  const PORT = 3000;
+
+  const getStockNames = () => {
+    console.log("getStockNames")
+    axios.get(`http://localhost:${PORT}/GetStocks`).then((response) => {
+      console.log("response.data", response.data)
+      //set the setStockNames useState
+    })
+  }
+
+  useEffect(() => {
+    getStockNames()
+  }, [])
+
+
+
+  const columns: GridColDef[] = [
+    { field: 'id', headerName: 'S.No', width: 70 },
+    {
+      field: 'product', headerName: 'Product', width: 130, editable: true, type: 'singleSelect',
+      valueOptions: stockNames,
+    },
+    { field: 'qty', headerName: 'QTY', width: 130, editable: true },
+    { field: 'gross_weight', headerName: 'Gross Weight', width: 130, editable: true },
+    { field: 'stone_weight', headerName: 'Stone Weight', width: 70, editable: true },
+    { field: 'stone_rate', headerName: 'Stone Rate', width: 130, editable: true },
+    { field: 'n_wt', headerName: 'N.WT', width: 130 },
+    { field: 'va_percent', headerName: 'VA%', width: 130, editable: true },
+    { field: 'mc_hc', headerName: 'MC/HC', width: 70, editable: true },
+    { field: 'amount', headerName: 'Amount', width: 130 },
+  ];
+
+
+  const handleProcessRowUpdate = (newRow: any) => {
+    const updatedRow = { ...newRow, isNew: false };
+    setRows((prevRows) =>
+      prevRows.map((row) => (row.id === newRow.id ? updatedRow : row))
+    );
+  }
+
+
+  function handleAddRow() {
+    console.log('new row added');
+
+    const id = randomId();
+    // const newRow = { id: idValue, product: '', qty: 0, gross_weight: 0.000, stone_weight: 0.000, stone_rate: 0.00, n_wt: 0.000, va_percent: 0.00, mc_hc: 0.00, amount: 0.00 }
+
+    // const copyRows  = [...rows]; 
+    // copyRows.push(newRow);
+
+    // console.log("CopyRows", copyRows)
+    // setRows(copyRows)
+
+    setRows((prevRows) => [
+      ...prevRows,
+      { id, product: '', qty: 0, gross_weight: 0.000, stone_weight: 0.000, stone_rate: 0.00, n_wt: 0.000, va_percent: 0.00, mc_hc: 0.00, amount: 0.00, isNew: true },
+    ]);
+  }
+
+
+  function handleRowClick(params: GridRowParams) {
+    console.log('Row clicked:', params.row.id);
+    setClickedRowId(params.row.id)
+  };
+
+
+  function handleDeleteRow(btnEvent: React.MouseEvent<HTMLButtonElement>) {
+    console.log('delete existing row', btnEvent);
+
+    setRows((prevRows) => rows.filter((row) => row.id !== clickedRowId));
+  };
+
+
+
   return (
     <Stack alignSelf="center" justifyContent="center" spacing={2} direction="row">
       <Card sx={{
         minWidth: '50%',
-        bgcolor: "red",
+        bgcolor: "white",
         alignSelf: "center",
         display: "flex",
         alignItems: "center",
@@ -138,7 +247,7 @@ export default function CreateBill() {
               </Stack>
 
 
-              <Stack paddingTop={2} spacing={2} direction="row">
+              {/* <Stack paddingTop={2} spacing={2} direction="row">
                 <TableContainer component={Paper}>
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
@@ -173,7 +282,20 @@ export default function CreateBill() {
                     </TableBody>
                   </Table>
                 </TableContainer>
-              </Stack>
+              </Stack> */}
+
+              <Container style={{ height: 400, width: '100%' }}>
+                <DataGrid
+                  rows={rows}
+                  columns={columns}
+                  // disableRowSelectionOnClick
+                  autoHeight
+                  hideFooterPagination
+                  processRowUpdate={handleProcessRowUpdate}
+                  onRowClick={handleRowClick}
+                />
+              </Container>
+
 
               <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between">
                 <Typography sx={{ alignSelf: "left" }}>
@@ -205,7 +327,7 @@ export default function CreateBill() {
                 </Stack>
               </Stack>
 
-              <Stack paddingTop={2} spacing={2} direction="row">
+              {/* <Stack paddingTop={2} spacing={2} direction="row">
                 <TableContainer component={Paper}>
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
@@ -236,7 +358,7 @@ export default function CreateBill() {
                     </TableBody>
                   </Table>
                 </TableContainer>
-              </Stack>
+              </Stack> */}
 
 
               <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between">
@@ -274,11 +396,12 @@ export default function CreateBill() {
       </Card>
       <Stack padding={2} spacing={2} direction="column">
         <SaveIcon sx={{ height: 40, width: 40 }} />
-        <LibraryAddIcon sx={{ height: 40, width: 40 }} />
-        <DeleteIcon sx={{ height: 40, width: 40 }} />
+        <Button variant="text" onClick={handleAddRow}><LibraryAddIcon sx={{ height: 40, width: 40 }} /></Button>
+        <Button variant="text" onClick={handleDeleteRow}><DeleteIcon sx={{ height: 40, width: 40 }} /></Button>
         <LibraryAddIcon sx={{ height: 40, width: 40 }} />
         <DeleteIcon sx={{ height: 40, width: 40 }} />
       </Stack>
     </Stack>
   )
 }
+
