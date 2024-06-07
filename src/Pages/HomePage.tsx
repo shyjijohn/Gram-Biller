@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 // import './App.css';
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -38,20 +39,47 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import PageviewOutlinedIcon from '@mui/icons-material/PageviewOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
-
-
-const updatingRateBtn = () => {
-  
-}
+import axios from 'axios'
 
 
 export default function HomePage() {
 
+  const [goldRate, setGoldRate] = useState<number>();
+  const [silverRate, setSilverRate] = useState<number>();
+
+  const PORT = 3000;
+
+  function handleGoldRate(e: React.ChangeEvent<HTMLInputElement>) {
+    console.log("handleGoldRate", e.target.value);
+    setGoldRate(e.target.value);
+  };
+
+  function handleSilverRate(e: React.ChangeEvent<HTMLInputElement>) {
+    console.log("handleSilverRate", e.target.value);
+    setSilverRate(e.target.value);
+  };
+
+  function updatingRateBtn()
+  {
+    console.log("inside updatingRateBtn.....")     
+
+    axios.put(`http://localhost:${PORT}/AddRateUpdates`, {
+      Gold_Rate: goldRate,
+      Silver_Rate: silverRate
+  })
+  .then((response) => {
+    console.log('Data posted:', response.data);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+  }
+  
   return (
     
     <Card sx={{
       minWidth: '50%',
-      bgcolor: "red",
+      bgcolor: "white",
       alignSelf: "center",
       display: "flex",
       alignItems: "center",
@@ -70,14 +98,14 @@ export default function HomePage() {
               <Typography sx={{ alignSelf: "left" }}>
                 Gold Rate
               </Typography >
-              <TextField id="outlined-basic" variant="outlined" size="small" />
+              <TextField id="outlined-basic" variant="outlined" size="small" value={goldRate} onChange={handleGoldRate}/>
             </Stack>
 
             <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
               <Typography sx={{ alignSelf: "left" }}>
                 Silver Rate
               </Typography >
-              <TextField id="outlined-basic" variant="outlined" size="small" />
+              <TextField id="outlined-basic" variant="outlined" size="small" value={silverRate} onChange={handleSilverRate} />
             </Stack>
 
             <Button variant="outlined" onClick={updatingRateBtn}>Update</Button>

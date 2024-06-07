@@ -83,18 +83,54 @@ export default function CreateBill() {
   const [rows, setRows] = useState<GridRowsProp>(initialRows);
   const [clickedRowId, setClickedRowId] = useState();
   const [stockNames, setStockNames] = useState<string[]>([]);
+
+  const [name, setName] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [address, setAddress] = useState<string>('');
+  const [invoiceNo, setInvoiceNo] = useState<number>();
+  const [date, setDate] = useState<string>('');
+  const [goldRate, setGoldRate] = useState<number>();
+  const [silverRate, setSilverRate] = useState<number>();
+  
   const PORT = 3000;
 
+  //get stocknames
+  var arr:string[] = []
   const getStockNames = () => {
     console.log("getStockNames")
     axios.get(`http://localhost:${PORT}/GetStocks`).then((response) => {
-      console.log("response.data", response.data)
+      console.log("response.data", response.data);
       //set the setStockNames useState
-    })
-  }
+      (response.data).forEach((data: any) => {
+          console.log("data.Name", data.Name)
+          
+          arr.push(data.Name)
+      })
+      setStockNames(arr)
+      console.log("arr", arr)
+      });
+    }
+  
+  //get rate updates
+    const getRateUpdates = () => {
+      console.log("getRateUpdates")
+      axios.get(`http://localhost:${PORT}/GetRates`).then((response) => {
+        console.log("response.data", response.data);
+        //set the setStockNames useState
+        (response.data).forEach((data: any) => {
+            console.log("data.Name", data.Gold_Rate, data.Silver_Rate);
+            setGoldRate(data.Gold_Rate)
+            setSilverRate(data.Silver_Rate)
+        })
+        // setStockNames(arr)
+        // console.log("arr", arr)
+        });
+      }  
+
 
   useEffect(() => {
     getStockNames()
+    getRateUpdates()
   }, [])
 
 
@@ -155,7 +191,41 @@ export default function CreateBill() {
     setRows((prevRows) => rows.filter((row) => row.id !== clickedRowId));
   };
 
+  //inputs
+  function handleName(e: React.ChangeEvent<HTMLInputElement>) {
+    console.log("handleName", e.target.value);
+    setName(e.target.value);
+  };
+  
+  function handlePhone(e: React.ChangeEvent<HTMLInputElement>) {
+    console.log("handlePhone", e.target.value);
+    setPhone(e.target.value);
+  };
 
+  function handleAddress(e: React.ChangeEvent<HTMLInputElement>) {
+    console.log("handleAddress", e.target.value);
+    setAddress(e.target.value);
+  };
+
+  // function handleDate(e: React.ChangeEvent<HTMLInputElement>) {
+  //   console.log("handleAddress", e.target.value);
+  //   setAddress(e.target.value);
+  // };
+
+  function handleDate(e: React.ChangeEvent<HTMLInputElement>) {
+    console.log("handleDate", e.target.value);
+    setDate(e.target.value);
+  };
+
+  function handleGoldRate(e: React.ChangeEvent<HTMLInputElement>) {
+    console.log("handleGoldRate", e.target.value);
+    setGoldRate(e.target.value);
+  };
+
+  function handleSilverRate(e: React.ChangeEvent<HTMLInputElement>) {
+    console.log("handleSilverRate", e.target.value);
+    setSilverRate(e.target.value);
+  };
 
   return (
     <Stack alignSelf="center" justifyContent="center" spacing={2} direction="row">
@@ -194,21 +264,21 @@ export default function CreateBill() {
                     <Typography sx={{ alignSelf: "center" }}>
                       Name:
                     </Typography >
-                    <TextField id="outlined-basic" variant="standard" size="small" />
+                    <TextField id="outlined-basic" variant="standard" size="small" value={name} onChange={handleName}/>
                   </Stack>
                   <Stack spacing={2} direction="row">
                     <Typography sx={{ alignSelf: "center" }}>
                       Phone:
                     </Typography >
-                    <TextField id="outlined-basic" variant="standard" size="small" />
+                    <TextField id="outlined-basic" variant="standard" size="small" value={phone} onChange={handlePhone}/>
                   </Stack>
                   <Stack spacing={2} direction="row">
                     <Typography sx={{ alignSelf: "center" }}>
                       Address:
                     </Typography >
                     <Stack spacing={2} direction="column">
-                      <TextField id="outlined-basic" variant="standard" size="small" />
-                      <TextField id="outlined-basic" variant="standard" size="small" />
+                      <TextField id="standard-multiline-flexible" multiline maxRows={4}
+                      variant="standard" size="small" value={address} onChange={handleAddress}/>
                     </Stack>
                   </Stack>
                 </Stack>
@@ -235,54 +305,16 @@ export default function CreateBill() {
                     <Typography sx={{ alignSelf: "center" }}>
                       Gold Rate:
                     </Typography >
-                    <TextField id="outlined-basic" variant="standard" size="small" />
+                    <TextField id="outlined-basic" variant="standard" size="small" value={goldRate} onChange={handleGoldRate}/>
                   </Stack>
                   <Stack spacing={2} direction="row">
                     <Typography sx={{ alignSelf: "center" }}>
                       Silver Rate:
                     </Typography >
-                    <TextField id="outlined-basic" variant="standard" size="small" />
+                    <TextField id="outlined-basic" variant="standard" size="small" value={silverRate} onChange={handleSilverRate} />
                   </Stack>
                 </Stack>
               </Stack>
-
-
-              {/* <Stack paddingTop={2} spacing={2} direction="row">
-                <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>S.No</TableCell>
-                        <TableCell align="right">Product</TableCell>
-                        <TableCell align="right">QTY</TableCell>
-                        <TableCell align="right">Gross Weight</TableCell>
-                        <TableCell align="right">Stone Weight</TableCell>
-                        <TableCell align="right">Stone Rate</TableCell>
-                        <TableCell align="right">N.WT</TableCell>
-                        <TableCell align="right">VA%</TableCell>
-                        <TableCell align="right">MC/HC</TableCell>
-                        <TableCell align="right">Amount</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {rows.map((row) => (
-                        <TableRow
-                          key={row.name}
-                          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                          <TableCell component="th" scope="row">
-                            {row.name}
-                          </TableCell>
-                          <TableCell align="right">{row.calories}</TableCell>
-                          <TableCell align="right">{row.fat}</TableCell>
-                          <TableCell align="right">{row.carbs}</TableCell>
-                          <TableCell align="right">{row.protein}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Stack> */}
 
               <Container style={{ height: 400, width: '100%' }}>
                 <DataGrid
@@ -326,39 +358,6 @@ export default function CreateBill() {
                   </Stack>
                 </Stack>
               </Stack>
-
-              {/* <Stack paddingTop={2} spacing={2} direction="row">
-                <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Particulars</TableCell>
-                        <TableCell align="right">WT</TableCell>
-                        <TableCell align="right">Wastage</TableCell>
-                        <TableCell align="right">Total WT</TableCell>
-                        <TableCell align="right">Rate</TableCell>
-                        <TableCell align="right">Amount</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {rows.map((row) => (
-                        <TableRow
-                          key={row.name}
-                          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                          <TableCell component="th" scope="row">
-                            {row.name}
-                          </TableCell>
-                          <TableCell align="right">{row.calories}</TableCell>
-                          <TableCell align="right">{row.fat}</TableCell>
-                          <TableCell align="right">{row.carbs}</TableCell>
-                          <TableCell align="right">{row.protein}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Stack> */}
 
 
               <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between">
