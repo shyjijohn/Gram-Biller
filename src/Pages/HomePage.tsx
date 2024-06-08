@@ -44,19 +44,18 @@ import axios from 'axios'
 
 export default function HomePage() {
 
-  const [goldRate, setGoldRate] = useState<number>();
-  const [silverRate, setSilverRate] = useState<number>();
-
+  const [goldRate, setGoldRate] = useState<number>(0);
+  const [silverRate, setSilverRate] = useState<number>(0);
   const PORT = 3000;
 
   function handleGoldRate(e: React.ChangeEvent<HTMLInputElement>) {
     console.log("handleGoldRate", e.target.value);
-    setGoldRate(e.target.value);
+    setGoldRate(parseFloat(e.target.value));
   };
 
   function handleSilverRate(e: React.ChangeEvent<HTMLInputElement>) {
     console.log("handleSilverRate", e.target.value);
-    setSilverRate(e.target.value);
+    setSilverRate(parseFloat(e.target.value));
   };
 
   function updatingRateBtn()
@@ -98,14 +97,14 @@ export default function HomePage() {
               <Typography sx={{ alignSelf: "left" }}>
                 Gold Rate
               </Typography >
-              <TextField id="outlined-basic" variant="outlined" size="small" value={goldRate} onChange={handleGoldRate}/>
+              <TextField id="outlined-basic" variant="outlined" size="small" type="number" value={goldRate} onChange={handleGoldRate}/>
             </Stack>
 
             <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
               <Typography sx={{ alignSelf: "left" }}>
                 Silver Rate
               </Typography >
-              <TextField id="outlined-basic" variant="outlined" size="small" value={silverRate} onChange={handleSilverRate} />
+              <TextField id="outlined-basic" variant="outlined" size="small" type="number" value={silverRate} onChange={handleSilverRate} />
             </Stack>
 
             <Button variant="outlined" onClick={updatingRateBtn}>Update</Button>

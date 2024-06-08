@@ -26,7 +26,7 @@ import Paper from '@mui/material/Paper';
 
 import SaveIcon from '@mui/icons-material/Save';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
-import { DataGrid, GridColDef, GridRowsProp, GridRowId, GridRowParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRowsProp, GridRowId, GridRowParams, GridRenderCellParams } from '@mui/x-data-grid';
 import { Container } from '@mui/material';
 import { randomId } from '@mui/x-data-grid-generator';
 import axios from 'axios'
@@ -87,10 +87,10 @@ export default function CreateBill() {
   const [name, setName] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
   const [address, setAddress] = useState<string>('');
-  const [invoiceNo, setInvoiceNo] = useState<number>();
-  const [date, setDate] = useState<string>('');
-  const [goldRate, setGoldRate] = useState<number>();
-  const [silverRate, setSilverRate] = useState<number>();
+  const [invoiceNo, setInvoiceNo] = useState<string>('');
+  const [date, setDate] = useState(null);
+  const [goldRate, setGoldRate] = useState<number>(0);
+  const [silverRate, setSilverRate] = useState<number>(0);
   
   const PORT = 3000;
 
@@ -133,22 +133,38 @@ export default function CreateBill() {
     getRateUpdates()
   }, [])
 
+  //valuegetter fn
+   function makeNWTValue(value : any , row: any ) {
+      console.log("value : ", value)
+      console.log("row : ", row)
+    return row.gross_weight - row.stone_weight
+   }
 
+   function makeAmount(value : any , row: any ) {
+    console.log("makeAmount row : ", row)
+    console.log("usestate : ", goldRate)
+    // if(params.row == undefined)
+    //   {
+    //     return 0
+    //   }
+    // const Gold:any = goldRate
+    return (((row.gross_weight - row.stone_weight) + (((row.gross_weight - row.stone_weight) * row.va_percent) / 100)) * goldRate) + row.mc_hc + row.stone_rate
+  }
 
+ //(((row.gross_weight - row.stone_weight) + (((row.gross_weight - row.stone_weight) * row.va_percent) / 100)) * row.goldRate) + row.mc_hc + row.stone_rate
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'S.No', width: 70 },
     {
       field: 'product', headerName: 'Product', width: 130, editable: true, type: 'singleSelect',
-      valueOptions: stockNames,
-    },
+      valueOptions: stockNames},
     { field: 'qty', headerName: 'QTY', width: 130, editable: true },
     { field: 'gross_weight', headerName: 'Gross Weight', width: 130, editable: true },
     { field: 'stone_weight', headerName: 'Stone Weight', width: 70, editable: true },
     { field: 'stone_rate', headerName: 'Stone Rate', width: 130, editable: true },
-    { field: 'n_wt', headerName: 'N.WT', width: 130 },
+    { field: 'n_wt', headerName: 'N.WT', width: 130, valueGetter: makeNWTValue},
     { field: 'va_percent', headerName: 'VA%', width: 130, editable: true },
     { field: 'mc_hc', headerName: 'MC/HC', width: 70, editable: true },
-    { field: 'amount', headerName: 'Amount', width: 130 },
+    { field: 'amount', headerName: 'Amount', width: 130, valueGetter: makeAmount },
   ];
 
 
@@ -207,24 +223,29 @@ export default function CreateBill() {
     setAddress(e.target.value);
   };
 
-  // function handleDate(e: React.ChangeEvent<HTMLInputElement>) {
-  //   console.log("handleAddress", e.target.value);
-  //   setAddress(e.target.value);
-  // };
+  function handleInvoiceNo() {
+    const newInvoiceNumber = generateRandomInvoiceNumber();
+    console.log("handleInvoiceNo", newInvoiceNumber);
+    setInvoiceNo(newInvoiceNumber);
+  };
 
-  function handleDate(e: React.ChangeEvent<HTMLInputElement>) {
-    console.log("handleDate", e.target.value);
-    setDate(e.target.value);
+  const generateRandomInvoiceNumber = () => {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+  };
+
+  function handleDate(newValue: any) {
+    console.log("handleDate", newValue);
+    setDate(newValue);
   };
 
   function handleGoldRate(e: React.ChangeEvent<HTMLInputElement>) {
     console.log("handleGoldRate", e.target.value);
-    setGoldRate(e.target.value);
+    setGoldRate(parseFloat(e.target.value));
   };
 
   function handleSilverRate(e: React.ChangeEvent<HTMLInputElement>) {
     console.log("handleSilverRate", e.target.value);
-    setSilverRate(e.target.value);
+    setSilverRate(parseFloat(e.target.value));
   };
 
   return (
@@ -287,9 +308,7 @@ export default function CreateBill() {
                     <Typography sx={{ alignSelf: "center" }}>
                       Invoice No:
                     </Typography >
-                    <Typography sx={{ alignSelf: "center" }}>
-                      685273
-                    </Typography >
+                    <TextField id="outlined-basic" variant="standard" size="small" value={invoiceNo} onChange={handleInvoiceNo}/>
                   </Stack>
                   <Stack spacing={2} direction="row">
                     <Typography sx={{ alignSelf: "center" }}>
@@ -297,7 +316,7 @@ export default function CreateBill() {
                     </Typography >
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DemoContainer components={['DatePicker']}>
-                        <DatePicker label="DD/MM/YYYY" />
+                        <DatePicker label="DD/MM/YYYY" value={date} onChange={handleDate}/>
                       </DemoContainer>
                     </LocalizationProvider>
                   </Stack>
@@ -305,13 +324,13 @@ export default function CreateBill() {
                     <Typography sx={{ alignSelf: "center" }}>
                       Gold Rate:
                     </Typography >
-                    <TextField id="outlined-basic" variant="standard" size="small" value={goldRate} onChange={handleGoldRate}/>
+                    <TextField id="outlined-basic" variant="standard" size="small" type="number" value={goldRate} onChange={handleGoldRate}/>
                   </Stack>
                   <Stack spacing={2} direction="row">
                     <Typography sx={{ alignSelf: "center" }}>
                       Silver Rate:
                     </Typography >
-                    <TextField id="outlined-basic" variant="standard" size="small" value={silverRate} onChange={handleSilverRate} />
+                    <TextField id="outlined-basic" variant="standard" size="small" type="number" value={silverRate} onChange={handleSilverRate} />
                   </Stack>
                 </Stack>
               </Stack>
