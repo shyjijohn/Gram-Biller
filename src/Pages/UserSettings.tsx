@@ -12,23 +12,24 @@ import Stack from '@mui/material/Stack';
 
 export default function UserSettings() {
   return (
-    <Card sx={{
-      minWidth: '50%',
-      bgcolor: "red",
-      alignSelf: "center",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }}>
-      <CardContent>
-        <Box
-          display="flex"
-          alignItems="center"
-          gap={4}
-          p={2}
-          sx={{ border: '2px solid grey' }}
-        >
-          <Stack>
+    <Stack alignSelf="center" justifyContent="center" spacing={2} direction="row"  sx={{ display: "flex", alignSelf: "end" }} >
+      <Card sx={{
+        maxWidth: '60%',
+        bgcolor: "white",
+        alignSelf: "center",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      }}>
+        <CardContent sx={{ maxWidth: '100%' }}>
+          <Box
+            display="flex"
+            alignItems="center"
+            gap={4}
+            p={2}
+            sx={{ border: '2px solid gray' , maxWidth: '100%' }}
+          >
+            <Stack sx={{ maxWidth: '100%' }}>
             <Stack  direction="row">
               <Typography sx={{ alignSelf: "left" }}>
                 App version:
@@ -89,5 +90,6 @@ export default function UserSettings() {
         </Box>
       </CardContent>
     </Card>
+    </Stack>
   )
 }

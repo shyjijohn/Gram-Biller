@@ -93,23 +93,25 @@ export default function AddStock() {
   }
 
   return (
+    <Stack alignSelf="center" justifyContent="center" spacing={2} direction="row"  sx={{ display: "flex", alignSelf: "end" }} >
     <Card sx={{
-      minWidth: '50%',
+      maxWidth: '60%',
       bgcolor: "white",
       alignSelf: "center",
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
     }}>
-      <CardContent>
+      <CardContent sx={{ maxWidth: '100%' }}>
         <Box
           display="flex"
           alignItems="center"
+          justifyContent="center"
           gap={4}
           p={2}
           sx={{ border: '2px solid grey' }}
         >
-          <Stack>
+          <Stack sx={{ maxWidth: '100%' }}>
             <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
               <Typography sx={{ alignSelf: "left" }}>
                 Name
@@ -164,5 +166,6 @@ export default function AddStock() {
         </Box>
       </CardContent>
     </Card>
+    </Stack>
   )
 }

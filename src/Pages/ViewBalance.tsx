@@ -53,23 +53,24 @@ const rows = [
 
 export default function ViewBalance() {
   return (
-    <Card sx={{
-      minWidth: '50%',
-      bgcolor: "red",
-      alignSelf: "center",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }}>
-      <CardContent>
-        <Box
-          display="flex"
-          alignItems="center"
-          gap={4}
-          p={2}
-          sx={{ border: '2px solid grey' }}
-        >
-          <Stack>
+    <Stack alignSelf="center" justifyContent="center" spacing={2} direction="row"  sx={{ display: "flex", alignSelf: "end" }} >
+      <Card sx={{
+        maxWidth: '60%',
+        bgcolor: "white",
+        alignSelf: "center",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      }}>
+        <CardContent sx={{ maxWidth: '100%' }}>
+          <Box
+            display="flex"
+            alignItems="center"
+            gap={4}
+            p={2}
+            sx={{ border: '2px solid gray' , maxWidth: '100%' }}
+          >
+            <Stack sx={{ maxWidth: '100%' }}>
             <Stack padding={2} spacing={2} direction="row" >
               <Typography sx={{ alignSelf: "center" }}>
                 Phone No
@@ -97,7 +98,7 @@ export default function ViewBalance() {
             <Stack padding={2} spacing={2} direction="row" justifyContent="center">
               <Card sx={{
                 minWidth: '50%',
-                bgcolor: "gray",
+                border: "gray",
                 display: "flex",
                 
               }}>
@@ -147,11 +148,12 @@ export default function ViewBalance() {
         checkboxSelection
       />
     </div>
-    <DeleteIcon sx={{ height: 50, width: 50 }}/>
+    <DeleteIcon sx={{ height: 30, width: 30 }}/>
             </Stack>           
           </Stack>
         </Box>
       </CardContent>
     </Card>
+    </Stack>
   )
 }

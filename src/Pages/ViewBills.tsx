@@ -89,14 +89,14 @@ export default function ViewBills() {
   return (
     <Stack padding={2} spacing={2} direction="row" >
       <Card sx={{
-        minWidth: '50%',
-        bgcolor: "red",
+        minWidth: '80%',
+        bgcolor: "white",
         alignSelf: "center",
         display: "flex",
         alignItems: "center",
         justifyContent: "center"
       }}>
-        <CardContent>
+        <CardContent sx={{ maxWidth: '100%' }}>
           <Box
             display="flex"
             alignItems="center"
@@ -104,8 +104,8 @@ export default function ViewBills() {
             p={2}
             sx={{ border: '2px solid grey' }}
           >
-            <Stack>
-              <Stack spacing={2} direction="row" justifyContent="space-between">
+            <Stack sx={{ maxWidth: '100%' }}>
+              <Stack spacing={2} direction="row" justifyContent="space-between" sx={{ maxWidth: '80%' }}>
                 <Stack>
                   <Typography sx={{ alignSelf: "left" }}>
                     Date From:
@@ -135,8 +135,8 @@ export default function ViewBills() {
                 </Stack>
               </Stack>
 
-              <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between">
-                <Stack direction="row">
+              <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between" sx={{ maxWidth: '80%' }}>
+                <Stack direction="row" sx={{ maxWidth: '80%' }}>
                   <Typography sx={{ alignSelf: "left" }}>
                     Name:
                   </Typography >
@@ -151,7 +151,7 @@ export default function ViewBills() {
                 </Stack>
               </Stack>
 
-              <Stack spacing={2} direction="row" justifyContent="space-between">
+              <Stack spacing={2} direction="row" justifyContent="space-between" sx={{ maxWidth: '80%' }}>
                 <Stack direction="row">
                   <Typography sx={{ alignSelf: "left" }}>
                     Invoice No:
@@ -167,7 +167,7 @@ export default function ViewBills() {
                 </Stack>
               </Stack>
 
-              <Stack spacing={2} direction="row" justifyContent="space-between">
+              <Stack spacing={2} direction="row" justifyContent="space-between" sx={{ maxWidth: '80%' }}>
                 <Stack direction="row">
                   <Typography sx={{ alignSelf: "left" }}>
                     Phone No:

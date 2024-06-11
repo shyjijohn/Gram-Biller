@@ -75,32 +75,32 @@ export default function HomePage() {
   }
   
   return (
-    
+    <Stack alignSelf="center" justifyContent="center" spacing={2} direction="row" sx={{ display: "flex", alignSelf: "end" }}>
     <Card sx={{
-      minWidth: '50%',
+      maxWidth: '60%',
       bgcolor: "white",
       alignSelf: "center",
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
     }}>
-      <CardContent>
+      <CardContent sx={{ border: '2px solid grey', maxWidth: '100%' }}>
         <Box
           display="flex"
           alignItems="center"
           gap={4}
           p={2}
-          sx={{ border: '2px solid grey' }}
+          sx={{ border: '2px solid red', maxWidth: '100%' }}
         >
-          <Stack>
-            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
+          <Stack sx={{ border: '2px solid blue', maxWidth: '100%' }}>
+            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between" sx={{ border: '2px solid red', maxWidth: '100%' }}>
               <Typography sx={{ alignSelf: "left" }}>
                 Gold Rate
               </Typography >
               <TextField id="outlined-basic" variant="outlined" size="small" type="number" value={goldRate} onChange={handleGoldRate}/>
             </Stack>
 
-            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
+            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between" sx={{ border: '2px solid green', maxWidth: '100%' }}>
               <Typography sx={{ alignSelf: "left" }}>
                 Silver Rate
               </Typography >
@@ -113,5 +113,6 @@ export default function HomePage() {
         </Box>
       </CardContent>
     </Card>
+    </Stack>
   )
 }
