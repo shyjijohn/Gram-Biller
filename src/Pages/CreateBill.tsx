@@ -217,25 +217,20 @@ export default function CreateBill() {
     { field: 'id', headerName: 'S.No' },
     {
       field: 'product', headerName: 'Product', width: 130, editable: true,
-      type: 'singleSelect',
-      valueOptions: stockNames
-      // renderEditCell: (params) => (
-      //   <Autocomplete
-      //     // options={stockNames}
-      //     // defaultValue={stockNames[0]}
-      //     // sx={{ width: 130 }}
-      //     // onChange={(event, newValue) => {
-      //     //   params.api.setEditCellValue({ id: params.id, field: params.field, value: newValue }, event);
-      //     // }}
-      //     // renderInput={(params) => <TextField {...params} />}
-
-
-      //     id="combo-box-demo"
-      //     options={stockNames}
-      //     sx={{ width: 750 }}
-      //     renderInput={(params) => <TextField {...params} />}
-      //   />
-      // ),
+      // type: 'singleSelect',
+      // valueOptions: stockNames
+      renderEditCell: (params) => (
+        <Autocomplete
+          id="combo-box-demo"
+          options={stockNames}
+          defaultValue={stockNames[0]}
+          sx={{ width: 750 }}
+          onChange={(event, newValue) => {
+              params.api.setEditCellValue({ id: params.id, field: params.field, value: newValue }, event);
+            }}
+          renderInput={(params) => ( <TextField {...params} />)}
+        />
+      ),
     },
     { field: 'qty', headerName: 'QTY', editable: true },
     { field: 'gross_weight', headerName: 'Gross Weight', editable: true },
