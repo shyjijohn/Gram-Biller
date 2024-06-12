@@ -88,7 +88,11 @@ export default function CreateBill() {
   const [stockNames, setStockNames] = useState<string[]>([]);
 
   const [name, setName] = useState<string>('');
+
   const [phone, setPhone] = useState<string>('');
+  const [error, setError] = useState(false);
+  const [helperText, setHelperText] = useState('');
+
   const [address, setAddress] = useState<string>('');
   const [invoiceNo, setInvoiceNo] = useState<string>(Math.floor(100000 + Math.random() * 900000).toString());
   const [date, setDate] = useState<Dayjs | null>(dayjs());
@@ -109,6 +113,11 @@ export default function CreateBill() {
 
   const [oldRows, setOldRows] = useState<GridRowsProp>(initialOldRows);
   const [clickedOldRowId, setClickedOldRowId] = useState();
+  const [oldReduced, setOldReduced] = useState<number>();
+  const [oldGoldTotalWeight, setOldGoldTotalWeight] = useState<number>();
+  const [total, setTotal] = useState<number>();
+  
+
 
   //get stocknames
   var arr: string[] = []
@@ -150,60 +159,60 @@ export default function CreateBill() {
   }, [])
 
   //valuegetter fn
-  function makeNWTValue(value: any, row: any) {
-    // console.log("value : ", value)
-    // console.log("row : ", row)
-    return row.gross_weight - row.stone_weight
-  }
+  // function makeNWTValue(value: any, row: any) {
+  //   // console.log("value : ", value)
+  //   // console.log("row : ", row)
+  //   return row.gross_weight - row.stone_weight
+  // }
 
-  function makeAmount(value: any, row: any) {
-    // console.log("makeAmount row : ", row)
-    // console.log("usestate : ", goldRate)
-    // if(params.row == undefined)
-    //   {
-    //     return 0
-    //   }
-    // const Gold:any = goldRate
+  // function makeAmount(value: any, row: any) {
+  //   // console.log("makeAmount row : ", row)
+  //   // console.log("usestate : ", goldRate)
+  //   // if(params.row == undefined)
+  //   //   {
+  //   //     return 0
+  //   //   }
+  //   // const Gold:any = goldRate
 
-    const makeAmountVar: number = parseFloat((((row.gross_weight - row.stone_weight) + (((row.gross_weight - row.stone_weight) * row.va_percent) / 100)) * goldRate) + row.mc_hc + row.stone_rate)
-    const amountToFixed: string = makeAmountVar.toFixed(2);
-    // Math.round((num + Number.EPSILON) * 100) / 100;
-    var addAmountArr: number[] = [];
-    var addAmountVar:number = 0
-    var addAmountFinal:number = 0
-    function addAmount(){
-      rows.map((row) => addAmountArr.push(row.amount));
-      // console.log("Added amount", addAmountArr)
-      for (let i = 0; i < addAmountArr.length; i++) {
-        // console.log("i.....", i)
-        addAmountVar += addAmountArr[i];  
-        // console.log("Added amount Var", addAmountVar)  
-      } 
-      addAmountFinal = addAmountVar + parseFloat(amountToFixed)
-      // console.log("Added amount final", addAmountFinal)
-    }
-    addAmount()
-    setTaxableAmount(addAmountFinal)
-    if(!isNaN(addAmountFinal))
-      {
-        setInWordsAmount(converter.toWords(addAmountFinal))
-      }
-    return amountToFixed
-  }
+  //   const makeAmountVar: number = parseFloat((((row.gross_weight - row.stone_weight) + (((row.gross_weight - row.stone_weight) * row.va_percent) / 100)) * goldRate) + row.mc_hc + row.stone_rate)
+  //   const amountToFixed: string = makeAmountVar.toFixed(2);
+  //   // Math.round((num + Number.EPSILON) * 100) / 100;
+  //   var addAmountArr: number[] = [];
+  //   var addAmountVar:number = 0
+  //   var addAmountFinal:number = 0
+  //   function addAmount(){
+  //     rows.map((row) => addAmountArr.push(row.amount));
+  //     // console.log("Added amount", addAmountArr)
+  //     for (let i = 0; i < addAmountArr.length; i++) {
+  //       // console.log("i.....", i)
+  //       addAmountVar += addAmountArr[i];  
+  //       // console.log("Added amount Var", addAmountVar)  
+  //     } 
+  //     addAmountFinal = addAmountVar + parseFloat(amountToFixed)
+  //     // console.log("Added amount final", addAmountFinal)
+  //   }
+  //   addAmount()
+  //   setTaxableAmount(addAmountFinal)
+  //   if(!isNaN(addAmountFinal))
+  //     {
+  //       setInWordsAmount(converter.toWords(addAmountFinal))
+  //     }
+  //   return amountToFixed
+  // }
 
-  function makeTotalWT(value: any, row: any) {
-    // console.log("value : ", value)
-    // console.log("row : ", row)
-    return row.wt - row.wastage
-  }
-  
-  function makeAmountInOldGold(value: any, row: any) {
-    // console.log("value : ", value)
-    // console.log("row : ", row)
-    return row.rate * (row.wt - row.wastage)
-  }
+  // function makeTotalWT(value: any, row: any) {
+  //   // console.log("value : ", value)
+  //   // console.log("row : ", row)
+  //   return row.wt - row.wastage
+  // }
 
-  
+  // function makeAmountInOldGold(value: any, row: any) {
+  //   // console.log("value : ", value)
+  //   // console.log("row : ", row)
+  //   return row.rate * (row.wt - row.wastage)
+  // }
+
+
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'S.No' },
     {
@@ -232,10 +241,10 @@ export default function CreateBill() {
     { field: 'gross_weight', headerName: 'Gross Weight', editable: true },
     { field: 'stone_weight', headerName: 'Stone Weight', editable: true },
     { field: 'stone_rate', headerName: 'Stone Rate', editable: true },
-    { field: 'n_wt', headerName: 'N.WT', valueGetter: makeNWTValue },
+    { field: 'n_wt', headerName: 'N.WT' },
     { field: 'va_percent', headerName: 'VA%', editable: true },
     { field: 'mc_hc', headerName: 'MC/HC', editable: true },
-    { field: 'amount', headerName: 'Amount', valueGetter: makeAmount },
+    { field: 'amount', headerName: 'Amount' },
   ];
 
 
@@ -244,9 +253,9 @@ export default function CreateBill() {
     { field: 'particulars', headerName: 'Particulars', editable: true },
     { field: 'wt', headerName: 'WT', editable: true },
     { field: 'wastage', headerName: 'Wastage', editable: true },
-    { field: 'total_wt', headerName: 'Total_WT', editable: true, valueGetter: makeTotalWT },
+    { field: 'total_wt', headerName: 'Total_WT', editable: true },
     { field: 'rate', headerName: 'Rate', editable: true },
-    { field: 'amount', headerName: 'Amount', valueGetter: makeAmountInOldGold },
+    { field: 'amount', headerName: 'Amount' },
   ];
 
   const handleProcessRowUpdateError = (error: any) => {
@@ -257,44 +266,41 @@ export default function CreateBill() {
     console.log("handleProcessRowUpdate : old rows", rows)
     console.log("handleProcessRowUpdate : new row", newRow)
 
-    for(let i=0; i<rows.length; i++) 
-      {
-        console.log("rows in for loop", rows)
-        if(rows[i].id === newRow.id)
-          {
-            newRow.n_wt = newRow.gross_weight - newRow.stone_weight
-            console.log("newRow.n_wt", newRow.n_wt, newRow.gross_weight, newRow.stone_weight)
-            newRow.amount = parseFloat((((newRow.gross_weight - newRow.stone_weight) + (((newRow.gross_weight - newRow.stone_weight) * newRow.va_percent) / 100)) * goldRate) + newRow.mc_hc + newRow.stone_rate).toFixed(2)
-            console.log("newRow.amount", newRow.amount)
-          }
+    for (let i = 0; i < rows.length; i++) {
+      console.log("rows in for loop", rows)
+      if (rows[i].id === newRow.id) {
+        newRow.n_wt = newRow.gross_weight - newRow.stone_weight
+        console.log("newRow.n_wt", newRow.n_wt, newRow.gross_weight, newRow.stone_weight)
+        newRow.amount = parseFloat((((newRow.gross_weight - newRow.stone_weight) + (((newRow.gross_weight - newRow.stone_weight) * newRow.va_percent) / 100)) * goldRate) + newRow.mc_hc + newRow.stone_rate).toFixed(2)
+        console.log("newRow.amount", newRow.amount)
       }
-     const newRows = rows.map((row) => (row.id === newRow.id ? newRow : row))
-     console.log("new rows : ", newRows)
+    }
+    const newRows = rows.map((row) => (row.id === newRow.id ? newRow : row))
+    console.log("new rows : ", newRows)
     // // const updatedRow = { ...newRow };
-     setRows(newRows);
+    setRows(newRows);
     console.log("now new row : ", newRow)
 
 
     var addAmountArr: number[] = [];
-    var addAmountVar:number = 0
-    var addAmountFinal:number = 0
-    function addAmount(){
+    var addAmountVar: number = 0
+    // var addAmountFinal: number = 0
+    function addAmount() {
       newRows.map((row) => addAmountArr.push(parseFloat(row.amount)));
       console.log("Added amount", addAmountArr)
       for (let i = 0; i < addAmountArr.length; i++) {
         console.log("i.....", i)
-        addAmountVar = addAmountVar + addAmountArr[i];  
-        console.log("Added amount Var", addAmountVar)  
-      } 
+        addAmountVar = addAmountVar + addAmountArr[i];
+        console.log("Added amount Var", addAmountVar)
+      }
       // addAmountFinal = addAmountVar + parseFloat(amountToFixed)
       // console.log("Added amount final", addAmountFinal)
     }
     addAmount()
     setTaxableAmount(addAmountVar)
-    if(!isNaN(addAmountVar))
-      {
-        setInWordsAmount(converter.toWords(addAmountVar))
-      }
+    if (!isNaN(addAmountVar)) {
+      setInWordsAmount(converter.toWords(addAmountVar))
+    }
     return newRow;
   }
 
@@ -304,17 +310,72 @@ export default function CreateBill() {
   }
   const handleProcessOldRowUpdate = (newOldRow: any) => {
 
-    console.log("handleProcessOldRowUpdate : old rows", rows)
+    console.log("handleProcessOldRowUpdate : old rows", oldRows)
     console.log("handleProcessOldRowUpdate : new row", newOldRow)
 
-    const newOldRows = rows.map((row) => (row.id === newOldRow.id ? newOldRow : row))
+    for (let i = 0; i < oldRows.length; i++) {
+      console.log("old rows in for loop", oldRows)
+      if (oldRows[i].id === newOldRow.id) {
+        newOldRow.total_wt = newOldRow.wt - newOldRow.wastage
+        console.log("newOldRow.total_wt", newOldRow.total_wt, newOldRow.wt, newOldRow.wastage)
+        newOldRow.amount = newOldRow.rate * (newOldRow.wt - newOldRow.wastage)
+        console.log("newOldRow.amount", newOldRow.amount)
+      }
+    }
+
+    const newOldRows = oldRows.map((row) => (row.id === newOldRow.id ? newOldRow : row))
     console.log("new old rows : ", newOldRows)
     // const updatedRow = { ...newRow };
-    setRows(newOldRows);
-    return newOldRow;
+    setOldRows(newOldRows);
+
+    var addAmountArrInOldRows: number[] = [];
+    var addAmountVarInOldRows: number = 0
+    // var addAmountFinalInOldRows: number = 0
+    function addAmountInOldRows() {
+      newOldRows.map((row) => addAmountArrInOldRows.push(parseFloat(row.amount)));
+      console.log("Added amount In OldRows", addAmountArrInOldRows)
+      for (let i = 0; i < addAmountArrInOldRows.length; i++) {
+        console.log("i.....", i)
+        addAmountVarInOldRows = addAmountVarInOldRows + addAmountArrInOldRows[i];
+        console.log("Added amount Var In OldRows", addAmountVarInOldRows)
+      }
+      // addAmountFinal = addAmountVar + parseFloat(amountToFixed)
+      // console.log("Added amount final", addAmountFinal)
+    }
+    addAmountInOldRows()
+    setOldReduced(addAmountVarInOldRows)
+
+
+
+    var addOldWeightArrInOldRows: number[] = [];
+    var addOldWeightVarInOldRows: number = 0
+    // var addAmountFinalInOldRows: number = 0
+    function addOldWeightInOldRows() {
+      newOldRows.map((row) => addOldWeightArrInOldRows.push(parseFloat(row.total_wt)));
+      console.log("Added amount In OldRows", addOldWeightArrInOldRows)
+      for (let i = 0; i < addOldWeightArrInOldRows.length; i++) {
+        console.log("i.....", i)
+        addOldWeightVarInOldRows = addOldWeightVarInOldRows + addOldWeightArrInOldRows[i];
+        console.log("Added amount Var In OldRows", addOldWeightVarInOldRows)
+      }
+      // addAmountFinal = addAmountVar + parseFloat(amountToFixed)
+      // console.log("Added amount final", addAmountFinal)
+    }
+    addOldWeightInOldRows()
+    setOldGoldTotalWeight(addOldWeightVarInOldRows)
+
+    var totalVar:number = 0
+    if(netAmount != undefined && oldReduced != undefined)
+      {
+        totalVar = netAmount - addAmountVarInOldRows
+        console.log("Total", totalVar)
+        setTotal(totalVar)
+      }
+     
+        return newOldRow;
   }
-  
-  
+
+
   function handleAddRow() {
 
     console.log('handleAddRow : ');
@@ -357,7 +418,7 @@ export default function CreateBill() {
     console.log('Old Row:', params.row);
     setClickedOldRowId(params.row.id)
   };
-  
+
   function handleDeleteRow(btnEvent: React.MouseEvent<HTMLButtonElement>) {
     console.log('delete existing row', btnEvent);
     console.log('clickedRowId : ', clickedRowId);
@@ -376,7 +437,7 @@ export default function CreateBill() {
     console.log('delete existing oldrow', btnEvent);
     console.log('clickedOldRowId : ', clickedOldRowId);
 
-    setRows((prevOldRows) => {
+    setOldRows((prevOldRows) => {
       const newOldRows = prevOldRows.filter((row) => row.id !== clickedOldRowId)
       console.log('new old rows', newOldRows);
       const newOldRowsCpy = newOldRows.map((row, index) => ({ ...row, id: index + 1 }));
@@ -384,7 +445,7 @@ export default function CreateBill() {
       return newOldRowsCpy;
     });
   };
-  
+
   //inputs
   function handleName(e: React.ChangeEvent<HTMLInputElement>) {
     console.log("handleName", e.target.value);
@@ -392,35 +453,32 @@ export default function CreateBill() {
   };
 
   function handlePhone(e: React.ChangeEvent<HTMLInputElement>) {
-    // console.log("handlePhone", e.target.value);
-    // validatePhoneNumber(e.target.value)
-    // setPhone(e.target.value);
-    // setIsValid();
-
-
     const newValue = e.target.value;
-    if (/^\d*$/.test(newValue)) {
       setPhone(newValue);
-    }
-    else {
-      alert("Invalid phone number");
-    }
-  };
-
-  // const validatePhoneNumber = (number: string) => {
-  //   const phoneRegex = /^[0-9]{10}$/;
-  //   if(phoneRegex.test(number))
-  //     {
-  //       return;
-  //     }
-  //     else{
-  //       alert('Phone number is not valid!');
-  //     }
-  // };
+      if (validatePhoneNumber(newValue)) {
+        setError(false);
+        setHelperText('');
+      } else {
+        setError(true);
+        setHelperText('Invalid phone number. Please enter a 10-digit number.');
+      }
+    };
+  
+    const validatePhoneNumber = (number: string) => {
+      const phoneRegex = /^[0-9]{10}$/;
+      return phoneRegex.test(number);
+    };
 
   function handleAddress(e: React.ChangeEvent<HTMLInputElement>) {
     console.log("handleAddress", e.target.value);
-    setAddress(e.target.value);
+    if(error == false)
+      {
+        setAddress(e.target.value);
+      }
+      else
+      {
+        alert("Please fill the phone number")
+      }
   };
 
   // function handleInvoiceNo() {
@@ -451,15 +509,21 @@ export default function CreateBill() {
   function handleDiscount(e: React.ChangeEvent<HTMLInputElement>) {
     console.log("handleDiscount", e.target.value);
     const discountVar = parseFloat(e.target.value);
-    // const netAmountVar = taxableAmount - discountVar
+    console.log("discountVar", discountVar)
     setDiscount(discountVar);
-    // setNetAmount(netAmountVar)
+
+    if (taxableAmount != undefined) {
+      const netAmountVar = taxableAmount - discountVar
+      setNetAmount(netAmountVar)
+      console.log("netAmountVar", netAmountVar)
+    }
+
   };
 
 
   var converter = require('number-to-words');
   return (
-    <Stack alignSelf="center" justifyContent="center" spacing={2} direction="row"  sx={{ display: "flex", alignSelf: "end" }} >
+    <Stack alignSelf="center" justifyContent="center" spacing={2} direction="row" sx={{ display: "flex", alignSelf: "end" }} >
       <Card sx={{
         maxWidth: '60%',
         bgcolor: "white",
@@ -474,7 +538,7 @@ export default function CreateBill() {
             alignItems="center"
             gap={4}
             p={2}
-            sx={{ border: '2px solid gray' , maxWidth: '100%' }}
+            sx={{ border: '2px solid gray', maxWidth: '100%' }}
           >
             <Stack sx={{ maxWidth: '100%' }}>
               <Stack paddingTop={2} spacing={0} direction="column" sx={{ maxWidth: '100%' }}>
@@ -490,8 +554,8 @@ export default function CreateBill() {
               </Stack>
 
               <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between"
-               sx={{ maxWidth: '100%' }}>
-                <Stack spacing={2} direction="column">
+                sx={{ maxWidth: '100%' }}>
+                <Stack spacing={2} direction="column" sx={{ maxWidth: '40%' }}>
                   <Stack spacing={2} direction="row">
                     <Typography sx={{ alignSelf: "center" }}>
                       Name:
@@ -502,7 +566,7 @@ export default function CreateBill() {
                     <Typography sx={{ alignSelf: "center" }}>
                       Phone:
                     </Typography >
-                    <TextField required id="outlined-required" variant="standard" size="small" value={phone} onChange={handlePhone} inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} />
+                    <TextField variant="standard" value={phone} onChange={handlePhone} error={error} helperText={helperText} />
                   </Stack>
                   <Stack spacing={2} direction="row">
                     <Typography sx={{ alignSelf: "center" }}>
@@ -546,7 +610,7 @@ export default function CreateBill() {
                 </Stack>
               </Stack>
 
-              <Container style={{ paddingTop:20, height: 300, width: '100%' }}>
+              <Container style={{ paddingTop: 20, height: 300, width: '100%' }}>
                 <DataGrid
                   editMode="row"
                   rows={rows}
@@ -594,16 +658,17 @@ export default function CreateBill() {
 
 
 
-              <Container style={{ paddingTop:20, alignSelf: "flex-start", height: 300, width: '70%' }}>
+              <Container style={{ paddingTop: 20, alignSelf: "flex-start", height: 300, width: '70%' }}>
                 <DataGrid
+                  editMode="row"
                   rows={oldRows}
                   columns={oldColumns}
                   // disableRowSelectionOnClick
                   // autoHeight
                   hideFooterPagination
-                processRowUpdate={handleProcessOldRowUpdate}
-                onProcessRowUpdateError={handleProcessOldRowUpdateError}
-                onRowClick={handleOldRowClick}
+                  processRowUpdate={handleProcessOldRowUpdate}
+                  onProcessRowUpdateError={handleProcessOldRowUpdateError}
+                  onRowClick={handleOldRowClick}
                 />
               </Container>
 
@@ -613,9 +678,9 @@ export default function CreateBill() {
                   <Typography sx={{ alignSelf: "left" }}>
                     Old Gold Total Weight:
                   </Typography >
-                  <Typography sx={{ alignSelf: "left" }}>
-                    0.000
-                  </Typography >
+                  <Typography sx={{ alignSelf: "center" }}>
+                      {oldGoldTotalWeight}
+                    </Typography >
                 </Stack>
                 <Stack spacing={2} direction="column">
                   <Stack spacing={2} direction="row">
@@ -623,7 +688,7 @@ export default function CreateBill() {
                       Old Reduced:
                     </Typography >
                     <Typography sx={{ alignSelf: "center" }}>
-                      0.00
+                      {oldReduced}
                     </Typography >
                   </Stack>
                   <Stack spacing={2} direction="row">
@@ -631,7 +696,7 @@ export default function CreateBill() {
                       TOTAL:
                     </Typography >
                     <Typography sx={{ alignSelf: "center" }}>
-                      0.00
+                      {total}
                     </Typography >
                   </Stack>
                 </Stack>
