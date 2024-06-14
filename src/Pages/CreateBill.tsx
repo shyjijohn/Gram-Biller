@@ -731,6 +731,17 @@ export default function CreateBill() {
                   processRowUpdate={handleProcessRowUpdate}
                   onProcessRowUpdateError={handleProcessRowUpdateError}
                   onRowClick={handleRowClick}
+                  sx={{
+                    '& .MuiDataGrid-root': {
+                      fontSize: '12px',
+                    },
+                    '& .MuiDataGrid-cell': {
+                      fontSize: '12px',
+                    },
+                    '& .MuiDataGrid-columnHeaders': {
+                      fontSize: '12px',
+                    },
+                  }}
                 />
               </Container>
 
@@ -768,7 +779,7 @@ export default function CreateBill() {
 
 
 
-              <Container style={{ paddingTop: 20, alignSelf: "flex-start", height: 300, width: '70%' }}>
+              <Container style={{ fontSize: 12, paddingTop: 20, alignSelf: "flex-start", height: 300, width: '70%' }}>
                 <DataGrid
                   editMode="row"
                   rows={oldRows}
@@ -779,6 +790,17 @@ export default function CreateBill() {
                   processRowUpdate={handleProcessOldRowUpdate}
                   onProcessRowUpdateError={handleProcessOldRowUpdateError}
                   onRowClick={handleOldRowClick}
+                  sx={{
+                    '& .MuiDataGrid-root': {
+                      fontSize: '12px',
+                    },
+                    '& .MuiDataGrid-cell': {
+                      fontSize: '12px',
+                    },
+                    '& .MuiDataGrid-columnHeaders': {
+                      fontSize: '12px',
+                    },
+                  }}
                 />
               </Container>
 
