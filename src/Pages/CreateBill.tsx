@@ -54,7 +54,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 //   createData('Gingerbread', 356, 16.0, 49, 3.9),
 // ];
 
-interface DataRow {
+interface BillItem {
   id: number;
   product: string;
   qty: number;
@@ -67,11 +67,40 @@ interface DataRow {
   amount: number;
 }
 
-const initialRows: GridRowsProp = [
+interface OldBillItem {
+  id: number;
+  particulars: string;
+  wt: number;
+  wastage: number;
+  total_wt: number;
+  rate: number;
+  amount: number;
+}
+
+interface BillData {
+  Name: string;
+  Phone: string;
+  Address: string;
+  Invoice_No: string;
+  Date: Dayjs | null;
+  Gold_Rate: number;
+  Silver_Rate: number;
+  Taxable_Amount: number;
+  Discount: number;
+  Net_Amount: number;
+  Old_Gold_Total_Weight: number;
+  Old_Reduced: number;
+  Total: number;
+  billitems: BillItem[];
+  oldbillitems: OldBillItem[];
+}
+
+
+const initialRows: BillItem[] = [
   { id: 1, product: '', qty: 0, gross_weight: 0.000, stone_weight: 0.000, stone_rate: 0.00, n_wt: 0.000, va_percent: 0.00, mc_hc: 0.00, amount: 0.00 },
 ];
 
-const initialOldRows: GridRowsProp = [
+const initialOldRows: OldBillItem[] = [
   { id: 1, particulars: '', wt: 0.000, wastage: 0.000, total_wt: 0.000, rate: 0.00, amount: 0.00 },
 ];
 
@@ -83,7 +112,7 @@ export default function CreateBill() {
   //create the columns collection after defining usestate in this react component.  
 
 
-  const [rows, setRows] = useState<GridRowsProp>(initialRows);
+  const [rows, setRows] = useState<BillItem[]>(initialRows);
   const [clickedRowId, setClickedRowId] = useState();
   const [stockNames, setStockNames] = useState<string[]>([]);
 
@@ -101,25 +130,43 @@ export default function CreateBill() {
 
   const [nextId, setNextId] = useState<number>(2);
   const [isValid, setIsValid] = useState<boolean>(true);
-  const [taxableAmount, setTaxableAmount] = useState<number>();
-  const [inWordsAmount, setInWordsAmount] = useState<number>();
+  const [taxableAmount, setTaxableAmount] = useState<number>(0.00);
+  const [inWordsAmount, setInWordsAmount] = useState<string>('');
 
-  const [discount, setDiscount] = useState<number>();
-  const [netAmount, setNetAmount] = useState<number>();
+  const [discount, setDiscount] = useState<number>(0.00);
+  const [netAmount, setNetAmount] = useState<number>(0.00);
 
 
   const PORT = 3000;
 
 
-  const [oldRows, setOldRows] = useState<GridRowsProp>(initialOldRows);
+  const [oldRows, setOldRows] = useState<OldBillItem[]>(initialOldRows);
   const [clickedOldRowId, setClickedOldRowId] = useState();
-  const [oldReduced, setOldReduced] = useState<number>();
-  const [oldGoldTotalWeight, setOldGoldTotalWeight] = useState<number>();
-  const [total, setTotal] = useState<number>();
-  
+  const [oldReduced, setOldReduced] = useState<number>(0.00);
+  const [oldGoldTotalWeight, setOldGoldTotalWeight] = useState<number>(0.000);
+  const [total, setTotal] = useState<number>(0.00);
+
+
+  // const [formData, setFormData] = useState<BillData>({
+  //   Name: name ,
+  //   Phone: phone,
+  //   Address: address,
+  //   Date: date,
+  //   Gold_Rate: goldRate,
+  //   Silver_Rate: silverRate,
+  //   Taxable_Amount: taxableAmount,
+  //   Discount: discount,
+  //   Old_Gold_Total_Weight: oldGoldTotalWeight,
+  //   Old_Reduced: oldReduced,
+  //   Total: total,
+  //   billitems: rows,
+  //   oldbillitems: oldRows
+  // })
 
 
   //get stocknames
+  
+  
   var arr: string[] = []
   const getStockNames = () => {
     // console.log("getStockNames")
@@ -226,9 +273,9 @@ export default function CreateBill() {
           defaultValue={stockNames[0]}
           sx={{ width: 750 }}
           onChange={(event, newValue) => {
-              params.api.setEditCellValue({ id: params.id, field: params.field, value: newValue }, event);
-            }}
-          renderInput={(params) => ( <TextField {...params} />)}
+            params.api.setEditCellValue({ id: params.id, field: params.field, value: newValue }, event);
+          }}
+          renderInput={(params) => (<TextField {...params} />)}
         />
       ),
     },
@@ -359,15 +406,13 @@ export default function CreateBill() {
     addOldWeightInOldRows()
     setOldGoldTotalWeight(addOldWeightVarInOldRows)
 
-    var totalVar:number = 0
-    if(netAmount != undefined && oldReduced != undefined)
-      {
-        totalVar = netAmount - addAmountVarInOldRows
-        console.log("Total", totalVar)
-        setTotal(totalVar)
-      }
-     
-        return newOldRow;
+    var totalVar: number = 0
+    if (netAmount != undefined && oldReduced != undefined) {
+      totalVar = netAmount - addAmountVarInOldRows
+      console.log("Total", totalVar)
+      setTotal(totalVar)
+    }
+    return newOldRow;
   }
 
 
@@ -395,11 +440,16 @@ export default function CreateBill() {
 
     console.log('handleAddOldRow : ');
     console.log('Old rows : ', rows);
+    if (oldRows == null || oldRows == undefined) {
+      setOldRows(initialOldRows)
+    }
+    else {
+      setOldRows((prevOldRows) => [
+        ...prevOldRows,
+        { id: prevOldRows.length + 1, particulars: '', wt: 0.000, wastage: 0.000, total_wt: 0.000, rate: 0.00, amount: 0.00 },
+      ]);
+    }
 
-    setOldRows((prevOldRows) => [
-      ...prevOldRows,
-      { id: prevOldRows.length + 1, particulars: '', wt: 0.000, wastage: 0.000, total_wt: 0.000, rate: 0.00, amount: 0.00 },
-    ]);
   }
 
   function handleRowClick(params: GridRowParams) {
@@ -441,6 +491,73 @@ export default function CreateBill() {
     });
   };
 
+
+  function handleSave() {
+    // e.preventDefault();
+
+    //Create bill object
+    //fill the bill object with the collected data 
+    //convert to json 
+    //send to backend
+
+    const billObject : BillData = 
+    {
+      Name: name,
+      Phone: phone,
+      Address: address,
+      Invoice_No: invoiceNo,
+      Date: date,
+      Gold_Rate: goldRate,
+      Silver_Rate: silverRate,
+      Taxable_Amount: taxableAmount,
+      Discount: discount,
+      Net_Amount: netAmount,
+      Old_Gold_Total_Weight: oldGoldTotalWeight,
+      Old_Reduced: oldReduced,
+      Total: total,
+      billitems:rows,
+      oldbillitems:oldRows
+    };
+
+    const str = JSON.stringify(billObject);
+
+    console.log("Bill String:", str);
+
+    axios.post(`http://localhost:${PORT}/newbill`, {
+      // Name: stockName,
+      // Stock_type: stockType, 
+      // Date: stockDate, 
+      // Quantity: stockQuantity,
+      // Weight: stockWeight,
+      // Remarks: stockRemarks
+      JsonStr: str
+  })
+  .then((response) => {
+    console.log('Data posted:', response.data);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+  
+
+    // const response = fetch(`http://localhost:${PORT}/newbill`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: str
+
+    // });
+    // console.log(" final response", response);
+    // // if (response) {
+    //   const result =  response.json();
+    //   console.log('Success:', result);
+    // } else {
+    //   console.error('Error:', response.statusText);
+    // }
+  };
+
+
   //inputs
   function handleName(e: React.ChangeEvent<HTMLInputElement>) {
     console.log("handleName", e.target.value);
@@ -449,31 +566,29 @@ export default function CreateBill() {
 
   function handlePhone(e: React.ChangeEvent<HTMLInputElement>) {
     const newValue = e.target.value;
-      setPhone(newValue);
-      if (validatePhoneNumber(newValue)) {
-        setError(false);
-        setHelperText('');
-      } else {
-        setError(true);
-        setHelperText('Invalid phone number. Please enter a 10-digit number.');
-      }
-    };
-  
-    const validatePhoneNumber = (number: string) => {
-      const phoneRegex = /^[0-9]{10}$/;
-      return phoneRegex.test(number);
-    };
+    setPhone(newValue);
+    if (validatePhoneNumber(newValue)) {
+      setError(false);
+      setHelperText('');
+    } else {
+      setError(true);
+      setHelperText('Invalid phone number. Please enter a 10-digit number.');
+    }
+  };
+
+  const validatePhoneNumber = (number: string) => {
+    const phoneRegex = /^[0-9]{10}$/;
+    return phoneRegex.test(number);
+  };
 
   function handleAddress(e: React.ChangeEvent<HTMLInputElement>) {
     console.log("handleAddress", e.target.value);
-    if(error == false)
-      {
-        setAddress(e.target.value);
-      }
-      else
-      {
-        alert("Please fill the phone number")
-      }
+    if (error == false) {
+      setAddress(e.target.value);
+    }
+    else {
+      alert("Please fill the phone number")
+    }
   };
 
   // function handleInvoiceNo() {
@@ -674,8 +789,8 @@ export default function CreateBill() {
                     Old Gold Total Weight:
                   </Typography >
                   <Typography sx={{ alignSelf: "center" }}>
-                      {oldGoldTotalWeight}
-                    </Typography >
+                    {oldGoldTotalWeight}
+                  </Typography >
                 </Stack>
                 <Stack spacing={2} direction="column">
                   <Stack spacing={2} direction="row">
@@ -702,7 +817,10 @@ export default function CreateBill() {
         </CardContent>
       </Card>
       <Stack padding={2} spacing={2} direction="column">
-        <SaveIcon sx={{ height: 40, width: 40 }} />
+        <Button variant="text" onClick={handleSave}>
+          <SaveIcon sx={{ height: 40, width: 40 }} />
+        </Button>
+        
         <Button variant="text" onClick={handleAddRow}><LibraryAddIcon sx={{ height: 40, width: 40 }} /></Button>
         <Button variant="text" onClick={handleDeleteRow}><DeleteIcon sx={{ height: 40, width: 40 }} /></Button>
         <Button variant="text" onClick={handleAddOldRow}><LibraryAddIcon sx={{ height: 40, width: 40 }} /></Button>
