@@ -740,6 +740,7 @@ export default function CreateBill() {
                     },
                     '& .MuiDataGrid-columnHeaders': {
                       fontSize: '12px',
+                      font: 'bold',
                     },
                   }}
                 />
