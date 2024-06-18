@@ -16,76 +16,216 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { useState } from 'react';
+import axios from 'axios';
+
+
+interface viewBills {
+  id: number;
+  name: string;
+  phoneNo: number;
+  invoiceNo: number;
+  date: string;
+  address: string;
+  goldWeight: number;
+  silverWeight: number;
+  oldItemWeight: number;
+  discount: number;
+  billAmount: number;
+}
+
 
 
 const columns: GridColDef[] = [
   { field: 'no', headerName: 'No', width: 10 },
   { field: 'name', headerName: 'Name', width: 70 },
   { field: 'phoneNo', headerName: 'Phone No', width: 100 },
-  {
-    field: 'invoiceNo',
-    headerName: 'Invoice No',
-    type: 'number',
-    width: 80
-  },
-  {
-    field: 'date',
-    headerName: 'Date',
-    type: 'number',
-    width: 60
-  },
-  {
-    field: 'address',
-    headerName: 'Address',
-    type: 'number',
-    width: 90
-  },
-  {
-    field: 'goldWeight',
-    headerName: 'Gold Weight',
-    type: 'number',
-    width: 120
-  },
-  {
-    field: 'silverWeight',
-    headerName: 'Silver Weight',
-    type: 'number',
-    width: 120
-  },
-  {
-    field: 'oldItemWeight',
-    headerName: 'Old Item Weight',
-    type: 'number',
-    width: 140
-  },
-  {
-    field: 'discount',
-    headerName: 'Discount',
-    type: 'number',
-    width: 90
-  },
-  {
-    field: 'billAmount',
-    headerName: 'Bill Amount',
-    type: 'number',
-  },
+  { field: 'invoiceNo', headerName: 'Invoice No', type: 'number', width: 80 },
+  { field: 'date', headerName: 'Date', type: 'number', width: 60 },
+  { field: 'address', headerName: 'Address', type: 'number', width: 90 },
+  { field: 'goldWeight', headerName: 'Gold Weight', type: 'number', width: 120 },
+  { field: 'silverWeight', headerName: 'Silver Weight', type: 'number', width: 120 },
+  { field: 'oldItemWeight', headerName: 'Old Item Weight', type: 'number', width: 140 },
+  { field: 'discount', headerName: 'Discount', type: 'number', width: 90 },
+  { field: 'billAmount', headerName: 'Bill Amount', type: 'number' },
 ];
 
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+// const rows:viewBills[] = [
+//   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
+//   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
+//   { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
+//   { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
+//   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
+//   { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
+//   { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
+//   { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
+//   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+// ];
+
 
 
 
 export default function ViewBills() {
+
+  const [name, setName] = useState<string>('');
+  const [invoiceNo, setInvoiceNo] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [error, setError] = useState(false);
+  const [helperText, setHelperText] = useState('');
+  const [rows, setRows] = useState<viewBills[]>([]);
+  const [selectedDateFrom, setSelectedDateFrom] = useState(null);
+  const [selectedDateTo, setSelectedDateTo] = useState(null);
+
+
+  const PORT = 3000;
+
+
+
+  function handleName(e: React.ChangeEvent<HTMLInputElement>) {
+    console.log("handleName", e.target.value);
+    setName(e.target.value);
+  };
+
+  function handleInvoiceNo(e: React.ChangeEvent<HTMLInputElement>) {
+    console.log("handleInvoiceNo", e.target.value);
+    setInvoiceNo(e.target.value);
+  };
+
+  function handlePhone(e: React.ChangeEvent<HTMLInputElement>) {
+    const newValue = e.target.value;
+    setPhone(newValue);
+    if (validatePhoneNumber(newValue)) {
+      setError(false);
+      setHelperText('');
+    } else {
+      setError(true);
+      setHelperText('Invalid phone number. Please enter a 10-digit number.');
+    }
+  };
+
+  const validatePhoneNumber = (number: string) => {
+    const phoneRegex = /^[0-9]{10}$/;
+    return phoneRegex.test(number);
+  };
+
+  const handleDateChangeFrom = (newDate:any) => {
+    setSelectedDateFrom(newDate);
+  };
+
+  const handleDateChangeTo = (newDate:any) => {
+    setSelectedDateTo(newDate);
+  };
+
+  function handleNameSearch() {
+    setRows([])
+    axios.get(`http://localhost:${PORT}/GetViewBillUsingName?Name=${name}`).then((response) => {
+      console.log("response.data.....", response.data);
+
+      var viewBillsUsingNameArr: viewBills[] = [];
+
+      (response.data).forEach((data: any) => {
+        const BillUsingName: viewBills = {
+          id: data.Create_Bill_id,
+          name: data.Name,
+          phoneNo: data.Phone,
+          invoiceNo: data.Invoice_No,
+          date: data.Date,
+          address: data.Address,
+          goldWeight: data.Gold_Rate,
+          silverWeight: data.Silver_Rate,
+          oldItemWeight: data.Old_Gold_Total_Weight,
+          discount: data.Discount,
+          billAmount: data.Total
+        }
+        viewBillsUsingNameArr.push(BillUsingName)
+      })
+      setRows(viewBillsUsingNameArr)
+    });
+  };
+
+
+
+  function handleInvoiceNoSearch() {
+    setRows([])
+    axios.get(`http://localhost:${PORT}/GetViewBillUsingInvoiceNo?Invoice_No=${invoiceNo}`).then((response) => {
+      console.log("response.data.....", response.data);
+      var viewBillsUsingInvoiceArr: viewBills[] = [];
+
+      (response.data).forEach((data: any) => {
+        const BillUsingInvoice: viewBills = {
+          id: data.Create_Bill_id,
+          name: data.Name,
+          phoneNo: data.Phone,
+          invoiceNo: data.Invoice_No,
+          date: data.Date,
+          address: data.Address,
+          goldWeight: data.Gold_Rate,
+          silverWeight: data.Silver_Rate,
+          oldItemWeight: data.Old_Gold_Total_Weight,
+          discount: data.Discount,
+          billAmount: data.Total
+        }
+        viewBillsUsingInvoiceArr.push(BillUsingInvoice)
+      })
+      setRows(viewBillsUsingInvoiceArr)
+    });
+  };
+
+
+  function handlePhoneNoSearch() {
+    setRows([])
+    axios.get(`http://localhost:${PORT}/GetViewBillUsingPhoneNo?Phone=${phone}`).then((response) => {
+      console.log("response.data.....", response.data);
+      var viewBillsUsingPhoneArr: viewBills[] = [];
+
+      (response.data).forEach((data: any) => {
+        const BillUsingPhone: viewBills = {
+          id: data.Create_Bill_id,
+          name: data.Name,
+          phoneNo: data.Phone,
+          invoiceNo: data.Invoice_No,
+          date: data.Date,
+          address: data.Address,
+          goldWeight: data.Gold_Rate,
+          silverWeight: data.Silver_Rate,
+          oldItemWeight: data.Old_Gold_Total_Weight,
+          discount: data.Discount,
+          billAmount: data.Total
+        }
+        viewBillsUsingPhoneArr.push(BillUsingPhone)
+      })
+      setRows(viewBillsUsingPhoneArr)
+    });
+  };
+
+
+  function handleDatesSearch() {
+    setRows([])
+    axios.get(`http://localhost:${PORT}/GetViewBillUsingDates?Date=${selectedDateFrom}&Date=${selectedDateTo}`).then((response) => {
+      console.log("response.data.....", response.data);
+      var viewBillsUsingDatesArr: viewBills[] = [];
+
+      (response.data).forEach((data: any) => {
+        const BillUsingDates: viewBills = {
+          id: data.Create_Bill_id,
+          name: data.Name,
+          phoneNo: data.Phone,
+          invoiceNo: data.Invoice_No,
+          date: data.Date,
+          address: data.Address,
+          goldWeight: data.Gold_Rate,
+          silverWeight: data.Silver_Rate,
+          oldItemWeight: data.Old_Gold_Total_Weight,
+          discount: data.Discount,
+          billAmount: data.Total
+        }
+        viewBillsUsingDatesArr.push(BillUsingDates)
+      })
+      setRows(viewBillsUsingDatesArr)
+    });
+  };
+  
+
   return (
     <Stack padding={2} spacing={2} direction="row" >
       <Card sx={{
@@ -112,7 +252,11 @@ export default function ViewBills() {
                   </Typography >
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['DatePicker']}>
-                      <DatePicker label="DD/MM/YYYY" />
+                      <DatePicker
+                        label="MM/DD/YYYY"
+                        value={selectedDateFrom}
+                        onChange={handleDateChangeFrom}
+                      />
                     </DemoContainer>
                   </LocalizationProvider>
                 </Stack>
@@ -122,16 +266,17 @@ export default function ViewBills() {
                   </Typography >
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['DatePicker']}>
-                      <DatePicker label="DD/MM/YYYY" />
+                      <DatePicker label="MM/DD/YYYY"
+                        value={selectedDateTo}
+                        onChange={handleDateChangeTo}
+                      />
                     </DemoContainer>
                   </LocalizationProvider>
                 </Stack>
                 <Stack>
-                  <PageviewOutlinedIcon sx={{
-                    alignSelf: "center",
-                    height: 40,
-                    width: 40
-                  }} />
+                <Button variant="text" onClick={handleDatesSearch}>
+                    <PageviewOutlinedIcon sx={{ alignSelf: "center", height: 40, width: 40 }} />
+                  </Button>
                 </Stack>
               </Stack>
 
@@ -140,14 +285,12 @@ export default function ViewBills() {
                   <Typography sx={{ alignSelf: "left" }}>
                     Name:
                   </Typography >
-                  <TextField id="outlined-basic" variant="standard" size="small" />
+                  <TextField id="outlined-basic" variant="standard" size="small" value={name} onChange={handleName} />
                 </Stack>
                 <Stack>
-                  <PageviewOutlinedIcon sx={{
-                    alignSelf: "center",
-                    height: 40,
-                    width: 40
-                  }} />
+                  <Button variant="text" onClick={handleNameSearch}>
+                    <PageviewOutlinedIcon sx={{ alignSelf: "center", height: 40, width: 40 }} />
+                  </Button>
                 </Stack>
               </Stack>
 
@@ -156,14 +299,12 @@ export default function ViewBills() {
                   <Typography sx={{ alignSelf: "left" }}>
                     Invoice No:
                   </Typography >
-                  <TextField id="outlined-basic" variant="standard" size="small" />
+                  <TextField id="outlined-basic" variant="standard" size="small" value={invoiceNo} onChange={handleInvoiceNo} />
                 </Stack>
                 <Stack>
-                  <PageviewOutlinedIcon sx={{
-                    alignSelf: "center",
-                    height: 40,
-                    width: 40
-                  }} />
+                  <Button variant="text" onClick={handleInvoiceNoSearch}>
+                    <PageviewOutlinedIcon sx={{ alignSelf: "center", height: 40, width: 40 }} />
+                  </Button>
                 </Stack>
               </Stack>
 
@@ -172,14 +313,12 @@ export default function ViewBills() {
                   <Typography sx={{ alignSelf: "left" }}>
                     Phone No:
                   </Typography >
-                  <TextField id="outlined-basic" variant="standard" size="small" />
+                  <TextField id="outlined-basic" variant="standard" size="small" value={phone} onChange={handlePhone} error={error} helperText={helperText} />
                 </Stack>
                 <Stack>
-                  <PageviewOutlinedIcon sx={{
-                    alignSelf: "center",
-                    height: 40,
-                    width: 40
-                  }} />
+                  <Button variant="text" onClick={handlePhoneNoSearch}>
+                    <PageviewOutlinedIcon sx={{ alignSelf: "center", height: 40, width: 40 }} />
+                  </Button>
                 </Stack>
               </Stack>
 
