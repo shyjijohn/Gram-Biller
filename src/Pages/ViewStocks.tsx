@@ -166,6 +166,7 @@ export default function ViewStocks() {
       console.log("response.data.....", response.data);
 
       //initialize an stockhistory array
+      var stockReportObjCollForIteration: stocksReport[] = [];
       var stockReportObjColl: stocksReport[] = [];
 
       (response.data).forEach((data: any) => {
@@ -173,12 +174,12 @@ export default function ViewStocks() {
         console.log("name", data.Stocks_id)
 
         if (data.Sales_Date == null) {
-          var stockDateVar = data.Stock_Date
+          // var stockDateVar = data.Stock_Date
           var Date1 = data.Stock_Date;
           console.log("date...2", Date1)
         }
         else if (data.Stock_Date == null) {
-          var salesDateVar = data.Sales_Date
+          // var salesDateVar = data.Sales_Date
           var Date1 = data.Sales_Date;
           console.log("date...2", Date1)
         }
@@ -189,65 +190,61 @@ export default function ViewStocks() {
         const day = String(sqlDateTime.getDate()).padStart(2, '0');
         console.log(`hhi${year}-${month}-${day}`);
 
-        var dateArr: string[] = []
 
-        var Stock_Quantity, Stock_QuantityArr:number[] = []
-        var Sales_Quantity, Sales_QuantityArr:number[] = []
-        var Stock_Weight, Stock_WeightArr:number[] = []
-        var Sales_Weight, Sales_WeightArr:number[] = []
+        //create a stock history object here
+        //assign the values from response.data to the newly created stock history object
+        //push the stock history object to the collection 
+        var balanceQuantityVar: number = 0;
+        var balanceWeightVar: number = 0;
 
-        if (dateArr.includes(`${year}-${month}-${day}`) && (data.Stock_QTY == '' || null || undefined)) {
-          Sales_QuantityArr.pop()
-          Sales_WeightArr.pop()
-          Sales_Quantity += data.Sales_QTY
-          console.log("Sales_Quantity add", Sales_Quantity)
-          Sales_Weight += data.Sales_WT
+        const targetDate = `${year}-${month}-${day}`;
+
+        const resultStock = stockReportObjCollForIteration.find(item => item.date === targetDate);
+
+        if (resultStock == undefined) {
+          //you dont have the stock in the colection. So create a new object and push that to the colleciton 
+          const stockReportObj: stocksReport =
+          {
+            id: data.Stocks_id,
+            date: `${year}-${month}-${day}`,
+            totalQuantity: data.Stock_QTY + balanceQuantityVar,
+            totalWeight: data.Stock_WT + balanceWeightVar,
+            salesQuantity: data.Sales_QTY,
+            salesWeight: data.Sales_WT,
+            balanceQuantity: data.Stock_QTY - data.Sales_QTY,
+            balanceWeight: data.Stock_WT - data.Sales_WT
+          }
+          balanceQuantityVar += data.Stock_QTY - data.Sales_QTY
+          balanceWeightVar += data.Stock_WT - data.Sales_WT
+          // stockReportObjColl.push(stockReportObj)
+          console.log("totally loaded", stockReportObj);
+          // id, date, totalQuantity, totalWeight, salesQuantity, salesWeight, balanceQuantity), balanceWeight,
+          stockReportObjCollForIteration.push(stockReportObj)
+          console.log("stockReportObjCollForIteration", stockReportObj, stockReportObjCollForIteration)
+        }
+        else {
+
+          //you have the stock in the colection. So, use the object to 
+
+          resultStock.totalQuantity += data.Stock_QTY + balanceQuantityVar;
+          console.log("resultStock", resultStock, resultStock.totalQuantity, data.Stock_QTY, balanceQuantityVar);
+          resultStock.totalWeight += data.Stock_WT + balanceWeightVar;
+          resultStock.salesQuantity += data.Sales_QTY;
+          resultStock.salesWeight += data.Sales_WT;
+          resultStock.balanceQuantity += data.Stock_QTY;
+          resultStock.balanceWeight += data.Stock_WT;
+          console.log("stockReportObjCollForIteration ESISTING", resultStock, stockReportObjCollForIteration)
+
+
+          balanceQuantityVar += data.Stock_QTY;
+          balanceWeightVar += data.Stock_WT;
         }
 
-        if (dateArr.includes(`${year}-${month}-${day}`) && data.Sales_QTY == null) {
-          Stock_QuantityArr.pop()
-          Stock_WeightArr.pop()
-          Stock_Quantity += data.Stock_QTY
-          Stock_Weight += data.Stock_WT
-        }
 
-        if (!dateArr.includes(`${year}-${month}-${day}`)) {
-          Sales_Quantity = data.Sales_QTY
-          Sales_Weight = data.Sales_WT
-          Stock_Quantity = data.Stock_QTY
-          Stock_Weight = data.Stock_WT
-        }
-        Stock_QuantityArr.push(Stock_Quantity)
-        Sales_QuantityArr.push(Sales_Quantity)
-        Stock_WeightArr.push(Stock_Weight)
-        Sales_WeightArr.push(Sales_Weight)
-        console.log("Stock_QuantityArr",dateArr, Stock_QuantityArr, Sales_QuantityArr, Stock_WeightArr, Sales_WeightArr)
 
-        dateArr.push(`${year}-${month}-${day}`)
-        // Stock_Quantity = ''
-        // Sales_Quantity = ''
-        // Stock_Weight = ''
-        // Sales_Weight = ''
       })
 
-      //create a stock history object here
-      //assign the values from response.data to the newly created stock history object
-      //push the stock history object to the collection 
-
-      // const stockReportObj: stocksReport =
-      // {
-      //   id: data.Stocks_id,
-      //   date: `${year}-${month}-${day}`,
-      //   totalQuantity: data.Total_Quantity,
-      //   totalWeight: data.Total_Weight,
-      //   salesQuantity: 1,
-      //   salesWeight: 1,
-      //   balanceQuantity: 1,
-      //   balanceWeight: 1
-      // }
-      // stockReportObjColl.push(stockReportObj)
-
-      // setStocksReport(stockReportObjColl)
+      //setStocksReport(stockReportObjColl)
     });
 
   }

@@ -633,7 +633,7 @@ export default function CreateBill() {
 
   var converter = require('number-to-words');
   return (
-    <Stack alignSelf="center" justifyContent="center" spacing={2} direction="row" sx={{ display: "flex", alignSelf: "end" }} >
+    <Stack display="flex" alignSelf="center" justifyContent="center" spacing={2} direction="row" >
       <Card sx={{
         maxWidth: '60%',
         bgcolor: "white",
@@ -650,7 +650,7 @@ export default function CreateBill() {
             p={2}
             sx={{ border: '2px solid gray', maxWidth: '100%' }}
           >
-            <Stack sx={{ maxWidth: '100%' }}>
+            <Stack sx={{ maxWidth: '100%', display: 'flex', direction: 'row' }}>
               <Stack paddingTop={2} spacing={0} direction="column" sx={{ maxWidth: '100%' }}>
                 <Typography sx={{ alignSelf: "center" }}>
                   Jewellers
@@ -720,7 +720,7 @@ export default function CreateBill() {
                 </Stack>
               </Stack>
 
-              <Container style={{ paddingTop: 20, height: 300, width: '100%' }}>
+              <Container style={{ paddingTop: 20, height: 250, width: '100%' }}>
                 <DataGrid
                   editMode="row"
                   rows={rows}
@@ -780,7 +780,7 @@ export default function CreateBill() {
 
 
 
-              <Container style={{ fontSize: 12, paddingTop: 20, alignSelf: "flex-start", height: 300, width: '70%' }}>
+              <Container style={{ fontSize: 12, paddingTop: 20, alignSelf: "flex-start", height: 200, width: '50%' }}>
                 <DataGrid
                   editMode="row"
                   rows={oldRows}
