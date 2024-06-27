@@ -361,6 +361,7 @@ export default function ViewStocks() {
                 <DeleteIcon sx={{ height: 30, width: 30 }} />
               </Stack>
 
+              
             </Stack>
           </Box>
         </CardContent>

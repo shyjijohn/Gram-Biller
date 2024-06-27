@@ -36,24 +36,6 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 
 
-// function createData(
-//   name: string,
-//   calories: number,
-//   fat: number,
-//   carbs: number,
-//   protein: number,
-// ) {
-//   return { name, calories, fat, carbs, protein };
-// }
-
-// const rows = [
-//   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-//   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-//   createData('Eclair', 262, 16.0, 24, 6.0),
-//   createData('Cupcake', 305, 3.7, 67, 4.3),
-//   createData('Gingerbread', 356, 16.0, 49, 3.9),
-// ];
-
 interface BillItem {
   id: number;
   product: string;
@@ -107,9 +89,9 @@ const initialOldRows: OldBillItem[] = [
 
 export default function CreateBill() {
 
-  //get only stock names from DB 
-  //assign or store those name in a usestate variable 
-  //create the columns collection after defining usestate in this react component.  
+//   //get only stock names from DB 
+//   //assign or store those name in a usestate variable 
+//   //create the columns collection after defining usestate in this react component.  
 
 
   const [rows, setRows] = useState<BillItem[]>(initialRows);
@@ -147,26 +129,10 @@ export default function CreateBill() {
   const [total, setTotal] = useState<number>(0.00);
 
 
-  // const [formData, setFormData] = useState<BillData>({
-  //   Name: name ,
-  //   Phone: phone,
-  //   Address: address,
-  //   Date: date,
-  //   Gold_Rate: goldRate,
-  //   Silver_Rate: silverRate,
-  //   Taxable_Amount: taxableAmount,
-  //   Discount: discount,
-  //   Old_Gold_Total_Weight: oldGoldTotalWeight,
-  //   Old_Reduced: oldReduced,
-  //   Total: total,
-  //   billitems: rows,
-  //   oldbillitems: oldRows
-  // })
-
-
+  
   //get stocknames
-  
-  
+
+
   var arr: string[] = []
   const getStockNames = () => {
     // console.log("getStockNames")
@@ -500,7 +466,7 @@ export default function CreateBill() {
     //convert to json 
     //send to backend
 
-    const billObject : BillData = 
+    const billObject: BillData =
     {
       Name: name,
       Phone: phone,
@@ -515,8 +481,8 @@ export default function CreateBill() {
       Old_Gold_Total_Weight: oldGoldTotalWeight,
       Old_Reduced: oldReduced,
       Total: total,
-      billitems:rows,
-      oldbillitems:oldRows
+      billitems: rows,
+      oldbillitems: oldRows
     };
 
     const str = JSON.stringify(billObject);
@@ -531,14 +497,14 @@ export default function CreateBill() {
       // Weight: stockWeight,
       // Remarks: stockRemarks
       JsonStr: str
-  })
-  .then((response) => {
-    console.log('Data posted:', response.data);
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
-  
+    })
+      .then((response) => {
+        console.log('Data posted:', response.data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
 
     // const response = fetch(`http://localhost:${PORT}/newbill`, {
     //   method: 'POST',
@@ -633,223 +599,227 @@ export default function CreateBill() {
 
   var converter = require('number-to-words');
   return (
-    <Stack display="flex" alignSelf="center" justifyContent="center" spacing={2} direction="row" >
-      <Card sx={{
-        maxWidth: '60%',
-        bgcolor: "white",
-        alignSelf: "center",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      }}>
-        <CardContent sx={{ maxWidth: '100%' }}>
-          <Box
-            display="flex"
-            alignItems="center"
-            gap={4}
-            p={2}
-            sx={{ border: '2px solid gray', maxWidth: '100%' }}
-          >
-            <Stack sx={{ maxWidth: '100%', display: 'flex', direction: 'row' }}>
-              <Stack paddingTop={2} spacing={0} direction="column" sx={{ maxWidth: '100%' }}>
-                <Typography sx={{ alignSelf: "center" }}>
-                  Jewellers
-                </Typography >
-                <Typography sx={{ alignSelf: "center" }}>
-                  Kulasekharam
-                </Typography >
-                <Typography sx={{ alignSelf: "center" }}>
-                  8438607589
-                </Typography >
-              </Stack>
 
-              <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between"
-                sx={{ maxWidth: '100%' }}>
-                <Stack spacing={2} direction="column" sx={{ maxWidth: '40%' }}>
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
-                      Name:
-                    </Typography >
-                    <TextField id="outlined-basic" variant="standard" size="small" value={name} onChange={handleName} />
+    <Stack display="flex" alignSelf="center" justifyContent="center" spacing={2} direction="row" >
+       
+        <Card sx={{
+          maxWidth: '60%',
+          bgcolor: "white",
+          alignSelf: "center",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}>
+          <CardContent sx={{ maxWidth: '100%' }}>
+            <Box
+              display="flex"
+              alignItems="center"
+              gap={4}
+              p={2}
+              sx={{ border: '2px solid gray', maxWidth: '100%' }}
+            >
+              <Stack sx={{ maxWidth: '100%', display: 'flex', direction: 'row' }}>
+                <Stack paddingTop={2} spacing={0} direction="column" sx={{ maxWidth: '100%' }}>
+                  <Typography sx={{ alignSelf: "center" }}>
+                    Jewellers
+                  </Typography >
+                  <Typography sx={{ alignSelf: "center" }}>
+                    Kulasekharam
+                  </Typography >
+                  <Typography sx={{ alignSelf: "center" }}>
+                    8438607589
+                  </Typography >
+                </Stack>
+
+                <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between"
+                  sx={{ maxWidth: '100%' }}>
+                  <Stack spacing={2} direction="column" sx={{ maxWidth: '40%' }}>
+                    <Stack spacing={2} direction="row">
+                      <Typography sx={{ alignSelf: "center" }}>
+                        Name:
+                      </Typography >
+                      <TextField id="outlined-basic" variant="standard" size="small" value={name} onChange={handleName} />
+                    </Stack>
+                    <Stack spacing={2} direction="row">
+                      <Typography sx={{ alignSelf: "center" }}>
+                        Phone:
+                      </Typography >
+                      <TextField variant="standard" value={phone} onChange={handlePhone} error={error} helperText={helperText} />
+                    </Stack>
+                    <Stack spacing={2} direction="row">
+                      <Typography sx={{ alignSelf: "center" }}>
+                        Address:
+                      </Typography >
+                      <Stack spacing={2} direction="column">
+                        <TextField id="standard-multiline-flexible" multiline maxRows={4}
+                          variant="standard" size="small" value={address} onChange={handleAddress} />
+                      </Stack>
+                    </Stack>
                   </Stack>
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
-                      Phone:
-                    </Typography >
-                    <TextField variant="standard" value={phone} onChange={handlePhone} error={error} helperText={helperText} />
-                  </Stack>
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
-                      Address:
-                    </Typography >
-                    <Stack spacing={2} direction="column">
-                      <TextField id="standard-multiline-flexible" multiline maxRows={4}
-                        variant="standard" size="small" value={address} onChange={handleAddress} />
+                  <Stack spacing={2} direction="column">
+                    <Stack spacing={2} direction="row">
+                      <Typography sx={{ alignSelf: "center" }}>
+                        Invoice No:
+                      </Typography >
+                      <Typography>{invoiceNo}</Typography>
+                    </Stack>
+                    <Stack spacing={2} direction="row">
+                      <Typography sx={{ alignSelf: "center" }}>
+                        Date:
+                      </Typography >
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer components={['DatePicker']}>
+                          <DatePicker value={date} onChange={handleDate} />
+                        </DemoContainer>
+                      </LocalizationProvider>
+                    </Stack>
+                    <Stack spacing={2} direction="row">
+                      <Typography sx={{ alignSelf: "center" }}>
+                        Gold Rate:
+                      </Typography >
+                      <TextField id="outlined-basic" variant="standard" size="small" type="number" value={goldRate} onChange={handleGoldRate} />
+                    </Stack>
+                    <Stack spacing={2} direction="row">
+                      <Typography sx={{ alignSelf: "center" }}>
+                        Silver Rate:
+                      </Typography >
+                      <TextField id="outlined-basic" variant="standard" size="small" type="number" value={silverRate} onChange={handleSilverRate} />
                     </Stack>
                   </Stack>
                 </Stack>
-                <Stack spacing={2} direction="column">
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
-                      Invoice No:
-                    </Typography >
-                    <Typography>{invoiceNo}</Typography>
-                  </Stack>
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
-                      Date:
-                    </Typography >
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['DatePicker']}>
-                        <DatePicker value={date} onChange={handleDate} />
-                      </DemoContainer>
-                    </LocalizationProvider>
-                  </Stack>
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
-                      Gold Rate:
-                    </Typography >
-                    <TextField id="outlined-basic" variant="standard" size="small" type="number" value={goldRate} onChange={handleGoldRate} />
-                  </Stack>
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
-                      Silver Rate:
-                    </Typography >
-                    <TextField id="outlined-basic" variant="standard" size="small" type="number" value={silverRate} onChange={handleSilverRate} />
-                  </Stack>
-                </Stack>
-              </Stack>
 
-              <Container style={{ paddingTop: 20, height: 250, width: '100%' }}>
-                <DataGrid
-                  editMode="row"
-                  rows={rows}
-                  columns={columns}
-                  // disableRowSelectionOnClick
-                  // autoHeight
-                  hideFooterPagination
-                  processRowUpdate={handleProcessRowUpdate}
-                  onProcessRowUpdateError={handleProcessRowUpdateError}
-                  onRowClick={handleRowClick}
-                  sx={{
-                    '& .MuiDataGrid-root': {
-                      fontSize: '12px',
-                    },
-                    '& .MuiDataGrid-cell': {
-                      fontSize: '12px',
-                    },
-                    '& .MuiDataGrid-columnHeaders': {
-                      fontSize: '12px',
-                      font: 'bold',
-                    },
-                  }}
-                />
-              </Container>
+                <Container style={{ paddingTop: 20, height: 250, width: '100%' }}>
+                  <DataGrid
+                    editMode="row"
+                    rows={rows}
+                    columns={columns}
+                    // disableRowSelectionOnClick
+                    // autoHeight
+                    hideFooterPagination
+                    processRowUpdate={handleProcessRowUpdate}
+                    onProcessRowUpdateError={handleProcessRowUpdateError}
+                    onRowClick={handleRowClick}
+                    sx={{
+                      '& .MuiDataGrid-root': {
+                        fontSize: '12px',
+                      },
+                      '& .MuiDataGrid-cell': {
+                        fontSize: '12px',
+                      },
+                      '& .MuiDataGrid-columnHeaders': {
+                        fontSize: '12px',
+                        font: 'bold',
+                      },
+                    }}
+                  />
+                </Container>
 
 
-              <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between">
-                <Typography sx={{ alignSelf: "left" }}>
-                  In Words:
-                </Typography >
-                <Typography sx={{ alignSelf: "left" }}>{inWordsAmount} only</Typography>
-                <Stack paddingTop={2} spacing={2} direction="column">
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "right" }}>
-                      Taxable Amount:
-                    </Typography >
-                    <Typography sx={{ alignSelf: "center" }}>
-                      {taxableAmount}
-                    </Typography >
-                  </Stack>
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
-                      Discount:
-                    </Typography >
-                    <TextField id="outlined-basic" variant="standard" size="small" value={discount} onChange={handleDiscount} />
-                  </Stack>
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
-                      NET AMOUNT:
-                    </Typography >
-                    <Typography sx={{ alignSelf: "center" }}>
-                      {netAmount}
-                    </Typography >
-                  </Stack>
-                </Stack>
-              </Stack>
-
-
-
-              <Container style={{ fontSize: 12, paddingTop: 20, alignSelf: "flex-start", height: 200, width: '50%' }}>
-                <DataGrid
-                  editMode="row"
-                  rows={oldRows}
-                  columns={oldColumns}
-                  // disableRowSelectionOnClick
-                  // autoHeight
-                  hideFooterPagination
-                  processRowUpdate={handleProcessOldRowUpdate}
-                  onProcessRowUpdateError={handleProcessOldRowUpdateError}
-                  onRowClick={handleOldRowClick}
-                  sx={{
-                    '& .MuiDataGrid-root': {
-                      fontSize: '12px',
-                    },
-                    '& .MuiDataGrid-cell': {
-                      fontSize: '12px',
-                    },
-                    '& .MuiDataGrid-columnHeaders': {
-                      fontSize: '12px',
-                    },
-                  }}
-                />
-              </Container>
-
-
-              <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between">
-                <Stack spacing={2} direction="row">
+                <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between">
                   <Typography sx={{ alignSelf: "left" }}>
-                    Old Gold Total Weight:
+                    In Words:
                   </Typography >
-                  <Typography sx={{ alignSelf: "center" }}>
-                    {oldGoldTotalWeight}
-                  </Typography >
-                </Stack>
-                <Stack spacing={2} direction="column">
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "right" }}>
-                      Old Reduced:
-                    </Typography >
-                    <Typography sx={{ alignSelf: "center" }}>
-                      {oldReduced}
-                    </Typography >
+                  <Typography sx={{ alignSelf: "left" }}>{inWordsAmount} only</Typography>
+                  <Stack paddingTop={2} spacing={2} direction="column">
+                    <Stack spacing={2} direction="row">
+                      <Typography sx={{ alignSelf: "right" }}>
+                        Taxable Amount:
+                      </Typography >
+                      <Typography sx={{ alignSelf: "center" }}>
+                        {taxableAmount}
+                      </Typography >
+                    </Stack>
+                    <Stack spacing={2} direction="row">
+                      <Typography sx={{ alignSelf: "center" }}>
+                        Discount:
+                      </Typography >
+                      <TextField id="outlined-basic" variant="standard" size="small" value={discount} onChange={handleDiscount} />
+                    </Stack>
+                    <Stack spacing={2} direction="row">
+                      <Typography sx={{ alignSelf: "center" }}>
+                        NET AMOUNT:
+                      </Typography >
+                      <Typography sx={{ alignSelf: "center" }}>
+                        {netAmount}
+                      </Typography >
+                    </Stack>
                   </Stack>
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
-                      TOTAL:
-                    </Typography >
-                    <Typography sx={{ alignSelf: "center" }}>
-                      {total}
-                    </Typography >
-                  </Stack>
                 </Stack>
-              </Stack>
 
-            </Stack>
-          </Box>
-        </CardContent>
-      </Card>
-      <Stack padding={2} spacing={2} direction="column">
-        <Button variant="text" onClick={handleSave}>
+
+
+                <Container style={{ fontSize: 12, paddingTop: 20, alignSelf: "flex-start", height: 200, width: '50%' }}>
+                  <DataGrid
+                    editMode="row"
+                    rows={oldRows}
+                    columns={oldColumns}
+                    // disableRowSelectionOnClick
+                    // autoHeight
+                    hideFooterPagination
+                    processRowUpdate={handleProcessOldRowUpdate}
+                    onProcessRowUpdateError={handleProcessOldRowUpdateError}
+                    onRowClick={handleOldRowClick}
+                    sx={{
+                      '& .MuiDataGrid-root': {
+                        fontSize: '12px',
+                      },
+                      '& .MuiDataGrid-cell': {
+                        fontSize: '12px',
+                      },
+                      '& .MuiDataGrid-columnHeaders': {
+                        fontSize: '12px',
+                      },
+                    }}
+                  />
+                </Container>
+
+
+                <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between">
+                  <Stack spacing={2} direction="row">
+                    <Typography sx={{ alignSelf: "left" }}>
+                      Old Gold Total Weight:
+                    </Typography >
+                    <Typography sx={{ alignSelf: "center" }}>
+                      {oldGoldTotalWeight}
+                    </Typography >
+                  </Stack>
+                  <Stack spacing={2} direction="column">
+                    <Stack spacing={2} direction="row">
+                      <Typography sx={{ alignSelf: "right" }}>
+                        Old Reduced:
+                      </Typography >
+                      <Typography sx={{ alignSelf: "center" }}>
+                        {oldReduced}
+                      </Typography >
+                    </Stack>
+                    <Stack spacing={2} direction="row">
+                      <Typography sx={{ alignSelf: "center" }}>
+                        TOTAL:
+                      </Typography >
+                      <Typography sx={{ alignSelf: "center" }}>
+                        {total}
+                      </Typography >
+                    </Stack>
+                  </Stack>
+                </Stack>
+
+              </Stack>
+            </Box>
+          </CardContent>
+        </Card>
+       
+       <Stack padding={2} spacing={2} direction="column">
+         <Button variant="text" onClick={handleSave}>
           <SaveIcon sx={{ height: 40, width: 40 }} />
         </Button>
-        
-        <Button variant="text" onClick={handleAddRow}><LibraryAddIcon sx={{ height: 40, width: 40 }} /></Button>
-        <Button variant="text" onClick={handleDeleteRow}><DeleteIcon sx={{ height: 40, width: 40 }} /></Button>
-        <Button variant="text" onClick={handleAddOldRow}><LibraryAddIcon sx={{ height: 40, width: 40 }} /></Button>
+
+       <Button variant="text" onClick={handleAddRow}><LibraryAddIcon sx={{ height: 40, width: 40 }} /></Button>
+       <Button variant="text" onClick={handleDeleteRow}><DeleteIcon sx={{ height: 40, width: 40 }} /></Button>
+         <Button variant="text" onClick={handleAddOldRow}><LibraryAddIcon sx={{ height: 40, width: 40 }} /></Button>
         <Button variant="text" onClick={handleDeleteOldRow}><DeleteIcon sx={{ height: 40, width: 40 }} /></Button>
       </Stack>
     </Stack>
+
   )
 }
 
