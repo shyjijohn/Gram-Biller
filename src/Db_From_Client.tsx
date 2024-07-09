@@ -12,6 +12,8 @@ const isLocal = true;
 class LocalService {
 
     static stocks: Stock[] = []
+    static stockNamesColl: string[] = []
+
     static rates: Rates
     static billData: BillData
 
@@ -23,7 +25,10 @@ class LocalService {
     static viewBillUsingDateColl: viewBills[] = []
 
     public static getStockNames(): string[] {
-        return ["Ring", "Bangle", "Earring", "Chain"]
+        (LocalService.stocks).map(items => {
+            LocalService.stockNamesColl.push(items.Name)
+        })
+        return LocalService.stockNamesColl
     }
 
     public static updatingRate(ratesIn: Rates) {

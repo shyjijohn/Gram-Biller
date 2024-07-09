@@ -20,6 +20,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { viewBills } from './BillData';
 import { ServiceManager } from '../Db_From_Client';
+import dayjs, { Dayjs } from 'dayjs';
 
 
 
@@ -63,8 +64,8 @@ export default function ViewBills() {
   const [error, setError] = useState(false);
   const [helperText, setHelperText] = useState('');
   const [rows, setRows] = useState<viewBills[]>([]);
-  const [selectedDateFrom, setSelectedDateFrom] = useState(null);
-  const [selectedDateTo, setSelectedDateTo] = useState(null);
+  const [selectedDateFrom, setSelectedDateFrom] = useState<Dayjs | null>();
+  const [selectedDateTo, setSelectedDateTo] = useState<Dayjs | null>();
 
 
   const PORT = 3000;
@@ -98,12 +99,16 @@ export default function ViewBills() {
     return phoneRegex.test(number);
   };
 
-  const handleDateChangeFrom = (newDate:any) => {
+  const handleDateChangeFrom = (newDate: Dayjs | null) => {
+    // if (newDate !== null) {
     setSelectedDateFrom(newDate);
+    // }
   };
 
-  const handleDateChangeTo = (newDate:any) => {
+  const handleDateChangeTo = (newDate: Dayjs | null) => {
+    // if (newDate !== null) {
     setSelectedDateTo(newDate);
+    // }
   };
 
   function handleNameSearch() {
@@ -232,10 +237,12 @@ export default function ViewBills() {
     // });
 
     var viewBillsUsingDatesArr: viewBills[] = [];
-    viewBillsUsingDatesArr = ServiceManager.viewBillUsingDates(selectedDateFrom, selectedDateTo)
-    setRows(viewBillsUsingDatesArr)
+    if (selectedDateFrom != null && selectedDateTo != null) {
+      viewBillsUsingDatesArr = ServiceManager.viewBillUsingDates(String(selectedDateFrom), String(selectedDateTo))
+      setRows(viewBillsUsingDatesArr)
+    }
   };
-  
+
 
   return (
     <Stack padding={2} spacing={2} direction="row" >
@@ -285,7 +292,7 @@ export default function ViewBills() {
                   </LocalizationProvider>
                 </Stack>
                 <Stack>
-                <Button variant="text" onClick={handleDatesSearch}>
+                  <Button variant="text" onClick={handleDatesSearch}>
                     <PageviewOutlinedIcon sx={{ alignSelf: "center", height: 40, width: 40 }} />
                   </Button>
                 </Stack>

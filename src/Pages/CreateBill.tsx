@@ -547,8 +547,6 @@ export default function CreateBill() {
   function handleDate(newValue: Dayjs | null) {
     console.log("handleDate", newValue);
     // console.log("Selected date to date", newValue?.toDate())
-
-
     setDate(newValue);
   };
 
