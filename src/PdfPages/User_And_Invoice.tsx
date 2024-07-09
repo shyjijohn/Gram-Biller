@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { FC, ReactElement } from 'react'
 import { View, Text, StyleSheet } from '@react-pdf/renderer'
+import { BillData } from '../Pages/BillData';
+import dayjs from 'dayjs';
 
 
 
@@ -20,7 +22,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Helvetica',
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        },
+    },
     user: {
         fontFamily: 'Helvetica',
         textAlign: 'left',
@@ -46,8 +48,8 @@ const styles = StyleSheet.create({
         borderBottomColor: '#000',
         borderBottomStyle: 'solid',
         // backgroundColor: 'brown',
-      },
-      textfield_short: {
+    },
+    textfield_short: {
         width: 80,
         fontSize: 11,
         textAlign: 'left',
@@ -55,58 +57,109 @@ const styles = StyleSheet.create({
         borderBottomColor: '#000',
         borderBottomStyle: 'solid',
         // backgroundColor: 'brown',
-      }
+    }
 });
 
 
+type UserInvoiceProps = {
+    bill: BillData
+}
 
-export default function User_And_Invoice() {
+
+function convertDateToString(dateStr: string | undefined): string {
+    if(dateStr == undefined){
+        return ''
+    }
+
+
+    var sqlDateTime = new Date(dateStr);
+    console.log("sqlDateTime...2", sqlDateTime)
+    const year = sqlDateTime.getFullYear();
+    const month = String(sqlDateTime.getMonth() + 1).padStart(2, '0');
+    const day = String(sqlDateTime.getDate()).padStart(2, '0');
+    console.log(`hhi${year}-${month}-${day}`)
+    return (`${year}-${month}-${day}`);
+    // }
+}
+
+const User_And_Invoice: FC<UserInvoiceProps> = ({ bill }): ReactElement => {
+   
+
+
+
+    //console.log("dayjs toDate: ", bill.Date?.toDate());
+    
+    // const dd = dayjs('2019-01-25');
+    
+    // console.log("new dayjs : ", dd);
+    // console.log("new dayjs toDate: ", dd.toDate());
+
+    // const newDate = dayjs(bill.Date)
+    // console.log("new dayjs toDate: ", newDate.toDate());
+
+
+
+    // // const dd = new dayjs.Dayjs();
+    // // console.log("new dayjs : ", dd);
+    // // console.log("new dayjs : ", dd.toDate());
+
+
+    // console.log("bill typeof: ", typeof(bill));
+    // console.log("dayjs typeof: ", typeof(bill.Date));
+    // // console.log("dayjs instanceof: ", instanceof(bill.Date));
+    // console.log("dayjs : ", bill.Date);
+    // console.log("dayjs toJSON: ", bill.Date?.toJSON());
+    // console.log("dayjs toString: ", bill.Date?.toString());
+
+    //     console.log("|Date from Comp : ", convertDateToString(bill.Date));
 
     return (
         <View style={styles.viewCol}>
             <View style={styles.viewRow1}>
                 <View style={styles.viewRow2}>
                     <Text style={styles.user}>Name:</Text>
-                    <Text style={styles.textfield_long}>Name</Text>
+                    <Text style={styles.textfield_long}>{bill.Name}</Text>
                 </View>
                 <View style={styles.viewRow2}>
                     <Text style={styles.invoice}>Invoice No:</Text>
-                    <Text style={styles.textfield_short}>Invoice No</Text>
+                    <Text style={styles.textfield_short}>{bill.Invoice_No}</Text>
                 </View>
             </View>
-            
+
             <View style={styles.viewRow1}>
                 <View style={styles.viewRow2}>
                     <Text style={styles.user}>Phone:</Text>
-                    <Text style={styles.textfield_long}>Phone</Text>
+                    <Text style={styles.textfield_long}>{bill.Phone}</Text>
                 </View>
                 <View style={styles.viewRow2}>
                     <Text style={styles.invoice}>Date:</Text>
-                    <Text style={styles.textfield_short}>Date</Text>
+                    <Text style={styles.textfield_short}>{convertDateToString(bill.Date)}</Text>
                 </View>
             </View>
 
             <View style={styles.viewRow1}>
                 <View style={styles.viewRow2}>
                     <Text style={styles.user}>Address:</Text>
-                    <Text style={styles.textfield_long}>Address</Text>
+                    <Text style={styles.textfield_long}>{bill.Address}</Text>
                 </View>
                 <View style={styles.viewRow2}>
                     <Text style={styles.invoice}>Gold Rate:</Text>
-                    <Text style={styles.textfield_short}>Gold Rate</Text>
+                    <Text style={styles.textfield_short}>{bill.Gold_Rate}</Text>
                 </View>
             </View>
 
             <View style={styles.viewRow1}>
                 <View style={styles.viewRow2}>
                     <Text style={styles.user}></Text>
-                    <Text style={styles.textfield_long}>Name</Text>
+                    <Text style={styles.textfield_long}>{bill.Address}</Text>
                 </View>
                 <View style={styles.viewRow2}>
                     <Text style={styles.invoice}>Silver Rate:</Text>
-                    <Text style={styles.textfield_short}>Silver Rate</Text>
+                    <Text style={styles.textfield_short}>{bill.Silver_Rate}</Text>
                 </View>
             </View>
         </View>
     )
-}
+};
+
+export default User_And_Invoice

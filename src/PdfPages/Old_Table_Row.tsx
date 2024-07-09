@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { FC, ReactElement } from 'react'
 import {Text, View, StyleSheet } from '@react-pdf/renderer';
+import { OldBillItem } from '../Pages/BillData';
 
 
 
@@ -49,15 +50,27 @@ amount: {
 
 
 
-export default function Old_Table_Row() {
+type oldbillitemsFromNewBill = {
+    oldBillItem: OldBillItem
+  } 
+
+
+const Old_Table_Row: FC<oldbillitemsFromNewBill> = ({ oldBillItem }): ReactElement => {
+
+
+
+
+
   return (
     <View style={styles.view}>
-            <Text style={styles.particulars}>Earring</Text>
-            <Text style={styles.wt}>12</Text>
-            <Text style={styles.wastage}>2.3</Text>
-            <Text style={styles.total_wt}>33</Text>
-            <Text style={styles.rate}>6.00</Text>
-            <Text style={styles.amount}>56.00</Text>
+            <Text style={styles.particulars}>{oldBillItem.particulars}</Text>
+            <Text style={styles.wt}>{oldBillItem.wt}</Text>
+            <Text style={styles.wastage}>{oldBillItem.wastage}</Text>
+            <Text style={styles.total_wt}>{oldBillItem.total_wt}</Text>
+            <Text style={styles.rate}>{oldBillItem.rate}</Text>
+            <Text style={styles.amount}>{oldBillItem.amount}</Text>
         </View>
   )
 }
+
+export default Old_Table_Row

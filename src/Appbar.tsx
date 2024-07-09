@@ -30,7 +30,7 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import PercentIcon from '@mui/icons-material/Percent';
 import SettingsIcon from '@mui/icons-material/Settings';
 
-import { useNavigate, useLocation } from 'react-router-dom'; 
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { Routes, Route, Link } from "react-router-dom";
 import HomePage from './Pages/HomePage';
@@ -42,6 +42,8 @@ import ViewBalance from './Pages/ViewBalance';
 import ViewSales from './Pages/ViewSales';
 import UserSettings from './Pages/UserSettings';
 import NoPage from './Pages/NoPage';
+import PdfMainPage from './PdfPages/Pdf_Main_Page'
+import { PDFViewer } from '@react-pdf/renderer';
 
 const drawerWidth = 240;
 
@@ -111,35 +113,35 @@ export default function Appbar() {
   const navigate = useNavigate();
 
   const navigateToHome = () => {
-    navigate('/home');  
+    navigate('/home');
   };
 
   const navigateToCreateBill = () => {
-    navigate('/createBill');  
+    navigate('/createBill');
   };
 
   const navigateToAddStock = () => {
-    navigate('/addStock');  
+    navigate('/addStock');
   };
 
   const navigateToViewBills = () => {
-    navigate('/viewBills');  
+    navigate('/viewBills');
   };
 
   const navigateToViewStocks = () => {
-    navigate('/viewStocks');  
+    navigate('/viewStocks');
   };
 
   const navigateToViewBalance = () => {
-    navigate('/viewBalance');  
+    navigate('/viewBalance');
   };
 
   const navigateToViewSales = () => {
-    navigate('/viewSales');  
+    navigate('/viewSales');
   };
 
   const navigateToUserSettings = () => {
-    navigate('/userSettings');  
+    navigate('/userSettings');
   };
 
 
@@ -186,54 +188,54 @@ export default function Appbar() {
         <List>
           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => ( */}
           <ListItemButton onClick={navigateToHome} style={{ backgroundColor: location.pathname === '/home' ? 'DodgerBlue' : 'white' }}>
-          <ListItemIcon>
-                  {/* {index % 2 === 0 ?  */}
-                  <HomeIcon /> 
-                  {/* : <MailIcon />} */}
-                </ListItemIcon>
+            <ListItemIcon>
+              {/* {index % 2 === 0 ?  */}
+              <HomeIcon />
+              {/* : <MailIcon />} */}
+            </ListItemIcon>
             <ListItem disablePadding>
               Home Page
-              
-                
-                <ListItemText/>
+
+
+              <ListItemText />
             </ListItem>
-            </ListItemButton>
+          </ListItemButton>
 
           {/* ))} */}
         </List>
         <List>
           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => ( */}
           <ListItemButton onClick={navigateToCreateBill} style={{ backgroundColor: location.pathname === '/createBill' ? 'DodgerBlue' : 'white' }}>
-          <ListItemIcon>
-                  {/* {index % 2 === 0 ?  */}
-                  <CreateIcon /> 
-                  {/* : <MailIcon />} */}
-                </ListItemIcon>
+            <ListItemIcon>
+              {/* {index % 2 === 0 ?  */}
+              <CreateIcon />
+              {/* : <MailIcon />} */}
+            </ListItemIcon>
             <ListItem disablePadding>
               Create Bill
-              
-                
-                <ListItemText/>
+
+
+              <ListItemText />
             </ListItem>
-            </ListItemButton>
+          </ListItemButton>
 
           {/* ))} */}
         </List>
         <List>
           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => ( */}
           <ListItemButton onClick={navigateToAddStock} style={{ backgroundColor: location.pathname === '/addStock' ? 'DodgerBlue' : 'white' }}>
-          <ListItemIcon>
-                  {/* {index % 2 === 0 ?  */}
-                  <AddBoxIcon /> 
-                  {/* : <MailIcon />} */}
-                </ListItemIcon>
+            <ListItemIcon>
+              {/* {index % 2 === 0 ?  */}
+              <AddBoxIcon />
+              {/* : <MailIcon />} */}
+            </ListItemIcon>
             <ListItem disablePadding>
               Add Stock
-              
-                
-                <ListItemText/>
+
+
+              <ListItemText />
             </ListItem>
-            </ListItemButton>
+          </ListItemButton>
 
           {/* ))} */}
         </List>
@@ -241,18 +243,18 @@ export default function Appbar() {
         <List>
           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => ( */}
           <ListItemButton onClick={navigateToViewBills} style={{ backgroundColor: location.pathname === '/viewBills' ? 'DodgerBlue' : 'white' }}>
-          <ListItemIcon>
-                  {/* {index % 2 === 0 ?  */}
-                  <CommentIcon /> 
-                  {/* : <MailIcon />} */}
-                </ListItemIcon>
+            <ListItemIcon>
+              {/* {index % 2 === 0 ?  */}
+              <CommentIcon />
+              {/* : <MailIcon />} */}
+            </ListItemIcon>
             <ListItem disablePadding>
               View Bills
-              
-                
-                <ListItemText/>
+
+
+              <ListItemText />
             </ListItem>
-            </ListItemButton>
+          </ListItemButton>
 
           {/* ))} */}
         </List>
@@ -260,18 +262,18 @@ export default function Appbar() {
         <List>
           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => ( */}
           <ListItemButton onClick={navigateToViewStocks} style={{ backgroundColor: location.pathname === '/viewStocks' ? 'DodgerBlue' : 'white' }}>
-          <ListItemIcon>
-                  {/* {index % 2 === 0 ?  */}
-                  <VisibilityIcon /> 
-                  {/* : <MailIcon />} */}
-                </ListItemIcon>
+            <ListItemIcon>
+              {/* {index % 2 === 0 ?  */}
+              <VisibilityIcon />
+              {/* : <MailIcon />} */}
+            </ListItemIcon>
             <ListItem disablePadding>
               View Stocks
-              
-                
-                <ListItemText/>
+
+
+              <ListItemText />
             </ListItem>
-            </ListItemButton>
+          </ListItemButton>
 
           {/* ))} */}
         </List>
@@ -279,18 +281,18 @@ export default function Appbar() {
         <List>
           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => ( */}
           <ListItemButton onClick={navigateToViewBalance} style={{ backgroundColor: location.pathname === '/viewBalance' ? 'DodgerBlue' : 'white' }}>
-          <ListItemIcon>
-                  {/* {index % 2 === 0 ?  */}
-                  <AccountBalanceIcon /> 
-                  {/* : <MailIcon />} */}
-                </ListItemIcon>
+            <ListItemIcon>
+              {/* {index % 2 === 0 ?  */}
+              <AccountBalanceIcon />
+              {/* : <MailIcon />} */}
+            </ListItemIcon>
             <ListItem disablePadding>
               View Balance
-              
-                
-                <ListItemText/>
+
+
+              <ListItemText />
             </ListItem>
-            </ListItemButton>
+          </ListItemButton>
 
           {/* ))} */}
         </List>
@@ -298,18 +300,18 @@ export default function Appbar() {
         <List>
           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => ( */}
           <ListItemButton onClick={navigateToViewSales} style={{ backgroundColor: location.pathname === '/viewSales' ? 'DodgerBlue' : 'white' }}>
-          <ListItemIcon>
-                  {/* {index % 2 === 0 ?  */}
-                  <PercentIcon /> 
-                  {/* : <MailIcon />} */}
-                </ListItemIcon>
+            <ListItemIcon>
+              {/* {index % 2 === 0 ?  */}
+              <PercentIcon />
+              {/* : <MailIcon />} */}
+            </ListItemIcon>
             <ListItem disablePadding>
               View Sales
-              
-                
-                <ListItemText/>
+
+
+              <ListItemText />
             </ListItem>
-            </ListItemButton>
+          </ListItemButton>
 
           {/* ))} */}
         </List>
@@ -317,18 +319,16 @@ export default function Appbar() {
         <List>
           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => ( */}
           <ListItemButton onClick={navigateToUserSettings} style={{ backgroundColor: location.pathname === '/userSettings' ? 'DodgerBlue' : 'white' }}>
-          <ListItemIcon>
-                  {/* {index % 2 === 0 ?  */}
-                  <SettingsIcon /> 
-                  {/* : <MailIcon />} */}
-                </ListItemIcon>
+            <ListItemIcon>
+              {/* {index % 2 === 0 ?  */}
+              <SettingsIcon />
+              {/* : <MailIcon />} */}
+            </ListItemIcon>
             <ListItem disablePadding>
               User settings
-              
-                
-                <ListItemText/>
+              <ListItemText />
             </ListItem>
-            </ListItemButton>
+          </ListItemButton>
 
           {/* ))} */}
         </List>
@@ -343,16 +343,20 @@ export default function Appbar() {
         </Typography> */}
 
         <Routes>
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/createBill" element={<CreateBill />} />
-        <Route path="/addStock" element={<AddStock />} />
-        <Route path="/viewBills" element={<ViewBills />} />
-        <Route path="/viewStocks" element={<ViewStocks />} />
-        <Route path="/viewBalance" element={<ViewBalance />} />
-        <Route path="/viewSales" element={<ViewSales />} />
-        <Route path="/userSettings" element={<UserSettings />} />
-        <Route path="*" element={<NoPage />} />
-      </Routes>
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/createBill" element={<CreateBill />} />
+          <Route path="/addStock" element={<AddStock />} />
+          <Route path="/viewBills" element={<ViewBills />} />
+          <Route path="/viewStocks" element={<ViewStocks />} />
+          <Route path="/viewBalance" element={<ViewBalance />} />
+          <Route path="/viewSales" element={<ViewSales />} />
+          <Route path="/userSettings" element={<UserSettings />} />
+          <Route path="*" element={<NoPage />} />
+          <Route path="/pdfMainPage" element={
+          
+            <PdfMainPage />
+          } />
+        </Routes>
       </Main>
     </Box>
   )

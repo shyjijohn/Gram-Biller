@@ -18,21 +18,11 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useState } from 'react';
 import axios from 'axios';
+import { viewBills } from './BillData';
+import { ServiceManager } from '../Db_From_Client';
 
 
-interface viewBills {
-  id: number;
-  name: string;
-  phoneNo: number;
-  invoiceNo: number;
-  date: string;
-  address: string;
-  goldWeight: number;
-  silverWeight: number;
-  oldItemWeight: number;
-  discount: number;
-  billAmount: number;
-}
+
 
 
 
@@ -118,111 +108,132 @@ export default function ViewBills() {
 
   function handleNameSearch() {
     setRows([])
-    axios.get(`http://localhost:${PORT}/GetViewBillUsingName?Name=${name}`).then((response) => {
-      console.log("response.data.....", response.data);
 
-      var viewBillsUsingNameArr: viewBills[] = [];
+    // axios.get(`http://localhost:${PORT}/GetViewBillUsingName?Name=${name}`).then((response) => {
+    //   console.log("response.data.....", response.data);
 
-      (response.data).forEach((data: any) => {
-        const BillUsingName: viewBills = {
-          id: data.Create_Bill_id,
-          name: data.Name,
-          phoneNo: data.Phone,
-          invoiceNo: data.Invoice_No,
-          date: data.Date,
-          address: data.Address,
-          goldWeight: data.Gold_Rate,
-          silverWeight: data.Silver_Rate,
-          oldItemWeight: data.Old_Gold_Total_Weight,
-          discount: data.Discount,
-          billAmount: data.Total
-        }
-        viewBillsUsingNameArr.push(BillUsingName)
-      })
-      setRows(viewBillsUsingNameArr)
-    });
+    //   var viewBillsUsingNameArr: viewBills[] = [];
+
+    //   (response.data).forEach((data: any) => {
+    //     const BillUsingName: viewBills = {
+    //       id: data.Create_Bill_id,
+    //       name: data.Name,
+    //       phoneNo: data.Phone,
+    //       invoiceNo: data.Invoice_No,
+    //       date: data.Date,
+    //       address: data.Address,
+    //       goldWeight: data.Gold_Rate,
+    //       silverWeight: data.Silver_Rate,
+    //       oldItemWeight: data.Old_Gold_Total_Weight,
+    //       discount: data.Discount,
+    //       billAmount: data.Total
+    //     }
+    //     viewBillsUsingNameArr.push(BillUsingName)
+    //   })
+    //   setRows(viewBillsUsingNameArr)
+    // });
+
+    var viewBillsUsingNameArr: viewBills[] = [];
+    viewBillsUsingNameArr = ServiceManager.viewBillUsingName(name)
+    console.log("viewBillsUsingNameArr", viewBillsUsingNameArr)
+    setRows(viewBillsUsingNameArr)
   };
 
 
 
   function handleInvoiceNoSearch() {
     setRows([])
-    axios.get(`http://localhost:${PORT}/GetViewBillUsingInvoiceNo?Invoice_No=${invoiceNo}`).then((response) => {
-      console.log("response.data.....", response.data);
-      var viewBillsUsingInvoiceArr: viewBills[] = [];
 
-      (response.data).forEach((data: any) => {
-        const BillUsingInvoice: viewBills = {
-          id: data.Create_Bill_id,
-          name: data.Name,
-          phoneNo: data.Phone,
-          invoiceNo: data.Invoice_No,
-          date: data.Date,
-          address: data.Address,
-          goldWeight: data.Gold_Rate,
-          silverWeight: data.Silver_Rate,
-          oldItemWeight: data.Old_Gold_Total_Weight,
-          discount: data.Discount,
-          billAmount: data.Total
-        }
-        viewBillsUsingInvoiceArr.push(BillUsingInvoice)
-      })
-      setRows(viewBillsUsingInvoiceArr)
-    });
+    // axios.get(`http://localhost:${PORT}/GetViewBillUsingInvoiceNo?Invoice_No=${invoiceNo}`).then((response) => {
+    //   console.log("response.data.....", response.data);
+    //   var viewBillsUsingInvoiceArr: viewBills[] = [];
+
+    //   (response.data).forEach((data: any) => {
+    //     const BillUsingInvoice: viewBills = {
+    //       id: data.Create_Bill_id,
+    //       name: data.Name,
+    //       phoneNo: data.Phone,
+    //       invoiceNo: data.Invoice_No,
+    //       date: data.Date,
+    //       address: data.Address,
+    //       goldWeight: data.Gold_Rate,
+    //       silverWeight: data.Silver_Rate,
+    //       oldItemWeight: data.Old_Gold_Total_Weight,
+    //       discount: data.Discount,
+    //       billAmount: data.Total
+    //     }
+    //     viewBillsUsingInvoiceArr.push(BillUsingInvoice)
+    //   })
+    //   setRows(viewBillsUsingInvoiceArr)
+    // });
+
+    var viewBillsUsingInvoiceArr: viewBills[] = [];
+    viewBillsUsingInvoiceArr = ServiceManager.viewBillUsingInvoice(invoiceNo)
+    setRows(viewBillsUsingInvoiceArr)
   };
 
 
   function handlePhoneNoSearch() {
     setRows([])
-    axios.get(`http://localhost:${PORT}/GetViewBillUsingPhoneNo?Phone=${phone}`).then((response) => {
-      console.log("response.data.....", response.data);
-      var viewBillsUsingPhoneArr: viewBills[] = [];
 
-      (response.data).forEach((data: any) => {
-        const BillUsingPhone: viewBills = {
-          id: data.Create_Bill_id,
-          name: data.Name,
-          phoneNo: data.Phone,
-          invoiceNo: data.Invoice_No,
-          date: data.Date,
-          address: data.Address,
-          goldWeight: data.Gold_Rate,
-          silverWeight: data.Silver_Rate,
-          oldItemWeight: data.Old_Gold_Total_Weight,
-          discount: data.Discount,
-          billAmount: data.Total
-        }
-        viewBillsUsingPhoneArr.push(BillUsingPhone)
-      })
-      setRows(viewBillsUsingPhoneArr)
-    });
+    // axios.get(`http://localhost:${PORT}/GetViewBillUsingPhoneNo?Phone=${phone}`).then((response) => {
+    //   console.log("response.data.....", response.data);
+    //   var viewBillsUsingPhoneArr: viewBills[] = [];
+
+    //   (response.data).forEach((data: any) => {
+    //     const BillUsingPhone: viewBills = {
+    //       id: data.Create_Bill_id,
+    //       name: data.Name,
+    //       phoneNo: data.Phone,
+    //       invoiceNo: data.Invoice_No,
+    //       date: data.Date,
+    //       address: data.Address,
+    //       goldWeight: data.Gold_Rate,
+    //       silverWeight: data.Silver_Rate,
+    //       oldItemWeight: data.Old_Gold_Total_Weight,
+    //       discount: data.Discount,
+    //       billAmount: data.Total
+    //     }
+    //     viewBillsUsingPhoneArr.push(BillUsingPhone)
+    //   })
+    //   setRows(viewBillsUsingPhoneArr)
+    // });
+
+    var viewBillsUsingPhoneArr: viewBills[] = [];
+    viewBillsUsingPhoneArr = ServiceManager.viewBillUsingPhone(phone)
+    setRows(viewBillsUsingPhoneArr)
   };
 
 
   function handleDatesSearch() {
     setRows([])
-    axios.get(`http://localhost:${PORT}/GetViewBillUsingDates?Date=${selectedDateFrom}&Date=${selectedDateTo}`).then((response) => {
-      console.log("response.data.....", response.data);
-      var viewBillsUsingDatesArr: viewBills[] = [];
 
-      (response.data).forEach((data: any) => {
-        const BillUsingDates: viewBills = {
-          id: data.Create_Bill_id,
-          name: data.Name,
-          phoneNo: data.Phone,
-          invoiceNo: data.Invoice_No,
-          date: data.Date,
-          address: data.Address,
-          goldWeight: data.Gold_Rate,
-          silverWeight: data.Silver_Rate,
-          oldItemWeight: data.Old_Gold_Total_Weight,
-          discount: data.Discount,
-          billAmount: data.Total
-        }
-        viewBillsUsingDatesArr.push(BillUsingDates)
-      })
-      setRows(viewBillsUsingDatesArr)
-    });
+    // axios.get(`http://localhost:${PORT}/GetViewBillUsingDates?Date=${selectedDateFrom}&Date=${selectedDateTo}`).then((response) => {
+    //   console.log("response.data.....", response.data);
+    //   var viewBillsUsingDatesArr: viewBills[] = [];
+
+    //   (response.data).forEach((data: any) => {
+    //     const BillUsingDates: viewBills = {
+    //       id: data.Create_Bill_id,
+    //       name: data.Name,
+    //       phoneNo: data.Phone,
+    //       invoiceNo: data.Invoice_No,
+    //       date: data.Date,
+    //       address: data.Address,
+    //       goldWeight: data.Gold_Rate,
+    //       silverWeight: data.Silver_Rate,
+    //       oldItemWeight: data.Old_Gold_Total_Weight,
+    //       discount: data.Discount,
+    //       billAmount: data.Total
+    //     }
+    //     viewBillsUsingDatesArr.push(BillUsingDates)
+    //   })
+    //   setRows(viewBillsUsingDatesArr)
+    // });
+
+    var viewBillsUsingDatesArr: viewBills[] = [];
+    viewBillsUsingDatesArr = ServiceManager.viewBillUsingDates(selectedDateFrom, selectedDateTo)
+    setRows(viewBillsUsingDatesArr)
   };
   
 

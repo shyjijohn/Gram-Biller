@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { FC, ReactElement } from 'react'
 import {Text, View, StyleSheet } from '@react-pdf/renderer';
+import { BillData } from '../Pages/BillData';
 
 
 
@@ -41,16 +42,24 @@ const styles = StyleSheet.create({
 
 
 
-export default function Total() {
+type TotalProps = {
+    bill: BillData
+}
+
+
+
+const Total: FC<TotalProps> = ({ bill }): ReactElement => {
+
+
   return (
     <View style={styles.view1}>
             <View style={styles.view2_space}>
                 <View style={styles.view2}>
                     <Text style={styles.old_gold_wt}>Old Gold Total Weight:</Text>
-                    <Text style={styles.old_gold_wt_value}>0.000</Text>
+                    <Text style={styles.old_gold_wt_value}>{bill.Old_Gold_Total_Weight}</Text>
                 </View>
                 <Text>Old Reduced:</Text>
-                <Text>$0.00</Text>
+                <Text>{bill.Old_Reduced}</Text>
             </View>
             <View style={styles.view2_space}>
                 <Text style={styles.view3}></Text>
@@ -59,8 +68,10 @@ export default function Total() {
             <View style={styles.view2_space}>
                 <Text style={styles.view3}></Text>
                 <Text>TOTAL:</Text>
-                <Text>$0.00</Text>
+                <Text>{bill.Total}</Text>
             </View>
         </View>
   )
 }
+
+export default Total

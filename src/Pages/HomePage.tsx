@@ -40,6 +40,8 @@ import Stack from '@mui/material/Stack';
 import PageviewOutlinedIcon from '@mui/icons-material/PageviewOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios'
+import { ServiceManager } from '../Db_From_Client';
+import { Rates } from './BillData';
 
 
 export default function HomePage() {
@@ -60,18 +62,23 @@ export default function HomePage() {
 
   function updatingRateBtn()
   {
-    console.log("inside updatingRateBtn.....")     
-
-    axios.put(`http://localhost:${PORT}/AddRateUpdates`, {
+    const RatesFromHomePage: Rates = {
       Gold_Rate: goldRate,
-      Silver_Rate: silverRate
-  })
-  .then((response) => {
-    console.log('Data posted:', response.data);
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
+      Silver_Rate: silverRate,
+    }
+    ServiceManager.updatingRate(RatesFromHomePage)
+  //   console.log("inside updatingRateBtn.....")     
+
+  //   axios.put(`http://localhost:${PORT}/AddRateUpdates`, {
+  //     Gold_Rate: goldRate,
+  //     Silver_Rate: silverRate
+  // })
+  // .then((response) => {
+  //   console.log('Data posted:', response.data);
+  // })
+  // .catch((error) => {
+  //   console.error('Error:', error);
+  // });
   }
   
   return (

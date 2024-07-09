@@ -4,19 +4,17 @@ import Appbar from './Appbar';
 import { PDFViewer } from '@react-pdf/renderer';
 import PdfMainPage from './PdfPages/Pdf_Main_Page'
 import './App.css';
+import { BillData } from './Pages/BillData';
 
 
 
 function App() {
 
-
   return (
 
 
     <div className="App">
-      <PDFViewer width="100%" height="100%" >
-        <PdfMainPage />
-      </PDFViewer>
+      <Appbar />
     </div>
 
 

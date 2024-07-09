@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { FC, ReactElement } from 'react'
 import { View, StyleSheet } from '@react-pdf/renderer'
 import TableHeader from './Table_Header';
 import TableRow from './Table_Row';
+import { BillItem } from '../Pages/BillData';
 
 
 const styles = StyleSheet.create({
@@ -17,11 +18,22 @@ const styles = StyleSheet.create({
 })
 
 
-export default function New_Bill() {
+type billitemsFromPdfMainPage = {
+  billitems: BillItem[]
+}
+
+
+const New_Bill: FC<billitemsFromPdfMainPage> = ({ billitems }): ReactElement => {
+
   return (
     <View style={styles.view}>
       <TableHeader />
-      <TableRow />
+       {
+        billitems.map(item => <TableRow billItem={item}/>)
+       }
+     
     </View>
   )
 }
+
+export default New_Bill

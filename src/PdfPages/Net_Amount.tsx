@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { FC, ReactElement } from 'react'
 import { View, Text, StyleSheet } from '@react-pdf/renderer';
+import { BillData } from '../Pages/BillData';
 
 
 
@@ -49,21 +50,29 @@ const styles = StyleSheet.create({
 })
 
 
-export default function Net_Amount() {
+
+type NetAmountProps = {
+    bill: BillData
+    inWords: string
+}
+  
+  
+  const Net_Amount: FC<NetAmountProps> = ({ bill, inWords }): ReactElement => {
+
     return (
         <View style={styles.view1}>
             <View style={styles.view2_space}>
                 <View style={styles.view2}>
                     <Text style={styles.words}>In Words:</Text>
-                    <Text style={styles.words_value}>Two Lakhs Twenty four Thousand Three Hundred and Fifty Four Rupees Only</Text>
+                    <Text style={styles.words_value}>{inWords}</Text>
                 </View>
                 <Text style={styles.net_amount}>Taxable Amount:</Text>
-                <Text style={styles.net_amount_value}>$0.00</Text>
+                <Text style={styles.net_amount_value}>{bill.Taxable_Amount}</Text>
             </View>
             <View style={styles.view2_space}>
                 <Text style={styles.view3}></Text>
                 <Text style={styles.net_amount}>Discount:</Text>
-                <Text style={styles.net_amount_value}>0.00</Text>
+                <Text style={styles.net_amount_value}>{bill.Discount}</Text>
             </View>
             <View style={styles.view2_space}>
                 <Text style={styles.view3}></Text>
@@ -72,8 +81,10 @@ export default function Net_Amount() {
             <View style={styles.view2_space}>
                 <Text style={styles.view3}></Text>
                 <Text style={styles.net_amount}>NET AMOUNT:</Text>
-                <Text style={styles.net_amount_value}>$0.00</Text>
+                <Text style={styles.net_amount_value}>{bill.Net_Amount}</Text>
             </View>
         </View>
     )
 }
+
+export default Net_Amount
