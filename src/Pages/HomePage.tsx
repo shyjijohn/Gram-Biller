@@ -91,23 +91,23 @@ export default function HomePage() {
       alignItems: "center",
       justifyContent: "center"
     }}>
-      <CardContent sx={{ border: '2px solid grey', maxWidth: '100%' }}>
+      <CardContent sx={{ maxWidth: '100%' }}>
         <Box
           display="flex"
           alignItems="center"
           gap={4}
           p={2}
-          sx={{ border: '2px solid red', maxWidth: '100%' }}
+          sx={{ border: '2px solid ', maxWidth: '100%' }}
         >
-          <Stack sx={{ border: '2px solid blue', maxWidth: '100%' }}>
-            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between" sx={{ border: '2px solid red', maxWidth: '100%' }}>
+          <Stack sx={{ maxWidth: '100%' }}>
+            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between" sx={{ maxWidth: '100%' }}>
               <Typography sx={{ alignSelf: "left" }}>
                 Gold Rate
               </Typography >
               <TextField id="outlined-basic" variant="outlined" size="small" type="number" value={goldRate} onChange={handleGoldRate}/>
             </Stack>
 
-            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between" sx={{ border: '2px solid green', maxWidth: '100%' }}>
+            <Stack padding={2} spacing={2} direction="row" justifyContent="space-between" sx={{ maxWidth: '100%' }}>
               <Typography sx={{ alignSelf: "left" }}>
                 Silver Rate
               </Typography >
