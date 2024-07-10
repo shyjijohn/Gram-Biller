@@ -351,7 +351,7 @@ export default function Appbar() {
           <Route path="/viewBalance" element={<ViewBalance />} />
           <Route path="/viewSales" element={<ViewSales />} />
           <Route path="/userSettings" element={<UserSettings />} />
-          <Route path="*" element={<NoPage />} />
+          <Route path="*" element={<HomePage />} />
           <Route path="/pdfMainPage" element={
           
             <PdfMainPage />
