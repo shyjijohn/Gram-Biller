@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Gram-Biller/static/css/main.2c6a34aa.css",
+    "main.js": "/Gram-Biller/static/js/main.6f14b007.js",
+    "index.html": "/Gram-Biller/index.html",
+    "main.2c6a34aa.css.map": "/Gram-Biller/static/css/main.2c6a34aa.css.map",
+    "main.6f14b007.js.map": "/Gram-Biller/static/js/main.6f14b007.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2c6a34aa.css",
+    "static/js/main.6f14b007.js"
+  ]
+}
