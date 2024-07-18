@@ -8,11 +8,10 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import PageviewOutlinedIcon from '@mui/icons-material/PageviewOutlined';
-import DeleteIcon from '@mui/icons-material/Delete';
-
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { Divider } from '@mui/material';
+import { Divider, Tooltip } from '@mui/material';
 
 const columns: GridColDef[] = [
   { field: 'no', headerName: 'No', width: 10 },
@@ -137,7 +136,7 @@ export default function ViewBalance() {
                 </Typography >
               </Stack>
 
-              <Stack padding={2} spacing={2} direction="row">
+              <Stack padding={2} spacing={2} direction="row" justifyContent= 'flex-start' alignItems= 'flex-start'>
                   <DataGrid
                     rows={rows}
                     columns={columns}
@@ -149,7 +148,7 @@ export default function ViewBalance() {
                     pageSizeOptions={[5, 10]}
                     // checkboxSelection
                   />
-                <DeleteIcon sx={{ height: 30, width: 30 }} />
+                <Tooltip title="Add row in New Bill"><Button variant="text"  ><DeleteOutlineOutlinedIcon sx={{ height: 30, width: 30, stroke: "#ffffff", strokeWidth: 1 }} /></Button></Tooltip>
               </Stack>
             </Stack>
           </Box>

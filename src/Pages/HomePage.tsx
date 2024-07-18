@@ -251,8 +251,8 @@ export default function HomePage() {
                     {
                       label: 'Sales',
                       data: [100, 400, 300, 900, 300, 500, 700, 600, 300, 500, 200, 1000],
-                      backgroundColor: "rgba(255, 122, 255)",
-                      borderColor: "rgba(255, 132, 123)",
+                      backgroundColor: "DodgerBlue",
+                      borderColor: "lightGray",
                     }]
                 }}
                 options={{
@@ -305,8 +305,8 @@ export default function HomePage() {
                     {
                       label: 'Expense',
                       data: [100, 200, 300, 200, 100, 400, 100, 600, 900, 500, 200, 1000],
-                      backgroundColor: "rgba(255, 122, 255)",
-                      borderColor: "rgba(255, 132, 123)",
+                      backgroundColor: "lightgrey",
+                      borderColor: "DodgerBlue",
                     }]
                 }}
                 options={{
@@ -347,8 +347,8 @@ export default function HomePage() {
                     {
                       label: 'Revenue',
                       data: [1000, 700, 500, 900, 600, 500, 700, 300, 200, 500, 200, 300],
-                      backgroundColor: "rgba(255, 122, 255)",
-                      borderColor: "rgba(255, 132, 123)",
+                      backgroundColor: "lightgrey",
+                      borderColor: "DodgerBlue",
                     }]
                 }}
                 options={{

@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import PageviewOutlinedIcon from '@mui/icons-material/PageviewOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AddToPhotosOutlinedIcon from '@mui/icons-material/AddToPhotosOutlined';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -823,13 +824,13 @@ export default function CreateBill() {
       <Stack padding={2} spacing={2} direction="column">
         <Tooltip title="Save and Show Pdf">
           <Button variant="text" onClick={handleSave}>
-            <SaveIcon sx={{ height: 40, width: 40 }} />
+            <SaveIcon sx={{ height: 40, width: 40, stroke: "#ffffff", strokeWidth: 1 }} />
           </Button>
         </Tooltip>
-        <Tooltip title="Add row in New Bill"><Button variant="text" onClick={handleAddRow}><LibraryAddIcon sx={{ height: 40, width: 40 }} /></Button></Tooltip>
-        <Tooltip title="Delete row in New Bill"><Button variant="text" onClick={handleDeleteRow}><DeleteIcon sx={{ height: 40, width: 40 }} /></Button></Tooltip>
-        <Tooltip title="Add row in Old Bill"><Button variant="text" onClick={handleAddOldRow}><LibraryAddIcon sx={{ height: 40, width: 40 }} /></Button></Tooltip>
-        <Tooltip title="Delete row in Old Bill"><Button variant="text" onClick={handleDeleteOldRow}><DeleteIcon sx={{ height: 40, width: 40 }} /></Button></Tooltip>
+        <Tooltip title="Add row in New Bill"><Button variant="text" onClick={handleAddRow}><LibraryAddIcon sx={{ height: 40, width: 40, stroke: "#ffffff", strokeWidth: 1 }} /></Button></Tooltip>
+        <Tooltip title="Delete row in New Bill"><Button variant="text" onClick={handleDeleteRow}><DeleteIcon sx={{ height: 40, width: 40, stroke: "#ffffff", strokeWidth: 1 }} /></Button></Tooltip>
+        <Tooltip title="Add row in Old Bill"><Button variant="text" onClick={handleAddOldRow}><LibraryAddIcon sx={{ height: 40, width: 40, stroke: "#ffffff", strokeWidth: 1 }} /></Button></Tooltip>
+        <Tooltip title="Delete row in Old Bill"><Button variant="text" onClick={handleDeleteOldRow}><DeleteIcon sx={{ height: 40, width: 40, stroke: "#ffffff", strokeWidth: 1 }} /></Button></Tooltip>
       </Stack>
     </Stack >
 

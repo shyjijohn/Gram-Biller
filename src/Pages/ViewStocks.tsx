@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import PageviewOutlinedIcon from '@mui/icons-material/PageviewOutlined';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -17,6 +17,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react';
 
 import { ServiceManager } from '../Db_From_Client';
+import { Tooltip } from '@mui/material';
 
 
 interface stocksHistory {
@@ -386,7 +387,7 @@ export default function ViewStocks() {
                 </Typography >
               </Stack>
 
-              <Stack paddingTop={2} spacing={2} direction="row">
+              <Stack paddingTop={2} spacing={2} direction="row" justifyContent= 'flex-start' alignItems= 'flex-start'>
                 <div style={{ height: 400, width: '100%' }}>
                   <DataGrid
                     rows={stocksHistory}
@@ -400,7 +401,7 @@ export default function ViewStocks() {
                     // checkboxSelection
                   />
                 </div>
-                <DeleteIcon sx={{ height: 30, width: 30 }} />
+                <Tooltip title="Add row in New Bill"><Button variant="text"  ><DeleteOutlineOutlinedIcon sx={{ height: 30, width: 30, stroke: "#ffffff", strokeWidth: 1 }} /></Button></Tooltip>
               </Stack>
 
 
