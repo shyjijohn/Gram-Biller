@@ -174,31 +174,31 @@ export default function ViewStocks() {
 
 
 
-                    // const getStockReportFn = (stockName: string | null) => {
-                    //   // console.log("getStockNames")
-                    //   if (stockName == null) {
-                    //     return
-                    //   }
-                    //   const stocksReportObjColFromLocalService = ServiceManager.getStockReportFn(stockName);
-                    //   console.log("getStockReportFn service", stocksReportObjColFromLocalService)
+  // const getStockReportFn = (stockName: string | null) => {
+  //   // console.log("getStockNames")
+  //   if (stockName == null) {
+  //     return
+  //   }
+  //   const stocksReportObjColFromLocalService = ServiceManager.getStockReportFn(stockName);
+  //   console.log("getStockReportFn service", stocksReportObjColFromLocalService)
 
-                    //   var stockReportObjColl: stocksReport[] = [];
-                    //   stocksReportObjColFromLocalService.map((item) => {
-                    //     const stockReportObj: stocksReport =
-                    //     {
-                    //       id: 1,
-                    //       date: item.Date,
-                    //       totalQuantity: item.Quantity,
-                    //       totalWeight: item.
-                    //       salesQuantity: item;
-                    //       salesWeight: item;
-                    //       balanceQuantity: item;
-                    //       balanceWeight: item;
-                    //     }
-                    //     stockReportObjColl.push(stockHistoryObj)
-                    //   })
-                    //   // setStocksReport(stockReportObjColl)
-                    // }
+  //   var stockReportObjColl: stocksReport[] = [];
+  //   stocksReportObjColFromLocalService.map((item) => {
+  //     const stockReportObj: stocksReport =
+  //     {
+  //       id: 1,
+  //       date: item.Date,
+  //       totalQuantity: item.Quantity,
+  //       totalWeight: item.
+  //       salesQuantity: item;
+  //       salesWeight: item;
+  //       balanceQuantity: item;
+  //       balanceWeight: item;
+  //     }
+  //     stockReportObjColl.push(stockHistoryObj)
+  //   })
+  //   // setStocksReport(stockReportObjColl)
+  // }
 
 
 
@@ -329,7 +329,7 @@ export default function ViewStocks() {
                   }}
                   id="combo-box-demo"
                   options={stockNames}
-                  sx={{ width: 300 }}
+                  sx={{ width: 200 }}
                   renderInput={(params) => (
                     <TextField {...params} variant="standard" />
                   )}
@@ -338,21 +338,22 @@ export default function ViewStocks() {
 
               <Stack padding={2} spacing={2} direction="row" justifyContent="center">
                 <Card sx={{
-                  minWidth: '30%',
+                  minWidth: '40%',
                   border: "gray",
-                  display: "flex",
-
                 }}>
                   <CardContent>
-                    <Typography sx={{ alignSelf: "center" }}>
-                      Available Total
-                    </Typography >
-                    <Typography sx={{ alignSelf: "self-start" }}>
-                      Quantity:
-                    </Typography >
-                    <Typography sx={{ alignSelf: "self-start" }}>
-                      Weight in gm:
-                    </Typography >
+                    <Stack sx={{direction: 'column', justifyContent: 'flex-start'}}>
+                      <Typography sx={{ alignSelf: "center" }}>
+                        Available Total
+                      </Typography >
+                      <Typography sx={{ py: 0, width: '100%', maxWidth: 360, borderRadius: 2, border: '1px solid', borderColor: 'divider', backgroundColor: 'background.paper' }} />
+                      <Typography sx={{ alignSelf: "self-start", paddingTop: 0.5 }}>
+                        Quantity:
+                      </Typography >
+                      <Typography sx={{ alignSelf: "self-start" }}>
+                        Weight in gm:
+                      </Typography >
+                    </Stack>
                   </CardContent>
                 </Card>
               </Stack>
@@ -374,7 +375,7 @@ export default function ViewStocks() {
                       },
                     }}
                     pageSizeOptions={[5, 10]}
-                    checkboxSelection
+                    // checkboxSelection
                   />
                 </div>
               </Stack>
@@ -396,7 +397,7 @@ export default function ViewStocks() {
                       },
                     }}
                     pageSizeOptions={[5, 10]}
-                    checkboxSelection
+                    // checkboxSelection
                   />
                 </div>
                 <DeleteIcon sx={{ height: 30, width: 30 }} />

@@ -17,7 +17,7 @@ import PageviewOutlinedIcon from '@mui/icons-material/PageviewOutlined';
 
 export default function ViewSales() {
   return (
-    <Stack alignSelf="center" justifyContent="center" spacing={2} direction="row"  sx={{ display: "flex", alignSelf: "end" }} >
+    <Stack alignSelf="center" justifyContent="center" spacing={2} direction="row" sx={{ display: "flex", alignSelf: "end" }} >
       <Card sx={{
         maxWidth: '60%',
         bgcolor: "white",
@@ -32,50 +32,66 @@ export default function ViewSales() {
             alignItems="center"
             gap={4}
             p={2}
-            sx={{ border: '2px solid gray' , maxWidth: '100%' }}
+            sx={{ border: '2px solid gray', maxWidth: '100%' }}
           >
-            <Stack sx={{ maxWidth: '100%' }}>
-          <Stack padding={2} spacing = {2} direction="row" justifyContent="space-between" >
-              <Typography sx={{ alignSelf: "center" }}>
-                Date
-              </Typography >
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={['DatePicker']}>
-                  <DatePicker label="MM/DD/YYYY" />
-                </DemoContainer>
-              </LocalizationProvider>
+            <Stack direction="row" spacing={2} sx={{ maxWidth: '100%' }}>
+              <Stack direction="column" spacing={2}>
+                <Typography sx={{ alignSelf: "self-start", lineHeight: 4 }}>
+                  Date
+                </Typography >
+                <Typography sx={{ alignSelf: "self-start", lineHeight: 1 }}>
+                  Cash Payment
+                </Typography >
+                <Typography sx={{ alignSelf: "self-start", lineHeight: 2 }}>
+                  Online Payment
+                </Typography >
+                <Typography sx={{ alignSelf: "self-start", lineHeight: 2 }}>
+                  Total Amount Paid
+                </Typography >
+              </Stack>
 
-              <PageviewOutlinedIcon sx={{ alignSelf: "center",
-                                          height: 40,
-                                          width: 40
-               }}/>
+              <Stack direction="column" spacing={0} justifyContent="space-between" >
+                <LocalizationProvider dateAdapter={AdapterDayjs} >
+                  <DemoContainer components={['DatePicker']}>
+                    <DatePicker label="MM/DD/YYYY" />
+                  </DemoContainer>
+                </LocalizationProvider>
+                <TextField id="outlined-basic" variant="outlined" size="small" />
+                <TextField id="outlined-basic" variant="outlined" size="small" />
+                <TextField id="outlined-basic" variant="outlined" size="small" />
+              </Stack>
+
+
+
+              <Stack direction="column" >
+                <Button>
+                  <PageviewOutlinedIcon sx={{
+                    stroke: "#ffffff",
+                    strokeWidth: 1,
+                    alignSelf: "center",
+                    height: 40,
+                    width: 40
+                  }} />
+                </Button>
+              </Stack>
+            </Stack>
+
+            {/* <Stack padding={2} spacing = {2} direction="row" justifyContent="space-between">
+              
             </Stack>
 
             <Stack padding={2} spacing = {2} direction="row" justifyContent="space-between">
-              <Typography sx={{ alignSelf: "center" }}>
-                Cash Payment
-              </Typography >
-              <TextField id="outlined-basic" variant="outlined" size="small" />
+              
             </Stack>
 
             <Stack padding={2} spacing = {2} direction="row" justifyContent="space-between">
-              <Typography sx={{ alignSelf: "center" }}>
-                Online Payment
-              </Typography >
-              <TextField id="outlined-basic" variant="outlined" size="small" />
-            </Stack>
+              
+            </Stack> */}
+            {/* </Stack> */}
 
-            <Stack padding={2} spacing = {2} direction="row" justifyContent="space-between">
-              <Typography sx={{ alignSelf: "center" }}>
-                Total Amount Paid
-              </Typography >
-              <TextField id="outlined-basic" variant="outlined" size="small" />
-            </Stack>
-          </Stack>
-
-        </Box>
-      </CardContent>
-    </Card>
+          </Box>
+        </CardContent>
+      </Card>
     </Stack>
   )
 }

@@ -12,11 +12,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { Divider } from '@mui/material';
 
 const columns: GridColDef[] = [
-  { field: 'no', headerName: 'No', width: 10},
-  { field: 'date', headerName: 'Date', width: 30},
-  { field: 'billAmount', headerName: 'Bill Amount', width: 90},
+  { field: 'no', headerName: 'No', width: 10 },
+  { field: 'date', headerName: 'Date', width: 30 },
+  { field: 'billAmount', headerName: 'Bill Amount', width: 90 },
   {
     field: 'paid',
     headerName: 'Paid',
@@ -53,7 +54,7 @@ const rows = [
 
 export default function ViewBalance() {
   return (
-    <Stack alignSelf="center" justifyContent="center" spacing={2} direction="row"  sx={{ display: "flex", alignSelf: "end" }} >
+    <Stack alignSelf="center" justifyContent="center" spacing={2} direction="row" sx={{ display: "flex", alignSelf: "end" }} >
       <Card sx={{
         maxWidth: '60%',
         bgcolor: "white",
@@ -68,92 +69,92 @@ export default function ViewBalance() {
             alignItems="center"
             gap={4}
             p={2}
-            sx={{ border: '2px solid gray' , maxWidth: '100%' }}
+            sx={{ border: '2px solid gray', maxWidth: '100%' }}
           >
-            <Stack sx={{ maxWidth: '100%' }}>
-            <Stack padding={2} spacing={2} direction="row" >
-              <Typography sx={{ alignSelf: "center" }}>
-                Phone No
-              </Typography >
-              <TextField id="outlined-basic" variant="outlined" size="small" />
-              <PageviewOutlinedIcon sx={{
-                alignSelf: "center",
-                height: 40,
-                width: 40
-              }} />
+            <Stack direction="column" sx={{ maxWidth: '100%' }}>
+              <Stack direction="row" >
+                <Stack padding={2} spacing={2} direction="column" >
+                  <Typography sx={{ alignSelf: "self-start", lineHeight: 2 }}>
+                    Phone No
+                  </Typography >
+                  <Typography sx={{ alignSelf: "self-start", lineHeight: 2 }}>
+                    Name
+                  </Typography >
+                </Stack>
+                <Stack padding={2} spacing={2} direction="column" >
+
+                  <TextField id="outlined-basic" variant="outlined" size="small" />
+                  <TextField id="outlined-basic" variant="outlined" size="small" />
+
+                </Stack>
+                <Stack spacing={1} direction="column" >
+                  <Button>
+                    <PageviewOutlinedIcon sx={{
+                      stroke: "#ffffff",
+                      strokeWidth: 1,
+                      alignSelf: "center",
+                      height: 40,
+                      width: 40
+                    }} />
+                  </Button>
+                  <Button>
+
+                    <PageviewOutlinedIcon sx={{
+                      stroke: "#ffffff",
+                      strokeWidth: 1,
+                      alignSelf: "center",
+                      height: 40,
+                      width: 40
+                    }} />
+                  </Button>
+
+                </Stack>
+              </Stack>
+
+              <Stack padding={2} spacing={2} direction="row" justifyContent="center">
+                <Card sx={{
+                  minWidth: '50%',
+                  border: "gray",
+                }}>
+                  <CardContent>
+                    <Stack direction="column" alignItems="flex-start">
+                      <Typography sx={{ alignSelf: "center" }}>Customer Details</Typography >
+                      <Typography sx={{py: 0,width: '100%',maxWidth: 360,borderRadius: 2,border: '1px solid',borderColor: 'divider',backgroundColor: 'background.paper',}}/>
+                      <Typography>Name:</Typography >
+                      <Typography>Phone No:</Typography >
+                      <Typography>Total Transaction:</Typography >
+                      <Typography>Paid:</Typography >
+                      <Typography>Balance to pay:</Typography >
+                    </Stack>
+                    <Button variant="contained" disabled sx={{ margin: 1 }}>Record Payment</Button>
+                  </CardContent>
+                </Card>
+              </Stack>
+
+              <Stack padding={2} spacing={2} direction="row">
+                <Typography sx={{ alignSelf: "center" }}>
+                  Payment history:
+                </Typography >
+              </Stack>
+
+              <Stack padding={2} spacing={2} direction="row">
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    initialState={{
+                      pagination: {
+                        paginationModel: { page: 0, pageSize: 5 },
+                      },
+                    }}
+                    pageSizeOptions={[5, 10]}
+                    // checkboxSelection
+                  />
+                <DeleteIcon sx={{ height: 30, width: 30 }} />
+              </Stack>
             </Stack>
-
-            <Stack padding={2} spacing={2} direction="row">
-              <Typography sx={{ alignSelf: "center", paddingRight:4 }}>
-                Name
-              </Typography >
-              <TextField id="outlined-basic" variant="outlined" size="small" />
-              <PageviewOutlinedIcon sx={{
-                alignSelf: "center",
-                height: 40,
-                width: 40
-              }} />
-            </Stack>
-
-            <Stack padding={2} spacing={2} direction="row" justifyContent="center">
-              <Card sx={{
-                minWidth: '50%',
-                border: "gray",
-                display: "flex",
-                
-              }}>
-                <CardContent>
-                  <Typography sx={{ alignSelf: "center" }}>
-                    Customer Details
-                  </Typography >
-                  <Typography sx={{ alignSelf: "self-start" }}>
-                    Name:
-                  </Typography >
-                  <Typography sx={{ alignSelf: "self-start" }}>
-                    Phone No: 
-                  </Typography >
-                  <Typography sx={{ alignSelf: "self-start" }}>
-                    Total Transaction:
-                  </Typography >
-                  <Typography sx={{ alignSelf: "self-start" }}>
-                    Paid:
-                  </Typography >
-                  <Typography sx={{ alignSelf: "self-start" }}>
-                    Balance to pay: 
-                  </Typography >
-                  <Button disabled>Record Payment</Button>
-                </CardContent>
-              </Card>
-            </Stack>
-
-            
-
-            <Stack padding={2} spacing={2} direction="row">
-              <Typography sx={{ alignSelf: "center" }}>
-                Payment history:
-              </Typography >
-            </Stack>
-
-            <Stack padding={2} spacing={2} direction="row">
-            <div style={{ height: 400, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection
-      />
-    </div>
-    <DeleteIcon sx={{ height: 30, width: 30 }}/>
-            </Stack>           
-          </Stack>
-        </Box>
-      </CardContent>
-    </Card>
+          </Box>
+        </CardContent>
+      </Card>
     </Stack>
   )
 }

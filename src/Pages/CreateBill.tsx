@@ -15,6 +15,7 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 import dayjs, { Dayjs } from 'dayjs';
 
 import Table from '@mui/material/Table';
@@ -28,7 +29,7 @@ import Paper from '@mui/material/Paper';
 import SaveIcon from '@mui/icons-material/Save';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import { DataGrid, GridColDef, GridRowsProp, GridRowId, GridRowParams, GridRenderCellParams } from '@mui/x-data-grid';
-import { Container } from '@mui/material';
+import { Container, createTheme, ThemeProvider } from '@mui/material';
 import { randomId } from '@mui/x-data-grid-generator';
 import axios from 'axios'
 import Autocomplete from '@mui/material/Autocomplete';
@@ -38,6 +39,27 @@ import PdfMainPage from '../PdfPages/Pdf_Main_Page'
 import { useNavigate, useLocation } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
 import { ServiceManager } from '../Db_From_Client';
+
+
+
+
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+  },
+});
+
 
 
 
@@ -199,9 +221,9 @@ export default function CreateBill() {
 
 
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'S.No' },
+    { field: 'id', headerName: 'S.No', headerClassName: 'super-app-theme--header',  width: 10 },
     {
-      field: 'product', headerName: 'Product', width: 130, editable: true,
+      field: 'product', headerName: 'Product', headerClassName: 'super-app-theme--header', width: 70, editable: true,
       // type: 'singleSelect',
       // valueOptions: stockNames
       renderEditCell: (params) => (
@@ -217,25 +239,25 @@ export default function CreateBill() {
         />
       ),
     },
-    { field: 'qty', headerName: 'QTY', editable: true },
-    { field: 'gross_weight', headerName: 'Gross Weight', editable: true },
-    { field: 'stone_weight', headerName: 'Stone Weight', editable: true },
-    { field: 'stone_rate', headerName: 'Stone Rate', editable: true },
-    { field: 'n_wt', headerName: 'N.WT' },
-    { field: 'va_percent', headerName: 'VA%', editable: true },
-    { field: 'mc_hc', headerName: 'MC/HC', editable: true },
-    { field: 'amount', headerName: 'Amount' },
+    { field: 'qty', headerName: 'QTY', headerClassName: 'super-app-theme--header', editable: true, width: 30 },
+    { field: 'gross_weight', headerName: 'Gross Weight', headerClassName: 'super-app-theme--header', editable: true, width: 90 },
+    { field: 'stone_weight', headerName: 'Stone Weight', headerClassName: 'super-app-theme--header', editable: true, width: 90 },
+    { field: 'stone_rate', headerName: 'Stone Rate', headerClassName: 'super-app-theme--header', editable: true, width: 80 },
+    { field: 'n_wt', headerName: 'N.WT', headerClassName: 'super-app-theme--header', width: 50 },
+    { field: 'va_percent', headerName: 'VA%', headerClassName: 'super-app-theme--header', editable: true, width: 40 },
+    { field: 'mc_hc', headerName: 'MC/HC', headerClassName: 'super-app-theme--header', editable: true, width: 60 },
+    { field: 'amount', headerName: 'Amount', headerClassName: 'super-app-theme--header', width: 67 },
   ];
 
 
   const oldColumns: GridColDef[] = [
     // { field: 'id', headerName: 'S.No', hideable: true },
-    { field: 'particulars', headerName: 'Particulars', editable: true },
-    { field: 'wt', headerName: 'WT', editable: true },
-    { field: 'wastage', headerName: 'Wastage', editable: true },
-    { field: 'total_wt', headerName: 'Total_WT', editable: true },
-    { field: 'rate', headerName: 'Rate', editable: true },
-    { field: 'amount', headerName: 'Amount' },
+    { field: 'particulars', headerName: 'Particulars', headerClassName: 'super-app-theme--header', editable: true, width: 70 },
+    { field: 'wt', headerName: 'WT', headerClassName: 'super-app-theme--header', editable: true, width: 20 },
+    { field: 'wastage', headerName: 'Wastage', headerClassName: 'super-app-theme--header', editable: true, width: 60 },
+    { field: 'total_wt', headerName: 'Total_WT', headerClassName: 'super-app-theme--header', editable: true, width: 65 },
+    { field: 'rate', headerName: 'Rate', headerClassName: 'super-app-theme--header', editable: true, width: 40 },
+    { field: 'amount', headerName: 'Amount',headerClassName: 'super-app-theme--header', width: 60 },
   ];
 
   const handleProcessRowUpdateError = (error: any) => {
@@ -596,83 +618,76 @@ export default function CreateBill() {
             p={2}
             sx={{ border: '2px solid gray', maxWidth: '100%' }}
           >
-            <Stack sx={{ maxWidth: '100%', display: 'flex', direction: 'row' }}>
-              <Stack paddingTop={2} spacing={0} direction="column" sx={{ maxWidth: '100%' }}>
-                <Typography sx={{ alignSelf: "center" }}>
-                  Jewellers
-                </Typography >
-                <Typography sx={{ alignSelf: "center" }}>
-                  Kulasekharam
-                </Typography >
-                <Typography sx={{ alignSelf: "center" }}>
-                  8438607589
-                </Typography >
+            <Stack direction="column" sx={{ maxWidth: '100%', display: 'flex', direction: 'row' }}>
+              <Stack paddingTop={2} direction="column" sx={{ maxWidth: '100%' }}>
+                <ThemeProvider theme={theme}>
+                  <Typography sx={{ alignSelf: "center", fontFamily: '"Segoe UI Emoji"', fontWeight: 'bold', fontSize: 20 }}>
+                    Vintage Jewelry
+                  </Typography >
+                  <Typography sx={{ alignSelf: "center", fontSize: 18 }}>
+                    OMR, Chennai
+                  </Typography >
+                  <Typography sx={{ alignSelf: "center" }}>
+                    9456784675
+                  </Typography >
+                </ThemeProvider>
               </Stack>
 
-              <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between"
-                sx={{ maxWidth: '100%' }}>
-                <Stack spacing={2} direction="column" sx={{ maxWidth: '40%' }}>
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
+              <Stack paddingTop={4} spacing={2} direction="row" justifyContent="space-between" alignItems="space-between" >
+                <Stack direction="row" sx={{ maxWidth: '60%' }} >
+                  <Stack spacing={1} direction="column" alignItems="flex-start" sx={{ width: '30%'}} >
+                    <Typography>
                       Name:
-                    </Typography >
-                    <TextField id="outlined-basic" variant="standard" size="small" value={name} onChange={handleName} />
-                  </Stack>
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
+                    </Typography>
+                    <Typography>
                       Phone:
-                    </Typography >
-                    <TextField variant="standard" value={phone} onChange={handlePhone} error={error} helperText={helperText} />
-                  </Stack>
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
+                    </Typography>
+                    <Typography>
                       Address:
-                    </Typography >
-                    <Stack spacing={2} direction="column">
-                      <TextField id="standard-multiline-flexible" multiline maxRows={4}
-                        variant="standard" size="small" value={address} onChange={handleAddress} />
-                    </Stack>
+                    </Typography>
+                  </Stack>
+
+                  <Stack direction="column" sx={{ width: '70%' }} >
+                    <TextField id="outlined-basic" variant="standard" size="small" value={name} onChange={handleName} />
+                    <TextField variant="standard" value={phone} onChange={handlePhone} error={error} helperText={helperText} />
+                    <TextField id="standard-multiline-flexible" multiline maxRows={4}
+                      variant="standard" size="small" value={address} onChange={handleAddress} />
                   </Stack>
                 </Stack>
-                <Stack spacing={2} direction="column">
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
+
+                <Stack direction="row" sx={{ maxWidth: '40%' }} >
+                  <Stack spacing={1} direction="column" alignItems="flex-start" sx={{ width: '40%' }}>
+                    <Typography>
                       Invoice No:
                     </Typography >
-                    <Typography>{invoiceNo}</Typography>
-                  </Stack>
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
+                    <Typography>
                       Date:
                     </Typography >
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['DatePicker']}>
-                        <DatePicker value={date} onChange={handleDate} />
-                      </DemoContainer>
-                    </LocalizationProvider>
-                  </Stack>
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
+                    <Typography>
                       Gold Rate:
                     </Typography >
-                    <TextField id="outlined-basic" variant="standard" size="small" type="number" value={goldRate} onChange={handleGoldRate} />
-                  </Stack>
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
+                    <Typography>
                       Silver Rate:
                     </Typography >
+                  </Stack>
+                  <Stack direction="column" spacing={-0.3} sx={{ width: '60%' }}>
+                    <Typography>{invoiceNo}</Typography>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DemoContainer components={['DatePicker']}>
+                        <DatePicker value={date} onChange={handleDate} sx={{ height: '25px', width: '10px' }} slotProps={{ textField: { variant: "standard" } }} />
+                      </DemoContainer>
+                    </LocalizationProvider>
+                    <TextField id="outlined-basic" variant="standard" size="small" type="number" value={goldRate} onChange={handleGoldRate} />
                     <TextField id="outlined-basic" variant="standard" size="small" type="number" value={silverRate} onChange={handleSilverRate} />
                   </Stack>
                 </Stack>
               </Stack>
 
-              <Container style={{ paddingTop: 20, height: 250, width: '100%' }}>
+              <Stack sx={{ paddingTop: 2, height: 230, width: '100%' }}>
                 <DataGrid
                   editMode="row"
                   rows={rows}
                   columns={columns}
-                  // disableRowSelectionOnClick
-                  // autoHeight
                   hideFooterPagination
                   processRowUpdate={handleProcessRowUpdate}
                   onProcessRowUpdateError={handleProcessRowUpdateError}
@@ -688,51 +703,59 @@ export default function CreateBill() {
                       fontSize: '12px',
                       font: 'bold',
                     },
+                    border: '2px solid gray',
+                    '& .super-app-theme--header': {
+                      backgroundColor: '#d3d3d3',
+                    },
                   }}
                 />
-              </Container>
+              </Stack>
 
 
-              <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between">
-                <Typography sx={{ alignSelf: "left" }}>
-                  In Words:
-                </Typography >
-                <Typography sx={{ alignSelf: "left" }}>{inWordsAmount} only</Typography>
-                <Stack paddingTop={2} spacing={2} direction="column">
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "right" }}>
-                      Taxable Amount:
-                    </Typography >
-                    <Typography sx={{ alignSelf: "center" }}>
-                      {taxableAmount}
-                    </Typography >
+              <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between" >
+                <Stack direction="row" sx={{ maxWidth: '58%' }}>
+                  <Stack direction="column" spacing={2} justifyContent="flex-start" alignItems="flex-start" sx={{ width: '40%' }}>
+                    <Typography>
+                      In Words:
+                    </Typography>
                   </Stack>
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
+
+                  <Stack direction="column" sx={{ width: '60%', overflow: "auto" }}>
+                    <Typography>{inWordsAmount}</Typography>
+                  </Stack>
+                </Stack>
+
+
+                <Stack direction="row" sx={{ width: "42%" }} >
+                  <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" sx={{ width: '60%' }}>
+                    <Typography>
+                      Taxable Amount:
+                    </Typography>
+                    <Typography>
                       Discount:
                     </Typography >
-                    <TextField id="outlined-basic" variant="standard" size="small" value={discount} onChange={handleDiscount} />
-                  </Stack>
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
+                    <Typography paddingTop={0.5}>
                       NET AMOUNT:
                     </Typography >
-                    <Typography sx={{ alignSelf: "center" }}>
+                  </Stack>
+
+                  <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" sx={{ maxWidth: '40%' }}>
+                    <Typography>
+                      {taxableAmount}
+                    </Typography >
+                    <TextField id="outlined-basic" variant="standard" size="small" value={discount} onChange={handleDiscount} />
+                    <Typography>
                       {netAmount}
                     </Typography >
                   </Stack>
                 </Stack>
               </Stack>
 
-
-
-              <Container style={{ fontSize: 12, paddingTop: 20, alignSelf: "flex-start", height: 200, width: '50%' }}>
+              <Stack style={{ fontSize: 12, paddingTop: 20, alignSelf: "flex-start", height: 180, width: '56.9%' }}>
                 <DataGrid
                   editMode="row"
                   rows={oldRows}
                   columns={oldColumns}
-                  // disableRowSelectionOnClick
-                  // autoHeight
                   hideFooterPagination
                   processRowUpdate={handleProcessOldRowUpdate}
                   onProcessRowUpdateError={handleProcessOldRowUpdateError}
@@ -746,35 +769,46 @@ export default function CreateBill() {
                     },
                     '& .MuiDataGrid-columnHeaders': {
                       fontSize: '12px',
+                      backgroundColor: 'rgba(255, 7, 0, 0.55)',
+                    },
+                    border: '2px solid gray',
+                    '& .super-app-theme--header': {
+                      backgroundColor: '#d3d3d3',
                     },
                   }}
                 />
-              </Container>
+              </Stack>
 
-
-              <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between">
-                <Stack spacing={2} direction="row">
-                  <Typography sx={{ alignSelf: "left" }}>
-                    Old Gold Total Weight:
-                  </Typography >
-                  <Typography sx={{ alignSelf: "center" }}>
-                    {oldGoldTotalWeight}
-                  </Typography >
-                </Stack>
-                <Stack spacing={2} direction="column">
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "right" }}>
-                      Old Reduced:
-                    </Typography >
-                    <Typography sx={{ alignSelf: "center" }}>
-                      {oldReduced}
+              <Stack direction="row" spacing={2} paddingTop={2} justifyContent="space-between" >
+                <Stack direction="row" sx={{ width: '60%' }}>
+                  <Stack spacing={2} direction="column" justifyContent="self-start" alignItems="self-start" sx={{ width: '45%' }}>
+                    <Typography>
+                      Old Gold Total Weight:
                     </Typography >
                   </Stack>
-                  <Stack spacing={2} direction="row">
-                    <Typography sx={{ alignSelf: "center" }}>
+                  <Stack direction="column" justifyContent="self-start" alignItems="self-start" sx={{ width: '55%' }}>
+                    <Typography>
+                      {oldGoldTotalWeight}
+                    </Typography >
+                  </Stack>
+                </Stack>
+
+
+                <Stack direction="row" sx={{ width: "40%" }}>
+                  <Stack spacing={0.5} direction="column" justifyContent="self-start" alignItems="self-start" sx={{ width: '60%' }}>
+                    <Typography>
+                      Old Reduced:
+                    </Typography >
+                    <Typography>
                       TOTAL:
                     </Typography >
-                    <Typography sx={{ alignSelf: "center" }}>
+                  </Stack>
+
+                  <Stack spacing={0.5} direction="column" justifyContent="self-start" alignItems="self-start" sx={{ width: '40%' }} >
+                    <Typography>
+                      {oldReduced}
+                    </Typography >
+                    <Typography>
                       {total}
                     </Typography >
                   </Stack>
@@ -784,7 +818,7 @@ export default function CreateBill() {
             </Stack>
           </Box>
         </CardContent>
-      </Card>
+      </Card >
 
       <Stack padding={2} spacing={2} direction="column">
         <Tooltip title="Save and Show Pdf">
@@ -797,7 +831,7 @@ export default function CreateBill() {
         <Tooltip title="Add row in Old Bill"><Button variant="text" onClick={handleAddOldRow}><LibraryAddIcon sx={{ height: 40, width: 40 }} /></Button></Tooltip>
         <Tooltip title="Delete row in Old Bill"><Button variant="text" onClick={handleDeleteOldRow}><DeleteIcon sx={{ height: 40, width: 40 }} /></Button></Tooltip>
       </Stack>
-    </Stack>
+    </Stack >
 
   )
 }

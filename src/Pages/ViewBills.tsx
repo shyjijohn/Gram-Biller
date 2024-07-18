@@ -256,89 +256,78 @@ export default function ViewBills() {
       }}>
         <CardContent sx={{ maxWidth: '100%' }}>
           <Box
-            display="flex"
-            alignItems="center"
             gap={4}
             p={2}
             sx={{ border: '2px solid grey' }}
           >
-            <Stack sx={{ maxWidth: '100%' }}>
-              <Stack spacing={2} direction="row" justifyContent="space-between" sx={{ maxWidth: '80%' }}>
-                <Stack>
-                  <Typography sx={{ alignSelf: "left" }}>
+            <Stack direction="column" sx={{ maxWidth: '100%' }}>
+              <Stack spacing={2} direction="row" sx={{ maxWidth: '100%' }}>
+
+                <Stack direction="column" spacing={3} sx={{alignItems: 'flex-start'}}>
+                  <Typography sx={{ paddingTop: 3}}>
                     Date From:
-                  </Typography >
+                  </Typography>
+                  <Typography>
+                    Name:
+                  </Typography>
+                  <Typography>
+                    Invoice No:
+                  </Typography>
+                  <Typography>
+                    Phone No:
+                  </Typography>
+                </Stack>
+
+                <Stack direction="column" spacing={2}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['DatePicker']}>
                       <DatePicker
                         label="MM/DD/YYYY"
                         value={selectedDateFrom}
                         onChange={handleDateChangeFrom}
+                        slotProps={{ textField: { variant: "standard" } }}
                       />
                     </DemoContainer>
                   </LocalizationProvider>
+                  <TextField id="outlined-basic" variant="standard" size="small" value={name} onChange={handleName} />
+                  <TextField id="outlined-basic" variant="standard" size="small" value={invoiceNo} onChange={handleInvoiceNo} />
+                  <TextField id="outlined-basic" variant="standard" size="small" value={phone} onChange={handlePhone} error={error} helperText={helperText} />
                 </Stack>
-                <Stack>
-                  <Typography sx={{ alignSelf: "left" }}>
+
+                <Stack direction="column" sx={{paddingTop: 3}}>
+                  <Typography>
                     Date To:
-                  </Typography >
+                  </Typography>
+                </Stack>
+
+                <Stack direction="column" >
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['DatePicker']}>
                       <DatePicker label="MM/DD/YYYY"
                         value={selectedDateTo}
                         onChange={handleDateChangeTo}
+                        slotProps={{ textField: { variant: "standard" } }}
                       />
                     </DemoContainer>
                   </LocalizationProvider>
                 </Stack>
-                <Stack>
+
+                <Stack direction="column">
                   <Button variant="text" onClick={handleDatesSearch}>
-                    <PageviewOutlinedIcon sx={{ alignSelf: "center", height: 40, width: 40 }} />
+                    <PageviewOutlinedIcon sx={{ alignSelf: "center", height: 40, width: 40, stroke: "#ffffff", strokeWidth: 1, }} />
                   </Button>
-                </Stack>
-              </Stack>
-
-              <Stack paddingTop={2} spacing={2} direction="row" justifyContent="space-between" sx={{ maxWidth: '80%' }}>
-                <Stack direction="row" sx={{ maxWidth: '80%' }}>
-                  <Typography sx={{ alignSelf: "left" }}>
-                    Name:
-                  </Typography >
-                  <TextField id="outlined-basic" variant="standard" size="small" value={name} onChange={handleName} />
-                </Stack>
-                <Stack>
                   <Button variant="text" onClick={handleNameSearch}>
-                    <PageviewOutlinedIcon sx={{ alignSelf: "center", height: 40, width: 40 }} />
+                    <PageviewOutlinedIcon sx={{ alignSelf: "center", height: 40, width: 40, stroke: "#ffffff", strokeWidth: 1, }} />
                   </Button>
-                </Stack>
-              </Stack>
-
-              <Stack spacing={2} direction="row" justifyContent="space-between" sx={{ maxWidth: '80%' }}>
-                <Stack direction="row">
-                  <Typography sx={{ alignSelf: "left" }}>
-                    Invoice No:
-                  </Typography >
-                  <TextField id="outlined-basic" variant="standard" size="small" value={invoiceNo} onChange={handleInvoiceNo} />
-                </Stack>
-                <Stack>
                   <Button variant="text" onClick={handleInvoiceNoSearch}>
-                    <PageviewOutlinedIcon sx={{ alignSelf: "center", height: 40, width: 40 }} />
+                    <PageviewOutlinedIcon sx={{ alignSelf: "center", height: 40, width: 40, stroke: "#ffffff", strokeWidth: 1, }} />
+                  </Button>
+                  <Button variant="text" onClick={handlePhoneNoSearch}>
+                    <PageviewOutlinedIcon sx={{ alignSelf: "center", height: 40, width: 40, stroke: "#ffffff", strokeWidth: 1, }} />
                   </Button>
                 </Stack>
               </Stack>
 
-              <Stack spacing={2} direction="row" justifyContent="space-between" sx={{ maxWidth: '80%' }}>
-                <Stack direction="row">
-                  <Typography sx={{ alignSelf: "left" }}>
-                    Phone No:
-                  </Typography >
-                  <TextField id="outlined-basic" variant="standard" size="small" value={phone} onChange={handlePhone} error={error} helperText={helperText} />
-                </Stack>
-                <Stack>
-                  <Button variant="text" onClick={handlePhoneNoSearch}>
-                    <PageviewOutlinedIcon sx={{ alignSelf: "center", height: 40, width: 40 }} />
-                  </Button>
-                </Stack>
-              </Stack>
 
               <Stack paddingTop={2} spacing={1} direction="row">
                 <div style={{ height: 400, width: '100%' }}>
@@ -351,7 +340,7 @@ export default function ViewBills() {
                       },
                     }}
                     pageSizeOptions={[5, 10]}
-                    checkboxSelection
+                    // checkboxSelection
                   />
                 </div>
               </Stack>
@@ -363,6 +352,6 @@ export default function ViewBills() {
         <VisibilityIcon color="disabled" sx={{ height: 40, width: 40 }} />
         <DeleteIcon color="disabled" sx={{ height: 40, width: 40 }} />
       </Stack>
-    </Stack>
+    </Stack >
   )
 }

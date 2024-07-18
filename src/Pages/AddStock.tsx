@@ -24,8 +24,8 @@ export default function AddStock() {
   const [stockName, setStockName] = useState<string>('')
   const [stockType, setStockType] = useState<string>('')
   const [stockDate, setStockDate] = useState(null)
-  const [stockQuantity, setStockQuantity] = useState<number>()
-  const [stockWeight, setStockWeight] = useState<number>()
+  const [stockQuantity, setStockQuantity] = useState<number>(0)
+  const [stockWeight, setStockWeight] = useState<number>(0)
   const [stockRemarks, setStockRemarks] = useState<string>('')
 
 
@@ -85,12 +85,18 @@ export default function AddStock() {
     }
 
     ServiceManager.addStock(addStocksObj)
+    setStockName('')
+    setStockType('')
+    setStockDate(null)
+    setStockQuantity(0)
+    setStockWeight(0)
+    setStockRemarks('')
     // const stocks = ServiceManager.getStockHistoryFn(stockName)
 
     // console.log("Add stocks page ", stocks)
 
 
-    
+
     //   axios.post(`http://localhost:${PORT}/AddStocks`, {
     //     Name: stockName,
     //     Stock_type: stockType, 
@@ -110,79 +116,64 @@ export default function AddStock() {
 
 
   return (
-    <Stack alignSelf="center" justifyContent="center" spacing={2} direction="row" sx={{ display: "flex", alignSelf: "end" }} >
+    <Stack alignSelf="center" justifyContent="center" spacing={2} >
       <Card sx={{
         maxWidth: '60%',
         bgcolor: "white",
         alignSelf: "center",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
       }}>
         <CardContent sx={{ maxWidth: '100%' }}>
           <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
             gap={4}
             p={2}
             sx={{ border: '2px solid grey' }}
           >
-            <Stack sx={{ maxWidth: '100%' }}>
-              <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
-                <Typography sx={{ alignSelf: "left" }}>
+            <Stack direction="column">
+            <Stack direction="row" sx={{ maxWidth: '100%' }}>
+              <Stack padding={2} spacing={1}  direction="column" justifyContent="flex-start" alignItems="flex-start" >
+                <Typography sx={{ alignSelf: "flexstart", lineHeight: 2.5 }}>
                   Name
                 </Typography >
-                <TextField id="outlined-basic" variant="outlined" size="small" value={stockName} onChange={stockNameBtn} />
-              </Stack>
-
-              <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
-                <Typography sx={{ alignSelf: "left" }}>
+                <Typography sx={{ alignSelf: "flexstart", lineHeight: 2.5 }}>
                   Stock type
                 </Typography >
-                <TextField id="outlined-basic" variant="standard" size="small" value={stockType} onChange={stockTypeBtn} />
-              </Stack>
-
-              <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
-                <Typography sx={{ alignSelf: "center" }}>
+                <Typography sx={{ alignSelf: "flexstart", lineHeight: 4 }}>
                   Date
                 </Typography >
+                <Typography sx={{ alignSelf: "flexstart", lineHeight: 2.5 }}>
+                  Quantity
+                </Typography >
+                <Typography sx={{ alignSelf: "flexstart", lineHeight: 2.5 }}>
+                  Weight(gm)
+                </Typography >
+                <Typography sx={{ alignSelf: "flexstart", lineHeight: 2.5 }}>
+                  Remarks
+                </Typography >
+              </Stack>
+
+
+              <Stack padding={2} spacing={1} direction="column" >
+                <TextField id="outlined-basic" variant="outlined" size="small" value={stockName} onChange={stockNameBtn} />
+                <TextField id="outlined-basic" variant="outlined" size="small" value={stockType} onChange={stockTypeBtn} />
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={['DatePicker']}>
                     <DatePicker label="DD/MM/YYYY" value={stockDate} onChange={stockDateBtn} />
                   </DemoContainer>
                 </LocalizationProvider>
-              </Stack>
-
-              <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
-                <Typography sx={{ alignSelf: "left" }}>
-                  Quantity
-                </Typography >
                 <TextField id="outlined-basic" variant="outlined" size="small" value={stockQuantity !== undefined ? stockQuantity : ''} onChange={stockQuantityBtn} />
-              </Stack>
-
-              <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
-                <Typography sx={{ alignSelf: "left" }}>
-                  Weight(gm)
-                </Typography >
                 <TextField id="outlined-basic" variant="outlined" size="small" value={stockWeight !== undefined ? stockWeight : ''} onChange={stockWeightBtn} />
-              </Stack>
-
-              <Stack padding={2} spacing={2} direction="row" justifyContent="space-between">
-                <Typography sx={{ alignSelf: "left" }}>
-                  Remarks
-                </Typography >
                 <TextField id="outlined-basic" variant="outlined" size="small" value={stockRemarks} onChange={stockRemarksBtn} />
               </Stack>
+            </Stack>
 
-              <Stack padding={2} spacing={2} direction="row" justifyContent="space-around">
-                <Button variant="outlined" onClick={addStocksBtn}>Add</Button>
-                <Button variant="outlined">Reset</Button>
-              </Stack>
+            <Stack padding={2} spacing={2} direction="row" justifyContent="space-around">
+            <Button variant="outlined" onClick={addStocksBtn}>Add</Button>
+            <Button variant="outlined">Reset</Button>
+            </Stack> 
             </Stack>
           </Box>
         </CardContent>
       </Card>
-    </Stack>
+    </Stack >
   )
 }

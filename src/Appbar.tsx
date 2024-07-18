@@ -52,6 +52,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
 }>(({ theme, open }) => ({
   flexGrow: 1,
   padding: theme.spacing(3),
+  backgroundColor: '#dddddd',
   transition: theme.transitions.create('margin', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -151,7 +152,7 @@ export default function Appbar() {
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar>
+        <Toolbar sx={{height: '20px'}}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -172,14 +173,16 @@ export default function Appbar() {
           flexShrink: 0,
           '& .MuiDrawer-paper': {
             width: drawerWidth,
-            boxSizing: 'border-box',
+            // boxSizing: 'border-box',
+            backgroundColor: 'white', // Set the color of the Drawer
+            color: 'black', // Set the text color
           },
         }}
         variant="persistent"
         anchor="left"
         open={open}
       >
-        <DrawerHeader>
+        <DrawerHeader sx={{backgroundColor:'white'}}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
@@ -194,7 +197,7 @@ export default function Appbar() {
               {/* : <MailIcon />} */}
             </ListItemIcon>
             <ListItem disablePadding>
-              Home Page
+              Dashboard
 
 
               <ListItemText />
