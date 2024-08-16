@@ -63,9 +63,6 @@ const theme = createTheme({
 
 
 
-
-
-
 const initialRows: BillItem[] = [
   { id: 1, product: '', qty: 0, gross_weight: 0.000, stone_weight: 0.000, stone_rate: 0.00, n_wt: 0.000, va_percent: 0.00, mc_hc: 0.00, amount: 0.00 },
 ];

@@ -45,6 +45,9 @@ import NoPage from './Pages/NoPage';
 import PdfMainPage from './PdfPages/Pdf_Main_Page'
 import { PDFViewer } from '@react-pdf/renderer';
 
+
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
@@ -162,6 +165,7 @@ export default function Appbar() {
           >
             <MenuIcon />
           </IconButton>
+          <ReceiptLongIcon sx={{marginRight: '10px'}}/>
           <Typography variant="h6" noWrap component="div">
             Gram Biller
           </Typography>
