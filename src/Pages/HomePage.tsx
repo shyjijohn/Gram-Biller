@@ -150,7 +150,7 @@ export default function HomePage() {
     //   </CardContent>
     // </Card>
     // </Stack>
-    <Stack alignSelf="center" spacing={2} direction="row" >
+    <Stack alignSelf="center" spacing={2} direction="row">
       <Stack direction="column" sx={{ width: '70%', height: 'full' }}>
         <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" sx={{ height: '10%' }}>
           <ThemeProvider theme={theme}>
