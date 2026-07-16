@@ -11,13 +11,17 @@ const isLocal = true;
 
 class LocalService {
 
-    static stocks: Stock[] = []
+    static stocks: Stock[] = JSON.parse(localStorage.getItem('stocks') || '[]')
     static stockNamesColl: string[] = []
 
-    static rates: Rates
+    static rates: Rates = JSON.parse(localStorage.getItem('rates') || '{"Gold_Rate": 0, "Silver_Rate": 0}')
     static billData: BillData
 
-    static billDataColl: BillData[] = []
+    static billDataColl: BillData[] = JSON.parse(localStorage.getItem('billDataColl') || '[]')
+
+    public static getAllBills(): BillData[] {
+        return LocalService.billDataColl;
+    }
 
     static viewBillUsingNameColl: viewBills[] = []
     static viewBillUsingInvoiceNoColl: viewBills[] = []
@@ -25,15 +29,18 @@ class LocalService {
     static viewBillUsingDateColl: viewBills[] = []
 
     public static getStockNames(): string[] {
-        (LocalService.stocks).map(items => {
-            LocalService.stockNamesColl.push(items.Name)
-        })
-        return LocalService.stockNamesColl
+        const uniqueNames = new Set<string>();
+        LocalService.stocks.forEach(items => {
+            uniqueNames.add(items.Name);
+        });
+        LocalService.stockNamesColl = Array.from(uniqueNames);
+        return LocalService.stockNamesColl;
     }
 
     public static updatingRate(ratesIn: Rates) {
         console.log("Updating rate: " + ratesIn.Gold_Rate)
         LocalService.rates = ratesIn
+        localStorage.setItem('rates', JSON.stringify(ratesIn))
     }
 
     public static getRateUpdates(): Rates {
@@ -43,6 +50,7 @@ class LocalService {
 
     public static addStock(stock: Stock) {
         LocalService.stocks.push(stock)
+        localStorage.setItem('stocks', JSON.stringify(LocalService.stocks))
     }
 
     public static getStockHistoryFn(stockName: string): Stock[] {
@@ -76,6 +84,7 @@ class LocalService {
     public static saveBillData(billDataIn: BillData) {
         console.log("saveBillData: " + billDataIn)
         LocalService.billDataColl.push(billDataIn)
+        localStorage.setItem('billDataColl', JSON.stringify(LocalService.billDataColl))
     }
 
     public static viewBillUsingName(name: String): viewBills[] {
@@ -301,6 +310,8 @@ class HttpService {
         //   .catch((error) => {
         //     console.error('Error:', error);
         //   });
+        LocalService.billDataColl.push(billDataIn)
+        localStorage.setItem('billDataColl', JSON.stringify(LocalService.billDataColl))
         LocalService.billData = billDataIn
     }
     public static viewBillUsingName(name: String): viewBills[] {
@@ -412,6 +423,14 @@ class HttpService {
 
 
 export class ServiceManager {
+    public static getAllBills(): BillData[] {
+        if (isLocal) {
+            return LocalService.getAllBills();
+        }
+        else {
+            return [];
+        }
+    }
     public static getStockNames(): string[] {
         if (isLocal) {
             return LocalService.getStockNames();

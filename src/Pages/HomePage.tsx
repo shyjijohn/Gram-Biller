@@ -9,6 +9,10 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -41,7 +45,7 @@ import PageviewOutlinedIcon from '@mui/icons-material/PageviewOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios'
 import { ServiceManager } from '../Db_From_Client';
-import { Rates } from './BillData';
+import { Rates, BillData } from './BillData';
 import { blue } from '@mui/material/colors';
 
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -79,6 +83,92 @@ export default function HomePage() {
   const [goldRate, setGoldRate] = useState<number>(0);
   const [silverRate, setSilverRate] = useState<number>(0);
   const PORT = 3000;
+
+  const [noOfSales, setNoOfSales] = useState<number>(0);
+  const [noOfCustomers, setNoOfCustomers] = useState<number>(0);
+  const [avgBillSize, setAvgBillSize] = useState<string>("0.00");
+  const [revenue, setRevenue] = useState<string>("0.00");
+  const [monthlySales, setMonthlySales] = useState<number[]>([0,0,0,0,0,0,0,0,0,0,0,0]);
+  const [monthlyRevenue, setMonthlyRevenue] = useState<number[]>([0,0,0,0,0,0,0,0,0,0,0,0]);
+
+  const [userName, setUserName] = useState<string>(localStorage.getItem('userName') || '');
+  const [showWelcome, setShowWelcome] = useState<boolean>(false);
+
+  useEffect(() => {
+    const allBills = ServiceManager.getAllBills();
+    if (allBills && allBills.length > 0) {
+      setNoOfSales(allBills.length);
+      const customers = new Set();
+      let totalRev = 0;
+      const salesByMonth = Array(12).fill(0);
+      const revByMonth = Array(12).fill(0);
+
+      allBills.forEach(b => {
+        if (b.Phone) customers.add(b.Phone);
+        let billTotal = b.Total ? Number(b.Total) : 0;
+        if(isNaN(billTotal)) billTotal = 0;
+        totalRev += billTotal;
+        if (b.Date) {
+          const d = new Date(b.Date);
+          if (!isNaN(d.getTime())) {
+            const month = d.getMonth();
+            salesByMonth[month] += 1;
+            revByMonth[month] += billTotal;
+          }
+        }
+      });
+
+      setNoOfCustomers(customers.size);
+      setAvgBillSize((totalRev / allBills.length).toFixed(2));
+      setRevenue(totalRev.toFixed(2));
+      setMonthlySales(salesByMonth);
+      setMonthlyRevenue(revByMonth);
+    } else if (!localStorage.getItem('userName')) {
+      setShowWelcome(true);
+    }
+  }, []);
+
+  const handleSaveDetails = () => {
+    localStorage.setItem('userName', userName);
+    setShowWelcome(false);
+  };
+
+  const populateDummyData = () => {
+    ServiceManager.addStock({ Name: 'Gold Chain', Stock_Type: 'Gold', Date: new Date().toISOString(), Quantity: 15, Weight: 150, Remarks: 'Initial' });
+    ServiceManager.addStock({ Name: 'Silver Ring', Stock_Type: 'Silver', Date: new Date().toISOString(), Quantity: 40, Weight: 200, Remarks: 'Initial' });
+    ServiceManager.addStock({ Name: 'Diamond Pendant', Stock_Type: 'Diamond', Date: new Date().toISOString(), Quantity: 5, Weight: 25, Remarks: 'Initial' });
+    ServiceManager.addStock({ Name: 'Gold Bangle', Stock_Type: 'Gold', Date: new Date().toISOString(), Quantity: 20, Weight: 300, Remarks: 'Initial' });
+
+    ServiceManager.updatingRate({ Gold_Rate: 7200, Silver_Rate: 85 });
+
+    const names = ['Alice Smith', 'Bob Johnson', 'Charlie Brown', 'Diana Prince', 'Evan Wright', 'Fiona Gallagher'];
+
+    for (let i = 0; i < 15; i++) {
+        const date = new Date();
+        date.setDate(date.getDate() - i * 5);
+        
+        ServiceManager.saveBillData({
+            Name: names[i % names.length],
+            Phone: `987654321${i % 10}`,
+            Address: `${i * 10} Main St`,
+            Invoice_No: `INV-${1000 + i}`,
+            Date: date.toISOString(),
+            Gold_Rate: 7200,
+            Silver_Rate: 85,
+            Taxable_Amount: 5000 + i * 1500,
+            Discount: i * 50,
+            Net_Amount: 5000 + i * 1500 - i * 50,
+            Old_Gold_Total_Weight: 0,
+            Old_Reduced: 0,
+            Total: 5000 + i * 1500 - i * 50,
+            billitems: [],
+            oldbillitems: []
+        });
+    }
+    
+    handleSaveDetails();
+    window.location.reload();
+  };
 
   function handleGoldRate(e: React.ChangeEvent<HTMLInputElement>) {
     console.log("handleGoldRate", e.target.value);
@@ -151,10 +241,36 @@ export default function HomePage() {
     // </Card>
     // </Stack>
     <Stack alignSelf="center" spacing={2} direction="row">
+      <Dialog open={showWelcome}>
+        <DialogTitle>Welcome to Gram-Biller!</DialogTitle>
+        <DialogContent>
+          <Typography gutterBottom>Please enter your name to get started:</Typography>
+          <TextField 
+            autoFocus
+            margin="dense"
+            label="Your Name / Shop Name"
+            fullWidth
+            variant="outlined"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+          <Typography variant="body2" sx={{ mt: 2, color: 'text.secondary' }}>
+            Don't have any data yet? You can populate the app with dummy data to see how it works!
+          </Typography>
+        </DialogContent>
+        <DialogActions sx={{ p: 2, justifyContent: 'space-between' }}>
+          <Button onClick={populateDummyData} color="secondary" variant="outlined">
+            Populate Dummy Data
+          </Button>
+          <Button onClick={handleSaveDetails} color="primary" variant="contained">
+            Continue
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Stack direction="column" sx={{ width: '70%', height: 'full' }}>
         <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" sx={{ height: '10%' }}>
           <ThemeProvider theme={theme}>
-            <Typography sx={{ fontFamily: '"Segoe UI Emoji"', fontWeight: 'bold', fontSize: 22 }}>Hi, FRANK!</Typography>
+            <Typography sx={{ fontFamily: '"Segoe UI Emoji"', fontWeight: 'bold', fontSize: 22 }}>Hi, {userName || 'User'}!</Typography>
           </ThemeProvider>
 
           <Typography sx={{ fontSize: 14 }}>Home Branch</Typography>
@@ -172,7 +288,7 @@ export default function HomePage() {
               <Stack direction="column" justifyContent="flex-start" alignItems="flex-start">
                 <ThemeProvider theme={theme}>
                   <ReceiptIcon />
-                  <Typography sx={{ fontWeight: 'bold', fontSize: 22 }}>25</Typography>
+                  <Typography sx={{ fontWeight: 'bold', fontSize: 22 }}>{noOfSales}</Typography>
                   <Typography sx={{ fontFamily: 'Arial', fontSize: 14 }}>No.of Sales</Typography>
                   <Stack direction="row"><Typography sx={{ color: 'green', fontSize: 10 }}>132.56%</Typography><Typography sx={{ fontSize: 10 }}>of last month</Typography></Stack>
                 </ThemeProvider>
@@ -191,7 +307,7 @@ export default function HomePage() {
               <Stack direction="column" justifyContent="flex-start" alignItems="flex-start">
                 <ThemeProvider theme={theme}>
                   <GroupsIcon />
-                  <Typography sx={{ fontWeight: 'bold', fontSize: 22 }}>20</Typography>
+                  <Typography sx={{ fontWeight: 'bold', fontSize: 22 }}>{noOfCustomers}</Typography>
                   <Typography sx={{ fontFamily: 'Arial', fontSize: 14 }}>No.of Customers</Typography>
                   <Stack direction="row"><Typography sx={{ color: 'red', fontSize: 10 }}>10.54%</Typography><Typography sx={{ fontSize: 10 }}>of last month</Typography></Stack>
                 </ThemeProvider>
@@ -210,7 +326,7 @@ export default function HomePage() {
               <Stack direction="column" justifyContent="flex-start" alignItems="flex-start">
                 <ThemeProvider theme={theme}>
                   <PaymentIcon />
-                  <Typography sx={{ fontWeight: 'bold', fontSize: 22 }}>56.86</Typography>
+                  <Typography sx={{ fontWeight: 'bold', fontSize: 22 }}>{avgBillSize}</Typography>
                   <Typography sx={{ fontFamily: 'Arial', fontSize: 14 }}>Avg. Bill Size</Typography>
                   <Stack direction="row"><Typography sx={{ color: 'red', fontSize: 10 }}>56.35%</Typography><Typography sx={{ fontSize: 10 }}>of last month</Typography></Stack>
                 </ThemeProvider>
@@ -229,7 +345,7 @@ export default function HomePage() {
               <Stack direction="column" justifyContent="flex-start" alignItems="flex-start">
                 <ThemeProvider theme={theme}>
                   <BalanceIcon />
-                  <Typography sx={{ fontWeight: 'bold', fontSize: 22 }}>1432.67</Typography>
+                  <Typography sx={{ fontWeight: 'bold', fontSize: 22 }}>{revenue}</Typography>
                   <Typography sx={{ fontFamily: 'Arial', fontSize: 14 }}>Balance</Typography>
                   <Stack direction="row"><Typography sx={{ color: 'red', fontSize: 10 }}>11.54%</Typography><Typography sx={{ fontSize: 10 }}>of last month</Typography></Stack>
                 </ThemeProvider>
@@ -250,7 +366,7 @@ export default function HomePage() {
                   datasets: [
                     {
                       label: 'Sales',
-                      data: [100, 400, 300, 900, 300, 500, 700, 600, 300, 500, 200, 1000],
+                      data: monthlySales,
                       backgroundColor: "DodgerBlue",
                       borderColor: "lightGray",
                     }]
@@ -337,7 +453,7 @@ export default function HomePage() {
                     <Typography sx={{ fontSize: 13 }}>For the current month</Typography>
                   </Stack>
                   <Stack direction="column">
-                    <Stack direction="row"><Typography sx={{ fontFamily: '"Segoe UI Emoji"', fontWeight: 'bold', fontSize: 22, color: 'grey' }}>INR  </Typography><Typography sx={{ fontWeight: 'bold', fontSize: 22 }}>1106.65</Typography></Stack>
+                    <Stack direction="row"><Typography sx={{ fontFamily: '"Segoe UI Emoji"', fontWeight: 'bold', fontSize: 22, color: 'grey' }}>INR  </Typography><Typography sx={{ fontWeight: 'bold', fontSize: 22 }}>{revenue}</Typography></Stack>
                     <Stack direction="row"><Typography sx={{ color: 'red', fontSize: 13 }}>22.72%</Typography><Typography sx={{ fontSize: 13 }}>of last month</Typography></Stack>
                   </Stack>
                   <Line
@@ -346,7 +462,7 @@ export default function HomePage() {
                   datasets: [
                     {
                       label: 'Revenue',
-                      data: [1000, 700, 500, 900, 600, 500, 700, 300, 200, 500, 200, 300],
+                      data: monthlyRevenue,
                       backgroundColor: "lightgrey",
                       borderColor: "DodgerBlue",
                     }]

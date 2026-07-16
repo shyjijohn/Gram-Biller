@@ -16,7 +16,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { viewBills } from './BillData';
 import { ServiceManager } from '../Db_From_Client';
@@ -69,6 +69,24 @@ export default function ViewBills() {
 
 
   const PORT = 3000;
+
+  useEffect(() => {
+    const allBills = ServiceManager.getAllBills();
+    const formattedBills: viewBills[] = allBills.map((eachBill, index) => ({
+        id: index + 1,
+        name: eachBill.Name,
+        phoneNo: eachBill.Phone,
+        invoiceNo: eachBill.Invoice_No,
+        date: eachBill.Date,
+        address: eachBill.Address,
+        goldWeight: eachBill.Gold_Rate,
+        silverWeight: eachBill.Silver_Rate,
+        oldItemWeight: eachBill.Old_Gold_Total_Weight,
+        discount: eachBill.Discount,
+        billAmount: eachBill.Total
+    }));
+    setRows(formattedBills);
+  }, []);
 
 
 

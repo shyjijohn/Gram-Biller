@@ -293,7 +293,12 @@ export default function ViewStocks() {
 
 
   useEffect(() => {
-    setStockNames(ServiceManager.getStockNames())
+    const names = ServiceManager.getStockNames();
+    setStockNames(names);
+    if (names && names.length > 0) {
+      setOptionStock(names[0]);
+      getStockHistoryFn(names[0]);
+    }
   }, [])
 
 
@@ -322,6 +327,7 @@ export default function ViewStocks() {
                 </Typography >
                 <Autocomplete
                   disablePortal
+                  value={optionStock}
                   onChange={(event: any, newValue: string | null) => {
                     setOptionStock(newValue);
                     console.log("newValue: " + newValue);
