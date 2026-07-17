@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/Gram-Biller/static/css/main.2c6a34aa.css",
-    "main.js": "/Gram-Biller/static/js/main.3d5bc86c.js",
+    "main.js": "/Gram-Biller/static/js/main.160c9fb8.js",
     "index.html": "/Gram-Biller/index.html",
     "main.2c6a34aa.css.map": "/Gram-Biller/static/css/main.2c6a34aa.css.map",
-    "main.3d5bc86c.js.map": "/Gram-Biller/static/js/main.3d5bc86c.js.map"
+    "main.160c9fb8.js.map": "/Gram-Biller/static/js/main.160c9fb8.js.map"
   },
   "entrypoints": [
     "static/css/main.2c6a34aa.css",
-    "static/js/main.3d5bc86c.js"
+    "static/js/main.160c9fb8.js"
   ]
 }
