@@ -80,9 +80,11 @@ const theme = createTheme({
 
 export default function HomePage() {
 
-  const [goldRate, setGoldRate] = useState<number>(0);
-  const [silverRate, setSilverRate] = useState<number>(0);
+  const savedRates = ServiceManager.getRateUpdates();
+  const [goldRate, setGoldRate] = useState<number>(savedRates?.Gold_Rate || 0);
+  const [silverRate, setSilverRate] = useState<number>(savedRates?.Silver_Rate || 0);
   const PORT = 3000;
+  const [ratesSaved, setRatesSaved] = useState<boolean>(false);
 
   const [noOfSales, setNoOfSales] = useState<number>(0);
   const [noOfCustomers, setNoOfCustomers] = useState<number>(0);
@@ -186,18 +188,8 @@ export default function HomePage() {
       Silver_Rate: silverRate,
     }
     ServiceManager.updatingRate(RatesFromHomePage)
-    //   console.log("inside updatingRateBtn.....")     
-
-    //   axios.put(`http://localhost:${PORT}/AddRateUpdates`, {
-    //     Gold_Rate: goldRate,
-    //     Silver_Rate: silverRate
-    // })
-    // .then((response) => {
-    //   console.log('Data posted:', response.data);
-    // })
-    // .catch((error) => {
-    //   console.error('Error:', error);
-    // });
+    setRatesSaved(true);
+    setTimeout(() => setRatesSaved(false), 2500);
   }
 
   return (
@@ -393,7 +385,9 @@ export default function HomePage() {
             {/* <Typography lineHeight={0.5}>Silver Rate</Typography> */}
             <TextField id="standard-basic" variant='standard' label="Silver Rate" size='small' sx={{ width: '70%' }} type="number" value={silverRate} onChange={handleSilverRate}></TextField>
           </Stack>
-          <Button variant="contained" sx={{ width: '30%', height: '60%', margin: '10px' }}>Update</Button>
+          <Button variant="contained" sx={{ width: '30%', height: '60%', margin: '10px' }} onClick={updatingRateBtn} color={ratesSaved ? 'success' : 'primary'}>
+            {ratesSaved ? '✓ Saved' : 'Update'}
+          </Button>
         </Stack>
 
         <Stack sx={{ height: '45%', width: '100%' }}>

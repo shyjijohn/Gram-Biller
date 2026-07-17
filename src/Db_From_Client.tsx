@@ -14,7 +14,7 @@ class LocalService {
     static stocks: Stock[] = JSON.parse(localStorage.getItem('stocks') || '[]')
     static stockNamesColl: string[] = []
 
-    static rates: Rates = JSON.parse(localStorage.getItem('rates') || '{"Gold_Rate": 0, "Silver_Rate": 0}')
+    static rates: Rates = JSON.parse(localStorage.getItem('rates') || '{"Gold_Rate": 7000, "Silver_Rate": 85}')
     static billData: BillData
 
     static billDataColl: BillData[] = JSON.parse(localStorage.getItem('billDataColl') || '[]')

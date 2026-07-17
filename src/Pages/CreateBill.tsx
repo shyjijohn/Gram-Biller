@@ -156,11 +156,13 @@ export default function CreateBill() {
 
 
   useEffect(() => {
-    // getRateUpdates()
-
     setStockNames(ServiceManager.getStockNames())
     const rates = ServiceManager.getRateUpdates()
     console.log("rates", rates)
+    if (rates) {
+      if (rates.Gold_Rate) setGoldRate(rates.Gold_Rate);
+      if (rates.Silver_Rate) setSilverRate(rates.Silver_Rate);
+    }
   }, [])
 
   //valuegetter fn
